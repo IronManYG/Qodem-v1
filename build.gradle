@@ -27,6 +27,6 @@ ext {
 
     // App dependencies
     lifecycle_version = "2.2.0"
-    navigationVersion = "2.2.0"
+    navigationVersion = "2.3.5"
 
 }

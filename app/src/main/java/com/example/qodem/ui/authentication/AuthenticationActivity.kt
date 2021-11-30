@@ -10,8 +10,10 @@ import androidx.lifecycle.Observer
 import com.example.qodem.MainActivity
 import com.example.qodem.R
 import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class AuthenticationActivity : AppCompatActivity(){
@@ -20,7 +22,7 @@ class AuthenticationActivity : AppCompatActivity(){
         const val TAG = "AuthenticationActivity"
     }
 
-    // Get a reference to the ViewModel scoped to this Fragment.
+    // Get a reference to the ViewModel scoped to this Activity.
     private val viewModel by viewModels<AuthenticationViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,13 +31,13 @@ class AuthenticationActivity : AppCompatActivity(){
 
         val authButton = findViewById<Button>(R.id.auth_button)
 
-        // : Implement the create account and sign in using FirebaseUI, use sign in using email and sign in using Google
+        // : Implement the create account and sign in using FirebaseUI, use sign in using Phone.
         authButton.setOnClickListener { startSignIn() }
 
-        // : If the user was authenticated, send him to RemindersActivity
+        // : If the user was authenticated, send him to MainActivity
 
         // Observe the authentication state so we can know if the user has logged in successfully.
-        // If the user has logged in successfully, send them to the RemindersActivity.
+        // If the user has logged in successfully, send them to the MainActivity.
         // If the user did not log in successfully, display an error message.
         viewModel.authenticationState.observe(this, Observer { authenticationState ->
             when (authenticationState) {
@@ -54,8 +56,7 @@ class AuthenticationActivity : AppCompatActivity(){
 
     // Caller
     private fun startSignIn() {
-        // Give users the option to sign in / register with their email or Google account. If users
-        // choose to register with their email, they will need to create a password as well.
+        // Give users the option to sign in / register with their Phone.
         val providers = arrayListOf(
             AuthUI.IdpConfig.PhoneBuilder().setDefaultNumber("sa", "538517374").build()
         )
@@ -73,7 +74,6 @@ class AuthenticationActivity : AppCompatActivity(){
         FirebaseAuthUIActivityResultContract()
     ) { result: FirebaseAuthUIAuthenticationResult? ->
         // Handle the FirebaseAuthUIAuthenticationResult
-        // ...
         if (result != null) {
             onSignInResult(result)
         }
@@ -90,8 +90,27 @@ class AuthenticationActivity : AppCompatActivity(){
             )
         } else {
             // Sign in failed
-            Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
+            if (response == null) {
+                // User pressed back button
+                 showSnackbar(R.string.sign_in_cancelled)
+                return
+            }
+            if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
+                showSnackbar(R.string.no_internet_connection)
+                return
+            }
+             showSnackbar(R.string.unknown_error)
+             Log.e(TAG, "Sign-in error: ", response.error)
+
         }
+    }
+
+    private fun showSnackbar(stringId: Int) {
+        Snackbar.make(
+            findViewById(R.id.authenticationLayout),
+            stringId,
+            Snackbar.LENGTH_SHORT)
+            .show()
     }
 
 }

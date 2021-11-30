@@ -5,7 +5,11 @@
       <map>
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/activity_authentication.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/community_fragment.xml" value="0.24909420289855072" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/custom_firebase_sign_in.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_location.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/home_fragment.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/menu/bottom_nav.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
