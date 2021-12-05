@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeFragment">
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/item_blood_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sign_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:text="sign out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_donation_campaigns"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
+
+        <Button
+            android:id="@+id/button_find_donors"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/home_find_donors"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="top"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_donor"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView_donation_campaigns" />
+
+        <Button
+            android:id="@+id/button_add_donor"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home_add_donor"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="top"
+            app:layout_constraintEnd_toStartOf="@+id/button_snap_and_share"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_find_donors"
+            app:layout_constraintTop_toTopOf="@+id/button_find_donors" />
+
+        <Button
+            android:id="@+id/button_snap_and_share"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home_snap_and_share"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_camera_alt"
+            app:iconGravity="top"
+            app:layout_constraintEnd_toStartOf="@+id/button_blood_journey"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_add_donor"
+            app:layout_constraintTop_toTopOf="@+id/button_add_donor" />
+
+        <Button
+            android:id="@+id/button_blood_journey"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home_blood_journey"
+            android:textSize="10sp"
+            app:icon="@drawable/ic_blood_drop"
+            app:iconGravity="top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_snap_and_share"
+            app:layout_constraintTop_toTopOf="@+id/button_snap_and_share" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

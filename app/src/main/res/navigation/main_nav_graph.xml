@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.example.qodem.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/locationFragment"
         android:name="com.example.qodem.ui.bloodbanklocation.LocationFragment"

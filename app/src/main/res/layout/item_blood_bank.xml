@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image_blood_bank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="TODO"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_local_hospital" />
+
+    <TextView
+        android:id="@+id/text_blood_bank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="hospital name"
+        app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank"
+        app:layout_constraintStart_toEndOf="@+id/image_blood_bank"
+        app:layout_constraintTop_toTopOf="@+id/image_blood_bank" />
+
+    <ImageView
+        android:id="@+id/image_blood_bank_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:contentDescription="TODO"
+        app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank"
+        app:layout_constraintStart_toEndOf="@+id/text_blood_bank"
+        app:layout_constraintTop_toTopOf="@+id/image_blood_bank"
+        app:srcCompat="@drawable/ic_place" />
+
+    <TextView
+        android:id="@+id/text_time_to_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="15 min"
+        app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_place"
+        app:layout_constraintEnd_toStartOf="@+id/text_add_time"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_blood_bank_place"
+        app:layout_constraintTop_toTopOf="@+id/image_blood_bank_place" />
+
+    <ImageView
+        android:id="@+id/image_working_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:contentDescription="TODO"
+        app:layout_constraintStart_toStartOf="@+id/image_blood_bank"
+        app:layout_constraintTop_toBottomOf="@+id/image_blood_bank"
+        app:srcCompat="@drawable/ic_menu_calendar" />
+
+    <TextView
+        android:id="@+id/text_working_days_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/blood_bank_working_days"
+        app:layout_constraintBottom_toBottomOf="@+id/image_working_days"
+        app:layout_constraintStart_toEndOf="@+id/image_working_days"
+        app:layout_constraintTop_toTopOf="@+id/image_working_days" />
+
+    <TextView
+        android:id="@+id/text_working_days_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Sunday to Thursday"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/text_working_days_label"
+        app:layout_constraintTop_toBottomOf="@+id/text_working_days_label" />
+
+    <ImageView
+        android:id="@+id/image_work_hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:contentDescription="TODO"
+        app:layout_constraintBottom_toBottomOf="@+id/image_working_days"
+        app:layout_constraintStart_toEndOf="@+id/divider2"
+        app:layout_constraintTop_toTopOf="@+id/image_working_days"
+        app:srcCompat="@drawable/ic_time" />
+
+    <TextView
+        android:id="@+id/text_work_hours_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/blood_bank_work_hours"
+        app:layout_constraintBottom_toBottomOf="@+id/image_work_hours"
+        app:layout_constraintStart_toEndOf="@+id/image_work_hours"
+        app:layout_constraintTop_toTopOf="@+id/image_work_hours" />
+
+    <TextView
+        android:id="@+id/text_work_hours_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="08:00 AM - 3:00 PM"
+        app:layout_constraintStart_toStartOf="@+id/text_work_hours_label"
+        app:layout_constraintTop_toBottomOf="@+id/text_work_hours_label" />
+
+    <TextView
+        android:id="@+id/text_add_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5 days ago"
+        app:layout_constraintBottom_toBottomOf="@+id/text_time_to_place"
+        app:layout_constraintEnd_toEndOf="@+id/text_work_hours_field" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/image_work_hours"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_blood_bank_place" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="@+id/text_work_hours_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_work_hours" />
+</androidx.constraintlayout.widget.ConstraintLayout>

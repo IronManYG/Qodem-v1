@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/blood_donation_drive"
+        android:icon="@drawable/ic_menu_calendar"
+        android:title="Blood Donation Drive"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/rewards"
+        android:icon="@drawable/ic_menu_card_giftcard"
+        android:title="Rewards"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/notification"
+        android:icon="@drawable/ic_menu_notifications"
+        android:title="Notification"
+        app:showAsAction="always"
+        />
+</menu>
