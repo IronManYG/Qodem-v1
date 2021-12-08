@@ -1,0 +1,871 @@
+{
+  "blood banks": [
+    {
+      "id": 1,
+      "name_en": "al raqi unversity hospital",
+      "name_ar": "مستشفى الراقي الجامعي",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 7,
+          "start time": "8:00",
+          "end time": "15:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249990902492",
+      "coordinates":{
+          "lat": 15.530953756287875 
+          "lng": 32.59044179928809
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 10,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 2,
+      "name_en": "el-sheikh hospital",
+      "name_ar": "مستشفى الشيخ التخصصي",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 7,
+          "start time": "08:00",
+          "end time": "15:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": false, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249183230349",
+      "coordinates":{
+          "lat": 15.546831713645574,
+          "lng": 32.56709971712917 
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 3,
+      "name_en": "salam centre for cardiac surgery",
+      "name_ar": "مستشفى السلام لجراحة القلب",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 12,
+          "start time": "09:00",
+          "end time": "21:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249918331326",
+      "coordinates":{
+          "lat": 15.518330357410683, 
+          "lng": 32.66224424847973 
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 4,
+      "name_en": "ibrahim malik teaching hospital",
+      "name_ar": "مستشفى إبراهيم مالك التعليمي",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 7,
+          "start time": "08:00",
+          "end time": "15:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249183428245",
+      "coordinates":{
+          "lat": 15.54583965071459,
+          "lng": 32.55200639840443
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 10,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 5,
+      "name_en": "al saha specialized hospital",
+      "name_ar": "مستشفى الساحة التخصصي",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "08:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249900038977",
+      "coordinates":{
+          "lat": 15.575995463859634,
+          "lng": 32.55692133988705
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 20,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 6,
+      "name_en": "royal care international hospital",
+      "name_ar": "مُستشفى رويال كير العالمية",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "08:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249156550154",
+      "coordinates":{
+          "lat": 15.609208342244075,
+          "lng": 32.57150283441924
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 7,
+      "name_en": "imperial hospital",
+      "name_ar": "مستشفى إمبريال",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 7,
+          "start time": "08:00",
+          "end time": "15:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249183766773",
+      "coordinates":{
+          "lat": 15.61389269133617,
+          "lng": 32.53750167644846
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 8,
+      "name_en": "ibn sena specialized hospital",
+      "name_ar": "مستشفى إبن سينا التخصصي",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 9,
+          "start time": "08:00",
+          "end time": "17:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249925667967",
+      "coordinates":{
+          "lat": 15.586757917033228,
+          "lng": 32.540896855196046
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 9,
+      "name_en": "khartoum teaching hospital",
+      "name_ar": "مستشفى الخرطوم التعليمي",
+      "city": "Khartoum",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249992026474",
+      "coordinates":{
+          "lat": 15.607343354924394,
+          "lng": 32.53264330910971
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 10,
+      "name_en": "ombada hospital",
+      "name_ar": "مستشفى أمبدة النموذجي التعليمي",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": null,
+      "coordinates":{
+          "lat": 15.668690152770413,
+          "lng": 32.41908898499795
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 11,
+      "name_en": "eldesoki specialist hospital",
+      "name_ar": "مستشفى الدسوقي التخصصي",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249120661668",
+      "coordinates":{
+          "lat": 15.703239116341672,
+          "lng": 32.47694823398739
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 10,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 12,
+      "name_en": "chinese friendship hospital",
+      "name_ar": "مستشفى الصداقة الصيني",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249155880071",
+      "coordinates":{
+          "lat": 15.663568173922327,
+          "lng": 32.46080558806799
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 13,
+      "name_en": "alamal alwtani hospital",
+      "name_ar": "مستشفى الأمل - أم درمان",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": null,
+      "coordinates":{
+          "lat": 15.67563298384772,
+          "lng": 32.4820946672621
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 20,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 14,
+      "name_en": "military hospital helipad",
+      "name_ar": "مستشفى السلاح الطبي",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249120513192",
+      "coordinates":{
+          "lat": 15.616125336626476,
+          "lng": 32.484832772771185
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 15,
+      "name_en": "aliaa specialist hospital 1",
+      "name_ar": "مستشفى علياء التخصصي 1",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249187552640",
+      "coordinates":{
+          "lat": 15.621580439532796,
+          "lng": 32.484833429270466
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 10,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 16,
+      "name_en": "omdurman maternity hospital",
+      "name_ar": "مستشفى الدايات امدرمان",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249120143411",
+      "coordinates":{
+          "lat": 15.639219694627462,
+          "lng": 32.490795622717926
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 17,
+      "name_en": "dr.najeeb specialized hospital",
+      "name_ar": "مستشفى دكتور نجيب التخصصي",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249999666600",
+      "coordinates":{
+          "lat": 15.642030589493972,
+          "lng": 32.49201960168095
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 18,
+      "name_en": "omdurman teaching hospital",
+      "name_ar": "مستشفى أم درمان التعليمي",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": null,
+      "coordinates":{
+          "lat": 15.642402555585823,
+          "lng": 32.487620772716234
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 20,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 19,
+      "name_en": "blue nile hospital",
+      "name_ar": "مستشفى النيل الأزرق",
+      "city": "omdurman",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": false, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249155887217",
+      "coordinates":{
+          "lat": 15.643848963988278,
+          "lng": 32.489101361103685
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 20,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 20,
+      "name_en": "martyr ali abdel fattah hospital",
+      "name_ar": "مستشفى الشهيد علي عبدالفتاح",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": null,
+      "coordinates":{
+          "lat": 15.727540397884198,
+          "lng": 32.580547510782196
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 20,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 21,
+      "name_en": "alban jaded hospital",
+      "name_ar": "مستشفى البان الجديد",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249994396744",
+      "coordinates":{
+          "lat": 15.619594089268272,
+          "lng": 32.631857610558875
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 7,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 22,
+      "name_en": "aldoha specialised hospital",
+      "name_ar": "مستشفى الضحى التخصصي",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249122820320",
+      "coordinates":{
+          "lat": 15.651334470454858,
+          "lng": 32.6256853820913
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 7,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 23,
+      "name_en": "baraha medical city",
+      "name_ar": "مدينة البراحة الطبية",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249185212222",
+      "coordinates":{
+          "lat": 15.67696328330934,
+          "lng": 32.544148851225714
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 24,
+      "name_en": "universal hospital sudan uhs",
+      "name_ar": "المستشفى العالمي",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+2492147483647",
+      "coordinates":{
+          "lat": 15.621758811436349,
+          "lng": 32.55668112017279
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 20,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 25,
+      "name_en": "al-amal hospital",
+      "name_ar": "مستشفى الأمل",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249185334505",
+      "coordinates":{
+          "lat": 15.631676437750373,
+          "lng": 32.552733502344005
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 26,
+      "name_en": "haj el-safi teaching hospital",
+      "name_ar": "مستشفى حاج الصافي التعليمي",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": null,
+      "coordinates":{
+          "lat": 15.631676437750373,
+          "lng": 32.552733502344005
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 15,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+    
+    {
+      "id": 27
+      "name_en": "international hospital",
+      "name_ar": "المستشفى الدولي",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": 16:00
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": "+249185338087",
+      "coordinates":{
+          "lat": 15.643904785936963,
+          "lng": 32.52630034985427
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 10
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+
+    {
+      "id": 28
+      "name_en": "khartoum bahri teaching hospital",
+      "name_ar": "مستشفى بحري التعليمي",
+      "city": "khartoum bahri",
+      "working hours": {
+          "number of hours": 8,
+          "start time": "09:00",
+          "end time": "16:00"
+      },
+      "working day": { 
+          "Saturday": false, 
+          "Sunday": true,
+          "Monday": true, 
+          "Tuesday": true, 
+          "Wednesday": true, 
+          "Thursday": true, 
+          "Friday": false,
+      },
+      "classification": "hospital",
+      "phone number": null,
+      "coordinates":{
+          "lat": 15.62634301134535,
+          "lng": 32.52848899411723
+      },
+      "gap betweem appointment": "00:30",
+      "donor limit": 20,
+      "blood donation campaign": false,
+      "campaign period": null
+    },
+  ]
+}
