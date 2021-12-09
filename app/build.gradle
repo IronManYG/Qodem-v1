@@ -10,6 +10,7 @@ android {
 
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
 
     defaultConfig {
@@ -51,6 +52,13 @@ dependencies {
 
     // App dependencies
 
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+
+    // Coroutine Lifecycle Scopes
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx: $lifecycle_version"
+
     // Kotlin
 
     // Constraint Layout
@@ -72,8 +80,19 @@ dependencies {
     // Core with Ktx
 
     // Retrofit
+    implementation "com.squareup.retrofit2:retrofit: $version_retrofit"
+    implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
+
+    // Recyclerview
+    implementation("androidx.recyclerview:recyclerview: $version_recyclerview")
 
     // Moshi
+    implementation "com.squareup.moshi:moshi:$version_moshi"
+    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+    implementation "com.squareup.moshi:moshi-adapters:$version_moshi"
 
     // Glide
 
