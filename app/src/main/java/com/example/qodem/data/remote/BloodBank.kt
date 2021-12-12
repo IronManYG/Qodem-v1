@@ -7,7 +7,7 @@ data class BloodBank(
     val classification: String,
     val coordinates: Coordinates,
     val donorLimit: Int,
-    val gapBetweemAppointment: String,
+    val gapBetweenAppointment: String,
     val id: Int,
     val name_ar: String,
     val name_en: String,

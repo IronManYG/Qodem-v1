@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface BloodBanksApi {
 
-    @GET("/b/61b1ae6e01558c731cd0e806/2")
+    @GET("/b/61b1ae6e01558c731cd0e806/3")
     suspend fun getBloodBanks(): Response<List<BloodBank>>
 
 }
