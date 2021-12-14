@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -89,16 +90,18 @@ dependencies {
     // Recyclerview
     implementation("androidx.recyclerview:recyclerview: $version_recyclerview")
 
-    // Moshi
-    implementation "com.squareup.moshi:moshi:$version_moshi"
-    implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
-    implementation "com.squareup.moshi:moshi-adapters:$version_moshi"
-
     // Glide
 
     // Room
+    implementation "androidx.room:room-runtime:$version_room"
+    implementation "androidx.room:room-ktx:$version_room"
+    kapt "androidx.room:room-compiler:$version_room"
 
     // Hilt (Dagger 2)
+    implementation("com.google.dagger:hilt-android:$version_hilt")
+    kapt("com.google.dagger:hilt-compiler:$version_hilt")
+
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$version_hilt_viewmodels"
 
     //Coroutines Dependencies
 
@@ -115,4 +118,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     // FirebaseUI auth
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

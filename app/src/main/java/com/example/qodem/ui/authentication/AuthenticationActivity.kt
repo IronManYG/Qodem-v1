@@ -7,7 +7,7 @@ import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.qodem.MainActivity
+import com.example.qodem.ui.MainActivity
 import com.example.qodem.R
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes

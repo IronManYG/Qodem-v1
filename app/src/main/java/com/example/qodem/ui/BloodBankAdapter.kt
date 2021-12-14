@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.qodem.data.remote.BloodBank
+import com.example.qodem.model.BloodBank
 import com.example.qodem.databinding.ItemBloodBankBinding
 
 class BloodBankAdapter() : RecyclerView.Adapter<BloodBankAdapter.BloodBankViewHolder>() {

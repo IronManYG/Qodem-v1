@@ -1,16 +1,14 @@
-package com.example.qodem
+package com.example.qodem.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.content.Intent
-import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.qodem.ui.authentication.AuthenticationActivity
-import com.firebase.ui.auth.AuthUI
+import com.example.qodem.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

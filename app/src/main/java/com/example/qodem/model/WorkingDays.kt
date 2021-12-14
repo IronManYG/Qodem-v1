@@ -1,4 +1,4 @@
-package com.example.qodem.data.remote
+package com.example.qodem.model
 
 data class WorkingDays(
     val Friday: Boolean,
