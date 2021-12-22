@@ -1,5 +1,6 @@
 package com.example.qodem.data.remote
 
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
 interface BloodBanksRetrofit {

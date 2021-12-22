@@ -1,5 +1,7 @@
 package com.example.qodem.model
 
+import com.google.android.gms.maps.model.LatLng
+
 data class BloodBank(
     var id: Int,
     var name_en: String,
@@ -9,7 +11,7 @@ data class BloodBank(
     var workingDays: WorkingDays,
     var classification: String,
     var phoneNumber: String?,
-    var coordinates: Coordinates,
+    var coordinates: LatLng,
     var gapBetweenAppointment: String,
     var donorLimit: Int,
     var bloodDonationCampaign: Boolean,

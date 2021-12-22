@@ -1,7 +1,9 @@
 package com.example.qodem.data.remote
 
 import com.example.qodem.model.BloodBank
+import com.example.qodem.model.Coordinates
 import com.example.qodem.utils.EntityMapper
+import com.google.android.gms.maps.model.LatLng
 import javax.inject.Inject
 
 class NetworkMapper
@@ -19,7 +21,7 @@ constructor():
             workingDays = entity.workingDays,
             classification = entity.classification,
             phoneNumber = entity.phoneNumber,
-            coordinates = entity.coordinates,
+            coordinates = LatLng(entity.coordinates.lat,entity.coordinates.lng),
             gapBetweenAppointment = entity.gapBetweenAppointment,
             donorLimit = entity.donorLimit,
             bloodDonationCampaign = entity.bloodDonationCampaign,
@@ -37,7 +39,7 @@ constructor():
             workingDays = domainModel.workingDays,
             classification = domainModel.classification,
             phoneNumber = domainModel.phoneNumber,
-            coordinates = domainModel.coordinates,
+            coordinates = Coordinates(domainModel.coordinates.latitude,domainModel.coordinates.longitude),
             gapBetweenAppointment = domainModel.gapBetweenAppointment,
             donorLimit = domainModel.donorLimit,
             bloodDonationCampaign = domainModel.bloodDonationCampaign,

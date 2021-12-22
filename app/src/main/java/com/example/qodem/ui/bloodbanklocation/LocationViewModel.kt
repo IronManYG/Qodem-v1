@@ -1,33 +1,33 @@
-package com.example.qodem.ui.home
+package com.example.qodem.ui.bloodbanklocation
 
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.qodem.data.repository.MainRepository
 import com.example.qodem.model.BloodBank
 import com.example.qodem.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
-//import com.example.qodem.ui.home.MainStateEvent.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class HomeViewModel
+class LocationViewModel
 @Inject
 constructor(
     private val mainRepository: MainRepository,
     private val savedStateHandle: SavedStateHandle
-): ViewModel() {
-
-//    private val _dataState: MutableStateFlow<DataState<List<BloodBank>>> = MutableStateFlow(DataState.Success(emptyList()))
+): ViewModel(){
+//    private val _dataState: MutableStateFlow<DataState<List<BloodBank>>> = MutableStateFlow(
+//        DataState.Success(emptyList()))
 //
 //    val dataState: StateFlow<DataState<List<BloodBank>>> = _dataState
 
     init {
         viewModelScope.launch{
-//            setStateEvent(GetBloodBanksEvent)
+//            setStateEvent(MainStateEvent.GetBloodBanksEvent)
             mainRepository.getBloodBanks()
         }
     }
@@ -41,19 +41,19 @@ constructor(
 //            val result: StateFlow<DataState<List<BloodBank>>> = mainRepository.getBloodBanks()
 //                .stateIn(
 //                    viewModelScope,
-//                    WhileSubscribed(5000),
+//                    SharingStarted.WhileSubscribed(5000),
 //                    DataState.Success(emptyList())
-//            )
+//                )
 //
 //            when(mainStateEvent){
-//                is GetBloodBanksEvent -> {
+//                is MainStateEvent.GetBloodBanksEvent -> {
 //                    result
 //                        .onEach { dataState ->
-//                        _dataState.value = dataState
-//                    }
+//                            _dataState.value = dataState
+//                        }
 //                        .launchIn(viewModelScope)
 //                }
-//                None -> {
+//                MainStateEvent.None -> {
 //                    //
 //                }
 //            }
