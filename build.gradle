@@ -36,5 +36,6 @@ ext {
     version_room = "2.3.0"
     version_hilt = "2.39"
     version_hilt_viewmodels = "1.0.0-alpha03"
+    version_work = "2.7.1"
 
 }

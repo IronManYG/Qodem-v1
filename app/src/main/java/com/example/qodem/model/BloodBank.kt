@@ -1,6 +1,7 @@
 package com.example.qodem.model
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.ClusterItem
 
 data class BloodBank(
     var id: Int,
@@ -16,4 +17,14 @@ data class BloodBank(
     var donorLimit: Int,
     var bloodDonationCampaign: Boolean,
     var campaignPeriod: Int?
-)
+): ClusterItem {
+    override fun getPosition(): LatLng =
+        coordinates
+
+    override fun getTitle(): String =
+        name_en
+
+    override fun getSnippet(): String =
+        name_en
+
+}

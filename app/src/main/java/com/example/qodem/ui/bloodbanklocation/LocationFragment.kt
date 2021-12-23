@@ -8,27 +8,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.alpha
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentLocationBinding
 import com.example.qodem.model.BloodBank
-import com.example.qodem.utils.DataState
+import com.example.qodem.utils.BitmapHelper
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
+import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.ktx.addCircle
 import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.awaitMapLoad
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -38,7 +39,12 @@ class LocationFragment : Fragment() {
 
     private lateinit var binding: FragmentLocationBinding
 
-    private var bloodBanks: List<BloodBank> = emptyList()
+    private val bloodDropIcon: BitmapDescriptor by lazy {
+        val color = ContextCompat.getColor(requireContext(), R.color.primaryDarkColor)
+        BitmapHelper.vectorToBitmap(requireContext(), R.drawable.ic_blood_drop, color)
+    }
+
+    private var circle: Circle? = null
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -50,19 +56,36 @@ class LocationFragment : Fragment() {
          * install it inside the SupportMapFragment. This method will only be triggered once theb
          * user has installed Google Play services and returned to the app.
          */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+//        val sydney = LatLng(-34.0, 151.0)
+//        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+
+
+        //addMarkers(googleMap)
+
+        addClusteredMarkers(googleMap)
+
+        // Ensure all places are visible in the map
+        val bounds = LatLngBounds.builder()
+        viewModel.bloodBanksList.observe(viewLifecycleOwner, Observer { bloodBanks ->
+            bloodBanks.forEach {
+                bounds.include(it.coordinates)
+            }
+        })
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20))
+
+        googleMap.setOnMapClickListener {
+            circle?.remove()
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLocationBinding.inflate(layoutInflater)
-
-//        subscribeObservers()
 
         return binding.root
     }
@@ -70,23 +93,17 @@ class LocationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-//        lifecycleScope.launchWhenCreated {
-//            Log.d("here","start map")
-//            // Get map
-//            val googleMap = mapFragment.awaitMap()
-//
-//            // Wait for map to finish loading
-//            googleMap.awaitMapLoad()
-//
-//            // Ensure all places are visible in the map
-//            val bounds = LatLngBounds.builder()
-//            bloodBanks.forEach { bounds.include(it.coordinates) }
-//            googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20))
-//
-//            addMarkers(googleMap)
-//        }
-        mapFragment?.getMapAsync(callback)
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        lifecycleScope.launchWhenCreated {
+
+            // Get map
+            val googleMap = mapFragment.awaitMap()
+
+            // Wait for map to finish loading
+            googleMap.awaitMapLoad()
+        }
+        mapFragment.getMapAsync(callback)
     }
 
 //    private fun subscribeObservers() {
@@ -111,30 +128,91 @@ class LocationFragment : Fragment() {
 //        }
 //    }
 
-    private fun displayError(message: String?) {
-        if (message != null) {
-            Toast.makeText(requireActivity(), message, Toast.LENGTH_LONG).show()
-        } else Toast.makeText(requireActivity(), "Unknown error", Toast.LENGTH_LONG).show()
-    }
-
-    private fun displayProgressBar(isDisplayed: Boolean) {
-        binding.progressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
-    }
+//    private fun displayError(message: String?) {
+//        if (message != null) {
+//            Toast.makeText(requireActivity(), message, Toast.LENGTH_LONG).show()
+//        } else Toast.makeText(requireActivity(), "Unknown error", Toast.LENGTH_LONG).show()
+//    }
+//
+//    private fun displayProgressBar(isDisplayed: Boolean) {
+//        binding.progressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
+//    }
 
     /**
      * Adds markers to the map. These markers won't be clustered.
      */
     private fun addMarkers(googleMap: GoogleMap) {
-        bloodBanks.forEach { bloodBank ->
-            val marker = googleMap.addMarker {
-                title(bloodBank.name_en)
-                position(bloodBank.coordinates)
+        viewModel.bloodBanksList.observe(viewLifecycleOwner, Observer { bloodBanks ->
+            bloodBanks.forEach { bloodBank ->
+                val marker = googleMap.addMarker {
+                    title(bloodBank.name_en)
+                    position(bloodBank.coordinates)
+                    icon(bloodDropIcon)
+                }
+                // Set place as the tag on the marker object so it can be referenced within
+                // MarkerInfoWindowAdapter
+                marker?.tag = bloodBank
             }
-            // Set place as the tag on the marker object so it can be referenced within
-            // MarkerInfoWindowAdapter
-            if (marker != null) {
-                marker.tag = bloodBank
-            }
+        })
+    }
+
+    /**
+     * Adds markers to the map with clustering support.
+     */
+    private fun addClusteredMarkers(googleMap: GoogleMap) {
+        // Create the ClusterManager class and set the custom renderer.
+        val clusterManager = ClusterManager<BloodBank>(requireContext(), googleMap)
+        clusterManager.renderer =
+            BloodBankRenderer(
+                requireContext(),
+                googleMap,
+                clusterManager
+            )
+
+        // Set custom info window adapter
+//        clusterManager.markerCollection.setInfoWindowAdapter(MarkerInfoWindowAdapter(this))
+
+        // Show polygon
+        clusterManager.setOnClusterItemClickListener { item ->
+            addCircle(googleMap, item)
+            return@setOnClusterItemClickListener false
+        }
+
+        // Add the places to the ClusterManager.
+        viewModel.bloodBanksList.observe(viewLifecycleOwner, Observer { bloodBanks ->
+            clusterManager.addItems(bloodBanks)
+        })
+        clusterManager.cluster()
+
+        // Set ClusterManager as the OnCameraIdleListener so that it
+        // can re-cluster when zooming in and out.
+        googleMap.setOnCameraIdleListener {
+            // When the camera stops moving, change the alpha value back to opaque.
+            clusterManager.markerCollection.markers.forEach { it.alpha = 1.0f }
+            clusterManager.clusterMarkerCollection.markers.forEach { it.alpha = 1.0f }
+
+            // Call clusterManager.onCameraIdle() when the camera stops moving so that reclustering
+            // can be performed when the camera stops moving.
+            clusterManager.onCameraIdle()
+        }
+
+        // When the camera starts moving, change the alpha value of the marker to translucent.
+        googleMap.setOnCameraMoveStartedListener {
+            clusterManager.markerCollection.markers.forEach { it.alpha = 0.3f }
+            clusterManager.clusterMarkerCollection.markers.forEach { it.alpha = 0.3f }
+        }
+    }
+
+    /**
+     * Adds a [Circle] around the provided [item]
+     */
+    private fun addCircle(googleMap: GoogleMap, item: BloodBank) {
+        circle?.remove()
+        circle = googleMap.addCircle {
+            center(item.coordinates)
+            radius(1000.0)
+            fillColor(ContextCompat.getColor(requireContext(), R.color.primaryLightColor))
+            strokeColor(ContextCompat.getColor(requireActivity(), R.color.primaryColor))
         }
     }
 }

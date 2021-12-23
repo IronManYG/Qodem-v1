@@ -7,23 +7,14 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentHomeBinding
-import com.example.qodem.model.BloodBank
 import com.example.qodem.ui.BloodBankAdapter
 import com.example.qodem.ui.authentication.AuthenticationActivity
-import com.example.qodem.utils.DataState
 import com.firebase.ui.auth.AuthUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -63,12 +54,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.setStateEvent(MainStateEvent.GetBloodBanksEvent)
-//            }
-//        }
-        viewModel.bloodBanksList.observe(viewLifecycleOwner, Observer<List<BloodBank>>{ bloodBanks ->
+        viewModel.bloodBanksList.observe(viewLifecycleOwner,{ bloodBanks ->
             bloodBankAdapter.bloodBanks = bloodBanks
         })
     }
