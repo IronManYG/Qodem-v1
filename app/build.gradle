@@ -101,8 +101,11 @@ dependencies {
     // Hilt (Dagger 2)
     implementation("com.google.dagger:hilt-android:$version_hilt")
     kapt("com.google.dagger:hilt-compiler:$version_hilt")
-
+    // Hilt with view model
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$version_hilt_viewmodels"
+    // Hilt with work
+    implementation("androidx.hilt:hilt-work:$version_hilt_work")
+    kapt("androidx.hilt:hilt-compiler:$version_hilt_work")
 
     //Coroutines Dependencies
 

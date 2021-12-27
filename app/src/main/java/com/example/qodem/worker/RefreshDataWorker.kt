@@ -1,24 +1,22 @@
-package com.example.qodem.Work
+package com.example.qodem.worker
 
 import android.content.Context
 import android.util.Log
 import androidx.hilt.work.HiltWorker
-import androidx.lifecycle.SavedStateHandle
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.example.qodem.data.repository.MainRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import retrofit2.HttpException
-import javax.inject.Inject
 
-@ExperimentalCoroutinesApi
 @HiltWorker
 class RefreshDataWorker
-@Inject
-constructor(appContext: Context,
-            params: WorkerParameters,
+@AssistedInject
+constructor(@Assisted appContext: Context,
+            @Assisted params: WorkerParameters,
             private val mainRepository: MainRepository,
-            private val savedStateHandle: SavedStateHandle
 ): CoroutineWorker(appContext, params) {
 
     companion object {
@@ -26,11 +24,13 @@ constructor(appContext: Context,
     }
 
     override suspend fun doWork(): Result {
-        Log.d("here", "workStart,doWork")
         return try {
+            Log.d(WORK_NAME, "workStart,doWork")
             mainRepository.getBloodBanks()
+            Log.d(WORK_NAME, "getBloodBanks")
             Result.success()
         } catch (e: HttpException) {
+            Log.d(WORK_NAME, "Error")
             Result.retry()
         }
     }

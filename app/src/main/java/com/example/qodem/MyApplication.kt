@@ -2,18 +2,23 @@ package com.example.qodem
 
 import android.app.Application
 import android.os.Build
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
-import com.example.qodem.Work.RefreshDataWorker
+import com.example.qodem.worker.RefreshDataWorker
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltAndroidApp
-class MyApplication: Application(){
+class MyApplication: Application(), Configuration.Provider{
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
@@ -21,6 +26,11 @@ class MyApplication: Application(){
         super.onCreate()
         delayedInit()
     }
+
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 
     private fun delayedInit() = applicationScope.launch {
         setupRecurringWork()
@@ -37,14 +47,15 @@ class MyApplication: Application(){
                 }
             }.build()
 
-        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(10, TimeUnit.SECONDS)
+        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(1, TimeUnit.DAYS)
             .setConstraints(constraints)
             .build()
 
-        WorkManager.getInstance().enqueueUniquePeriodicWork(
+        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
             RefreshDataWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.REPLACE,
             repeatingRequest)
+
     }
 
 }
