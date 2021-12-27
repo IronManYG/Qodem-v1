@@ -12,4 +12,9 @@
     <string name="item_home" >Home</string>
     <string name="item_map">Map</string>
     <string name="item_Community">Community</string>
+    <string name="button_book_an__appointment">book an appointment</string>
+    <string name="no_records_massage">Our records indicate you haven\'t donated yet.</string>
+    <string name="remaining_days">Day</string>
+    <string name="remaining_hours">Hours</string>
+    <string name="appointment_info">Appointment info</string>
 </resources>

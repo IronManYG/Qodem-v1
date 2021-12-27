@@ -3,7 +3,6 @@ package com.example.qodem.ui.home
 import androidx.lifecycle.*
 import com.example.qodem.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-//import com.example.qodem.ui.home.MainStateEvent.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject

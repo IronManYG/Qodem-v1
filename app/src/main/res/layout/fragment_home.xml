@@ -26,7 +26,7 @@
             app:layout_constraintBottom_toTopOf="@+id/button_find_donors"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
         <Button
             android:id="@+id/button_find_donors"
@@ -92,6 +92,267 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_margin="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_no_appointment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/button_book_an_appointment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_book_an__appointment"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_no_records_massage" />
+
+                <TextView
+                    android:id="@+id/text_no_records_massage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="64dp"
+                    android:text="@string/no_records_massage"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_oppointment_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/text_appointment_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/appointment_info"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_remaining_days_field"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+
+                <TextView
+                    android:id="@+id/text_remaining_days_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/remaining_days"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@+id/text_remaining_hours_label"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/text_remaining_days_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_days_label"
+                    app:layout_constraintHorizontal_bias="0.437"
+                    app:layout_constraintStart_toStartOf="@+id/text_remaining_days_label"
+                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_label" />
+
+                <TextView
+                    android:id="@+id/text_remaining_hours_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/remaining_hours"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@+id/text_remaining_minutes_label"
+                    app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+
+                <TextView
+                    android:id="@+id/text_remaining_minutes_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Minute"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toStartOf="@+id/text_remaining_seconds_label"
+                    app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+
+                <TextView
+                    android:id="@+id/text_remaining_seconds_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Second"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+
+                <TextView
+                    android:id="@+id/text_remaining_hours_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="08"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_hours_label"
+                    app:layout_constraintStart_toStartOf="@+id/text_remaining_hours_label"
+                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_hours_label" />
+
+                <TextView
+                    android:id="@+id/text_remaining_minutes_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_minutes_label"
+                    app:layout_constraintStart_toStartOf="@+id/text_remaining_minutes_label"
+                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_minutes_label" />
+
+                <TextView
+                    android:id="@+id/text_remaining_seconds_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="47"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
+                    app:layout_constraintStart_toStartOf="@+id/text_remaining_seconds_label"
+                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_seconds_label" />
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?android:attr/listDivider"
+                    android:backgroundTint="@color/primaryDarkColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_field" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="al raqi unversity hospital"
+                    android:textColor="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_appointment"
+                    app:layout_constraintEnd_toStartOf="@+id/textView13"
+                    app:layout_constraintStart_toEndOf="@+id/image_blood_bank_appointment"
+                    app:layout_constraintTop_toTopOf="@+id/image_blood_bank_appointment" />
+
+                <ImageView
+                    android:id="@+id/image_blood_bank_appointment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
+                    app:layout_constraintTop_toBottomOf="@+id/divider3"
+                    app:srcCompat="@drawable/ic_local_hospital" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Khartoum"
+                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
+                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Monday, 5 December 2022"
+                    app:layout_constraintEnd_toStartOf="@+id/divider4"
+                    app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
+                    app:layout_constraintTop_toBottomOf="@+id/image_blood_bank_appointment" />
+
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="2dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="-8dp"
+                    android:background="?android:attr/listDivider"
+                    android:backgroundTint="@color/primaryDarkColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="03:00 PM"
+                    app:layout_constraintStart_toEndOf="@+id/divider4"
+                    app:layout_constraintTop_toTopOf="@+id/textView14" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView15"
+                    app:layout_constraintTop_toTopOf="@+id/textView14"
+                    app:srcCompat="@drawable/ic_qr_code" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verify"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@android:string/cancel"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/button4" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/button5"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                    app:layout_constraintStart_toEndOf="@+id/button5"
+                    app:layout_constraintTop_toTopOf="@+id/button5"
+                    app:srcCompat="@drawable/ic_map" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
