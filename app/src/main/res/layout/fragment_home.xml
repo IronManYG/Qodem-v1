@@ -8,16 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
-        <Button
-            android:id="@+id/sign_out_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="sign out"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_donation_campaigns"
             android:layout_width="0dp"
@@ -32,12 +22,12 @@
             android:id="@+id/button_find_donors"
             android:layout_width="85dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="24dp"
             android:text="@string/home_find_donors"
             android:textSize="10sp"
             app:icon="@drawable/ic_search"
             app:iconGravity="top"
-            app:layout_constraintBottom_toTopOf="@+id/sign_out_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_add_donor"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
@@ -106,7 +96,7 @@
                 android:id="@+id/layout_no_appointment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <Button
                     android:id="@+id/button_book_an_appointment"
@@ -136,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="8dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/text_appointment_info"
@@ -160,18 +150,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/text_remaining_days_field"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_days_label"
-                    app:layout_constraintHorizontal_bias="0.437"
-                    app:layout_constraintStart_toStartOf="@+id/text_remaining_days_label"
-                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_label" />
-
-                <TextView
                     android:id="@+id/text_remaining_hours_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -186,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="Minute"
+                    android:text="@string/remaining_minutes"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toStartOf="@+id/text_remaining_seconds_label"
                     app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
@@ -195,10 +173,22 @@
                     android:id="@+id/text_remaining_seconds_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Second"
+                    android:text="@string/remaining_seconds"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+
+                <TextView
+                    android:id="@+id/text_remaining_days_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_days_label"
+                    app:layout_constraintHorizontal_bias="0.437"
+                    app:layout_constraintStart_toStartOf="@+id/text_remaining_days_label"
+                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_label" />
 
                 <TextView
                     android:id="@+id/text_remaining_hours_field"
@@ -246,19 +236,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_field" />
 
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="al raqi unversity hospital"
-                    android:textColor="@color/primaryColor"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_appointment"
-                    app:layout_constraintEnd_toStartOf="@+id/textView13"
-                    app:layout_constraintStart_toEndOf="@+id/image_blood_bank_appointment"
-                    app:layout_constraintTop_toTopOf="@+id/image_blood_bank_appointment" />
-
                 <ImageView
                     android:id="@+id/image_blood_bank_appointment"
                     android:layout_width="wrap_content"
@@ -269,16 +246,29 @@
                     app:srcCompat="@drawable/ic_local_hospital" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/text_appointment_place"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="al raqi unversity hospital"
+                    android:textColor="@color/primaryColor"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_appointment"
+                    app:layout_constraintEnd_toStartOf="@+id/text_appointment_city"
+                    app:layout_constraintStart_toEndOf="@+id/image_blood_bank_appointment"
+                    app:layout_constraintTop_toTopOf="@+id/image_blood_bank_appointment" />
+
+                <TextView
+                    android:id="@+id/text_appointment_city"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:text="Khartoum"
                     app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
-                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+                    app:layout_constraintTop_toTopOf="@+id/text_appointment_place" />
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/text_appointment_date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -296,60 +286,60 @@
                     android:layout_marginBottom="-8dp"
                     android:background="?android:attr/listDivider"
                     android:backgroundTint="@color/primaryDarkColor"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_appointment_date"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                    app:layout_constraintTop_toBottomOf="@+id/text_appointment_place" />
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/text_appointment_time"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="03:00 PM"
                     app:layout_constraintStart_toEndOf="@+id/divider4"
-                    app:layout_constraintTop_toTopOf="@+id/textView14" />
+                    app:layout_constraintTop_toTopOf="@+id/text_appointment_date" />
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/text_appointment_qr"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView15"
-                    app:layout_constraintTop_toTopOf="@+id/textView14"
+                    app:layout_constraintStart_toEndOf="@+id/text_appointment_time"
+                    app:layout_constraintTop_toTopOf="@+id/text_appointment_date"
                     app:srcCompat="@drawable/ic_qr_code" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/button_verify_appointment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Verify"
+                    android:text="@string/verify_appointment"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/button_cancel_appointment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@android:string/cancel"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button4" />
+                    app:layout_constraintStart_toEndOf="@+id/button_verify_appointment" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/image_appointment_directions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/button5"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
-                    app:layout_constraintStart_toEndOf="@+id/button5"
-                    app:layout_constraintTop_toTopOf="@+id/button5"
+                    app:layout_constraintBottom_toBottomOf="@+id/button_cancel_appointment"
+                    app:layout_constraintEnd_toStartOf="@+id/text_appointment_qr"
+                    app:layout_constraintStart_toEndOf="@+id/button_cancel_appointment"
+                    app:layout_constraintTop_toTopOf="@+id/button_cancel_appointment"
                     app:srcCompat="@drawable/ic_map" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

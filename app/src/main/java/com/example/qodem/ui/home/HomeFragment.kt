@@ -45,8 +45,6 @@ class HomeFragment : Fragment() {
         //d
         setupRecyclerView()
 
-        binding.signOutButton.setOnClickListener { onClick(binding.signOutButton) }
-
 //        subscribeObservers()
 
         return binding.root
@@ -57,17 +55,6 @@ class HomeFragment : Fragment() {
         viewModel.bloodBanksList.observe(viewLifecycleOwner,{ bloodBanks ->
             bloodBankAdapter.bloodBanks = bloodBanks
         })
-    }
-
-    private fun onClick(v: View) {
-        if (v.id == R.id.sign_out_button) {
-            AuthUI.getInstance()
-                .signOut(requireContext())
-                .addOnCompleteListener { // user is now signed out
-                    startActivity(Intent(requireContext(), AuthenticationActivity::class.java))
-                    activity?.finish()
-                }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {

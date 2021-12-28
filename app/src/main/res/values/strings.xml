@@ -17,4 +17,10 @@
     <string name="remaining_days">Day</string>
     <string name="remaining_hours">Hours</string>
     <string name="appointment_info">Appointment info</string>
+    <string name="sign_out">sign out</string>
+    <string name="remaining_minutes">Minutes</string>
+    <string name="remaining_seconds">Second</string>
+    <string name="verify_appointment">Verify</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
