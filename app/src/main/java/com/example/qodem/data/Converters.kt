@@ -1,10 +1,12 @@
-package com.example.qodem.data.bloodbanks.local
+package com.example.qodem.data
 
 import androidx.room.TypeConverter
 import com.example.qodem.model.Coordinates
+import com.example.qodem.model.Donation
 import com.example.qodem.model.WorkingDays
 import com.example.qodem.model.WorkingHours
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class Converters {
 
@@ -36,5 +38,25 @@ class Converters {
     @TypeConverter
     fun toCoordinates(coordinates: String): Coordinates? {
         return Gson().fromJson(coordinates,Coordinates::class.java)
+    }
+
+//    @TypeConverter
+//    fun fromDonation(donation: Donation): String? {
+//        return Gson().toJson(donation)
+//    }
+//
+//    @TypeConverter
+//    fun toDonation(donation: String): Donation? {
+//        return Gson().fromJson(donation,Donation::class.java))
+//    }
+
+    @TypeConverter
+    fun fromDonation(donations: List<Donation?>): String {
+      return Gson().toJson(donations)
+    }
+
+    @TypeConverter
+    fun toDonation(donation: String): List<Donation?> {
+        return Gson().fromJson(donation,Array<Donation>::class.java).toList()
     }
 }

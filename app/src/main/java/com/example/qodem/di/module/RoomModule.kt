@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.qodem.data.bloodbanks.local.BloodBankDao
 import com.example.qodem.data.bloodbanks.local.BloodBankDatabase
+import com.example.qodem.data.userinfo.local.UserDao
+import com.example.qodem.data.userinfo.local.UserDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +33,23 @@ object RoomModule {
     @Provides
     fun provideBloodBankDAO(bloodBankDatabase: BloodBankDatabase): BloodBankDao {
         return bloodBankDatabase.bloodBankDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDb(@ApplicationContext context: Context): UserDatabase {
+        return Room
+            .databaseBuilder(
+                context,
+                UserDatabase::class.java,
+                UserDatabase.DATABASE_NAME,)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDAO(userDatabase: UserDatabase): UserDao {
+        return userDatabase.userDao()
     }
 }

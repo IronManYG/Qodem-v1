@@ -1,10 +1,13 @@
 package com.example.qodem.di.module
 
 import com.example.qodem.data.bloodbanks.local.BloodBankDao
-import com.example.qodem.data.bloodbanks.local.CacheMapper
+import com.example.qodem.data.bloodbanks.local.BloodBankCacheMapper
 import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
-import com.example.qodem.data.bloodbanks.remote.NetworkMapper
+import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
+import com.example.qodem.data.userinfo.local.UserCacheMapper
+import com.example.qodem.data.userinfo.local.UserDao
+import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,12 +20,21 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMainRepository(
+    fun provideBloodBankRepository(
         bloodBanksDao: BloodBankDao,
         retrofit: BloodBanksRetrofit,
-        cacheMapper: CacheMapper,
-        networkMapper: NetworkMapper
+        bloodBankCacheMapper: BloodBankCacheMapper,
+        bloodBankNetworkMapper: BloodBankNetworkMapper
     ): BloodBankRepository {
-        return BloodBankRepository(bloodBanksDao, retrofit, cacheMapper, networkMapper)
+        return BloodBankRepository(bloodBanksDao, retrofit, bloodBankCacheMapper, bloodBankNetworkMapper)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(
+        userDao: UserDao,
+        userMapper: UserCacheMapper
+    ): UserInfoRepository {
+        return UserInfoRepository(userDao,userMapper)
     }
 }

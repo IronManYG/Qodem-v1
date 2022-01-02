@@ -6,7 +6,7 @@ import com.example.qodem.utils.EntityMapper
 import com.google.android.gms.maps.model.LatLng
 import javax.inject.Inject
 
-class NetworkMapper
+class BloodBankNetworkMapper
 @Inject
 constructor():
     EntityMapper<BloodBankNetworkEntity, BloodBank> {
