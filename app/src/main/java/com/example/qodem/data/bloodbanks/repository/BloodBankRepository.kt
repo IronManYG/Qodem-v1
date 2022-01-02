@@ -1,18 +1,17 @@
-package com.example.qodem.data.repository
+package com.example.qodem.data.bloodbanks.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.example.qodem.data.local.BloodBankDao
-import com.example.qodem.data.local.CacheMapper
-import com.example.qodem.data.remote.BloodBanksRetrofit
-import com.example.qodem.data.remote.NetworkMapper
+import com.example.qodem.data.bloodbanks.local.BloodBankDao
+import com.example.qodem.data.bloodbanks.local.CacheMapper
+import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
+import com.example.qodem.data.bloodbanks.remote.NetworkMapper
 import com.example.qodem.model.BloodBank
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class MainRepository
+class BloodBankRepository
 constructor(
     private val bloodBankDao: BloodBankDao,
     private val bloodBanksRetrofit: BloodBanksRetrofit,

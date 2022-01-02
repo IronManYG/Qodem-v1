@@ -2,8 +2,8 @@ package com.example.qodem.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.example.qodem.data.local.BloodBankDao
-import com.example.qodem.data.local.BloodBankDatabase
+import com.example.qodem.data.bloodbanks.local.BloodBankDao
+import com.example.qodem.data.bloodbanks.local.BloodBankDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

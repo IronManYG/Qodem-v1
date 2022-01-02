@@ -4,9 +4,8 @@ import android.content.Context
 import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
-import androidx.work.Data
 import androidx.work.WorkerParameters
-import com.example.qodem.data.repository.MainRepository
+import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import retrofit2.HttpException
@@ -16,7 +15,7 @@ class RefreshDataWorker
 @AssistedInject
 constructor(@Assisted appContext: Context,
             @Assisted params: WorkerParameters,
-            private val mainRepository: MainRepository,
+            private val bloodBankRepository: BloodBankRepository,
 ): CoroutineWorker(appContext, params) {
 
     companion object {
@@ -26,7 +25,7 @@ constructor(@Assisted appContext: Context,
     override suspend fun doWork(): Result {
         return try {
             Log.d(WORK_NAME, "workStart,doWork")
-            mainRepository.getBloodBanks()
+            bloodBankRepository.getBloodBanks()
             Log.d(WORK_NAME, "getBloodBanks")
             Result.success()
         } catch (e: HttpException) {

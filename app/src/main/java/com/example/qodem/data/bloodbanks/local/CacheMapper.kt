@@ -1,4 +1,4 @@
-package com.example.qodem.data.local
+package com.example.qodem.data.bloodbanks.local
 
 import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Coordinates

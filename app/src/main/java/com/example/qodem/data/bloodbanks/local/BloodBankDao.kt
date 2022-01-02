@@ -1,4 +1,4 @@
-package com.example.qodem.data.local
+package com.example.qodem.data.bloodbanks.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

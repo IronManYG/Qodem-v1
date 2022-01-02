@@ -1,6 +1,6 @@
 package com.example.qodem.di.module
 
-import com.example.qodem.data.remote.BloodBanksRetrofit
+import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

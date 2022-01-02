@@ -1,4 +1,4 @@
-package com.example.qodem.data.remote
+package com.example.qodem.data.bloodbanks.remote
 
 import com.example.qodem.model.Coordinates
 import com.example.qodem.model.WorkingDays

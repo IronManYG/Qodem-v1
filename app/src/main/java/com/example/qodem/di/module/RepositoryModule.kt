@@ -1,10 +1,10 @@
 package com.example.qodem.di.module
 
-import com.example.qodem.data.local.BloodBankDao
-import com.example.qodem.data.local.CacheMapper
-import com.example.qodem.data.remote.BloodBanksRetrofit
-import com.example.qodem.data.remote.NetworkMapper
-import com.example.qodem.data.repository.MainRepository
+import com.example.qodem.data.bloodbanks.local.BloodBankDao
+import com.example.qodem.data.bloodbanks.local.CacheMapper
+import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
+import com.example.qodem.data.bloodbanks.remote.NetworkMapper
+import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +22,7 @@ object RepositoryModule {
         retrofit: BloodBanksRetrofit,
         cacheMapper: CacheMapper,
         networkMapper: NetworkMapper
-    ): MainRepository {
-        return MainRepository(bloodBanksDao, retrofit, cacheMapper, networkMapper)
+    ): BloodBankRepository {
+        return BloodBankRepository(bloodBanksDao, retrofit, cacheMapper, networkMapper)
     }
 }

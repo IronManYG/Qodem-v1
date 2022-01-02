@@ -1,4 +1,4 @@
-package com.example.qodem.data.remote
+package com.example.qodem.data.bloodbanks.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
