@@ -7,6 +7,8 @@ import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
 import com.example.qodem.data.userinfo.local.UserCacheMapper
 import com.example.qodem.data.userinfo.local.UserDao
+import com.example.qodem.data.userinfo.remote.UserFirestore
+import com.example.qodem.data.userinfo.remote.UserNetworkMapper
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import dagger.Module
 import dagger.Provides
@@ -33,8 +35,10 @@ object RepositoryModule {
     @Provides
     fun provideUserRepository(
         userDao: UserDao,
-        userMapper: UserCacheMapper
+        userCacheMapper: UserCacheMapper,
+        userFirestore: UserFirestore,
+        userNetworkMapper: UserNetworkMapper
     ): UserInfoRepository {
-        return UserInfoRepository(userDao,userMapper)
+        return UserInfoRepository(userDao,userFirestore,userCacheMapper,userNetworkMapper)
     }
 }

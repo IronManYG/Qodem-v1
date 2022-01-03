@@ -9,9 +9,9 @@ import androidx.room.Query
 @Dao
 interface UserDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(userEntity: UserCacheEntity)
-
     @Query("SELECT * FROM user")
-    fun get(): LiveData<UserCacheEntity>
+    fun getUserInfo(): LiveData<UserCacheEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveUserInfo(userEntity: UserCacheEntity)
 }

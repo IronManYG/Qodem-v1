@@ -128,6 +128,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     // FirebaseUI auth
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+    // Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.0'
 
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:$version_work"
