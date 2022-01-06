@@ -15,7 +15,14 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity(){
 
     companion object {
@@ -23,7 +30,7 @@ class AuthenticationActivity : AppCompatActivity(){
     }
 
     // Get a reference to the ViewModel scoped to this Activity.
-    private val viewModel by viewModels<AuthenticationViewModel>()
+    private val viewModel : AuthenticationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +49,21 @@ class AuthenticationActivity : AppCompatActivity(){
         viewModel.authenticationState.observe(this, Observer { authenticationState ->
             when (authenticationState) {
                 AuthenticationViewModel.AuthenticationState.AUTHENTICATED -> {
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.getUser("966538517374")
+                    }
+                    viewModel.userInfoState.observe(this, Observer{
+                        when (it) {
+                            true -> {
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            false -> {
+                                Log.e(TAG, "user not founded")
+                            }
+                        }
+                    })
                 }
                 else -> Log.e(
                     TAG,

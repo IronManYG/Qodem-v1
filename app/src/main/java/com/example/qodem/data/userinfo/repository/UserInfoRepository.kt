@@ -1,10 +1,13 @@
 package com.example.qodem.data.userinfo.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.example.qodem.data.userinfo.local.UserCacheMapper
 import com.example.qodem.data.userinfo.local.UserDao
 import com.example.qodem.data.userinfo.remote.UserFirestore
+import com.example.qodem.data.userinfo.remote.UserNetworkEntity
 import com.example.qodem.data.userinfo.remote.UserNetworkMapper
 import com.example.qodem.model.User
 import kotlinx.coroutines.Dispatchers
@@ -23,12 +26,40 @@ constructor(
         userCacheMapper.mapFromEntity(it)
     }
 
+    var userInfoFound: Boolean = false
+
+    private var _errorResultMessage: MutableLiveData<String> = MutableLiveData<String>()
+
+    val errorResultMessage: LiveData<String>
+        get() = _errorResultMessage
+
     suspend fun getUserInfo(phoneNumber: String) {
         withContext(Dispatchers.IO){
-            val networkUser = userFirestore.getUserInfo(phoneNumber) as Result.Success
-            val userInfo = userNetworkMapper.mapFromEntity(networkUser.data)
-            userDao.saveUserInfo(userCacheMapper.mapToEntity(userInfo))
+            val networkUser = userFirestore.getUserInfo(phoneNumber)
+            Log.d("UserInfoRepository", "Start")
+            when(networkUser) {
+                is Result.Success -> {
+                    val userInfo = userNetworkMapper.mapFromEntity(networkUser.data)
+                    userDao.saveUserInfo(userCacheMapper.mapToEntity(userInfo))
+                    userInfoFound = true
+                    Log.e("UserInfoRepository", "User found!")
+                }
+                is Result.Error -> {
+                    val message = networkUser.message
+                    if (message == "User not found!"){
+                        _errorResultMessage.postValue(message!!)
+                        Log.e("UserInfoRepository", "User not found")
+                        userInfoFound = false
+                    } else {
+                        Log.e("UserInfoRepository", message!!)
+                    }
+                }
+            }
         }
+    }
+
+    suspend fun saveUserInfo(userNetworkEntity: UserNetworkEntity) {
+        userFirestore.saveUserInfo(userNetworkEntity)
     }
 
 }

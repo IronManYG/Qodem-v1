@@ -35,8 +35,8 @@ object RepositoryModule {
     @Provides
     fun provideUserRepository(
         userDao: UserDao,
-        userCacheMapper: UserCacheMapper,
         userFirestore: UserFirestore,
+        userCacheMapper: UserCacheMapper,
         userNetworkMapper: UserNetworkMapper
     ): UserInfoRepository {
         return UserInfoRepository(userDao,userFirestore,userCacheMapper,userNetworkMapper)
