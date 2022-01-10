@@ -7,8 +7,10 @@ import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.NavDeepLinkBuilder
 import com.example.qodem.ui.MainActivity
 import com.example.qodem.R
+import com.example.qodem.ui.signup.SignUpActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -16,21 +18,18 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class AuthenticationActivity : AppCompatActivity(){
+class AuthenticationActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "AuthenticationActivity"
     }
 
     // Get a reference to the ViewModel scoped to this Activity.
-    private val viewModel : AuthenticationViewModel by viewModels()
+    private val viewModel: AuthenticationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,21 +48,35 @@ class AuthenticationActivity : AppCompatActivity(){
         viewModel.authenticationState.observe(this, Observer { authenticationState ->
             when (authenticationState) {
                 AuthenticationViewModel.AuthenticationState.AUTHENTICATED -> {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.getUser("966538517374")
-                    }
-                    viewModel.userInfoState.observe(this, Observer{
-                        when (it) {
-                            true -> {
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
-                            false -> {
-                                Log.e(TAG, "user not founded")
-                            }
+                    CoroutineScope(Dispatchers.Main).launch {
+                        withContext(Dispatchers.Main) {
+                            Log.e(TAG, "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} ")
+                            val userPhoneNumber = viewModel.userPhoneNumber.value.toString()
+                            viewModel.getUser(userPhoneNumber)
+                            viewModel.userInfoState.observe(this@AuthenticationActivity, Observer {
+                                when (it) {
+                                    true -> {
+                                        val intent = Intent(
+                                            this@AuthenticationActivity,
+                                            MainActivity::class.java
+                                        )
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    false -> {
+                                        val intent = Intent(
+                                            this@AuthenticationActivity,
+                                            SignUpActivity::class.java
+                                        )
+                                        startActivity(intent)
+                                        finish()
+
+                                        Log.e(TAG, "user not founded")
+                                    }
+                                }
+                            })
                         }
-                    })
+                    }
                 }
                 else -> Log.e(
                     TAG,
@@ -77,7 +90,7 @@ class AuthenticationActivity : AppCompatActivity(){
     private fun startSignIn() {
         // Give users the option to sign in / register with their Phone.
         val providers = arrayListOf(
-            AuthUI.IdpConfig.PhoneBuilder().setDefaultNumber("sa", "538517374").build()
+            AuthUI.IdpConfig.PhoneBuilder().setDefaultCountryIso("sa").build()
         )
 
         val signInIntent = AuthUI.getInstance()
@@ -111,15 +124,15 @@ class AuthenticationActivity : AppCompatActivity(){
             // Sign in failed
             if (response == null) {
                 // User pressed back button
-                 showSnackbar(R.string.sign_in_cancelled)
+                showSnackbar(R.string.sign_in_cancelled)
                 return
             }
             if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
                 showSnackbar(R.string.no_internet_connection)
                 return
             }
-             showSnackbar(R.string.unknown_error)
-             Log.e(TAG, "Sign-in error: ", response.error)
+            showSnackbar(R.string.unknown_error)
+            Log.e(TAG, "Sign-in error: ", response.error)
 
         }
     }
@@ -128,7 +141,8 @@ class AuthenticationActivity : AppCompatActivity(){
         Snackbar.make(
             findViewById(R.id.authenticationLayout),
             stringId,
-            Snackbar.LENGTH_SHORT)
+            Snackbar.LENGTH_SHORT
+        )
             .show()
     }
 

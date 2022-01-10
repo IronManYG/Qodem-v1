@@ -14,7 +14,6 @@ class UserFirestore {
     private val usersCollectionRef = Firebase.firestore.collection("users")
 
     suspend fun getUserInfo(phoneNumber: String) = withContext(Dispatchers.IO) {
-        Log.d("UserFirestore", "Start")
         try {
             lateinit var userInfo: UserNetworkEntity
 

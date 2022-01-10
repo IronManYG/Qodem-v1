@@ -26,7 +26,10 @@ constructor(
         userCacheMapper.mapFromEntity(it)
     }
 
-    var userInfoFound: Boolean = false
+    private var _userInfoFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    val userInfoFound: LiveData<Boolean>
+        get() = _userInfoFound
 
     private var _errorResultMessage: MutableLiveData<String> = MutableLiveData<String>()
 
@@ -36,20 +39,20 @@ constructor(
     suspend fun getUserInfo(phoneNumber: String) {
         withContext(Dispatchers.IO){
             val networkUser = userFirestore.getUserInfo(phoneNumber)
-            Log.d("UserInfoRepository", "Start")
+
             when(networkUser) {
                 is Result.Success -> {
                     val userInfo = userNetworkMapper.mapFromEntity(networkUser.data)
                     userDao.saveUserInfo(userCacheMapper.mapToEntity(userInfo))
-                    userInfoFound = true
-                    Log.e("UserInfoRepository", "User found!")
+                    _userInfoFound.postValue(true)
+                    Log.d("UserInfoRepository", "User found!")
                 }
                 is Result.Error -> {
                     val message = networkUser.message
                     if (message == "User not found!"){
                         _errorResultMessage.postValue(message!!)
                         Log.e("UserInfoRepository", "User not found")
-                        userInfoFound = false
+                        _userInfoFound.postValue(false)
                     } else {
                         Log.e("UserInfoRepository", message!!)
                     }
