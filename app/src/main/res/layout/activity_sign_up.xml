@@ -17,9 +17,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:hint="First Name"
-            app:endIconMode="clear_text"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +26,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_first_name_field"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -36,9 +36,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:hint="Last Name"
             app:endIconMode="clear_text"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_first_name_label">
@@ -55,17 +55,20 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:hint="Data Of Birth"
             app:endIconMode="clear_text"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_last_name_label">
+            app:layout_constraintTop_toBottomOf="@+id/text_last_name_label"
+            app:startIconDrawable="@drawable/ic_menu_calendar">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_data_of_birth_field"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:inputType="date" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,9 +77,9 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:hint="Blood Type"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toStartOf="@+id/menu_gender"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +98,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Gender"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/menu_blood_type"
@@ -112,8 +116,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:hint="City"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menu_blood_type">
@@ -126,32 +130,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_id_number_label"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="ID Number"
-            app:endIconMode="clear_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menu_id_type">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_id_number_field"
-                android:enabled="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/menu_id_type"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:hint="ID Type"
+            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menu_city">
@@ -163,6 +147,45 @@
                 android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_id_number_label"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ID Number"
+            app:endIconMode="clear_text"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menu_id_type">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_id_number_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button_cancel_sign_up"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:text="@android:string/cancel"
+            app:layout_constraintEnd_toStartOf="@+id/button_sign_up"
+            app:layout_constraintTop_toBottomOf="@+id/text_id_number_label" />
+
+        <Button
+            android:id="@+id/button_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_cancel_sign_up" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
