@@ -37,7 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Last Name"
-            app:endIconMode="clear_text"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,12 +45,13 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_Last_name_field"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_data_of_birth_label"
+            android:id="@+id/text_date_of_birth_label"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             app:startIconDrawable="@drawable/ic_menu_calendar">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_data_of_birth_field"
+                android:id="@+id/edit_text_date_of_birth_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="false"
@@ -83,9 +83,10 @@
             app:layout_constraintEnd_toStartOf="@+id/menu_gender"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_data_of_birth_label">
+            app:layout_constraintTop_toBottomOf="@+id/text_date_of_birth_label">
 
             <AutoCompleteTextView
+                android:id="@+id/menu_blood_type_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none" />
@@ -105,6 +106,7 @@
             app:layout_constraintTop_toTopOf="@+id/menu_blood_type">
 
             <AutoCompleteTextView
+                android:id="@+id/menu_gender_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none" />
@@ -123,6 +125,7 @@
             app:layout_constraintTop_toBottomOf="@+id/menu_blood_type">
 
             <AutoCompleteTextView
+                android:id="@+id/menu_city_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none" />

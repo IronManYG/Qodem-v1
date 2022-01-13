@@ -68,7 +68,7 @@ class AuthenticationActivity : AppCompatActivity() {
                                             this@AuthenticationActivity,
                                             SignUpActivity::class.java
                                         )
-                                        intent.putExtra("USER_PHONENUMBER",userPhoneNumber)
+                                        intent.putExtra("USER_PHONE_NUMBER",userPhoneNumber)
                                         startActivity(intent)
                                         finish()
 
