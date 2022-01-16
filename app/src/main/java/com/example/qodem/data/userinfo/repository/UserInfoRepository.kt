@@ -31,10 +31,22 @@ constructor(
     val userInfoFound: LiveData<Boolean>
         get() = _userInfoFound
 
-    private var _errorResultMessage: MutableLiveData<String> = MutableLiveData<String>()
+    private var _userInfoSaved: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
-    val errorResultMessage: LiveData<String>
+    val userInfoSaved: LiveData<Boolean>
+        get() = _userInfoSaved
+
+    private var _errorResultMessage: MutableLiveData<String?> = MutableLiveData<String?>()
+
+    val errorResultMessage: LiveData<String?>
         get() = _errorResultMessage
+
+    private var _saveErrorMessage: MutableLiveData<String?> = MutableLiveData<String?>()
+
+    val saveErrorMessage: LiveData<String?>
+        get() = _saveErrorMessage
+
+
 
     suspend fun getUserInfo(phoneNumber: String) {
         withContext(Dispatchers.IO){
@@ -50,7 +62,7 @@ constructor(
                 is Result.Error -> {
                     val message = networkUser.message
                     if (message == "User not found!"){
-                        _errorResultMessage.postValue(message!!)
+                        _errorResultMessage.postValue(message)
                         Log.e("UserInfoRepository", "User not found")
                         _userInfoFound.postValue(false)
                     } else {
@@ -62,7 +74,21 @@ constructor(
     }
 
     suspend fun saveUserInfo(userNetworkEntity: UserNetworkEntity) {
-        userFirestore.saveUserInfo(userNetworkEntity)
+        withContext(Dispatchers.IO) {
+            val saveResult = userFirestore.saveUserInfo(userNetworkEntity)
+            when (saveResult) {
+                is Result.Success -> {
+                    _userInfoSaved.postValue(true)
+                    Log.d("UserInfoRepository", "User Successful Saved!")
+                }
+                is Result.Error -> {
+                    val message = saveResult.message
+                    _saveErrorMessage.postValue(message)
+                    Log.d("UserInfoRepository", message!!)
+                    _userInfoSaved.postValue(false)
+                }
+            }
+        }
     }
 
 }

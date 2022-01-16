@@ -1,6 +1,7 @@
 package com.example.qodem.data.userinfo.remote
 
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -35,7 +36,16 @@ class UserFirestore {
     }
 
     suspend fun saveUserInfo(userNetworkEntity: UserNetworkEntity) = withContext(Dispatchers.IO) {
-        usersCollectionRef.add(userNetworkEntity).await()
-    }!!
+        try {
+            usersCollectionRef.add(userNetworkEntity).await()
+            return@withContext Result.Success("User Successful Saved")
+        } catch (e: Exception){
+            return@withContext Result.Error(e.localizedMessage)
+        }
+    }
+
+    suspend fun getAppointments(){}
+
+    suspend fun saveAppointment(){}
 
 }

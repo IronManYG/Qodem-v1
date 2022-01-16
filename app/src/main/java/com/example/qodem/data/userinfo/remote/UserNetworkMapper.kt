@@ -4,7 +4,8 @@ import com.example.qodem.model.User
 import com.example.qodem.utils.EntityMapper
 import javax.inject.Inject
 
-class UserNetworkMapper @Inject
+class UserNetworkMapper
+@Inject
 constructor() : EntityMapper<UserNetworkEntity, User> {
     override fun mapFromEntity(entity: UserNetworkEntity): User {
         return User(
