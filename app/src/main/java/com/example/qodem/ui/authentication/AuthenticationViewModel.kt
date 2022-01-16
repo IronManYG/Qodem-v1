@@ -24,7 +24,15 @@ constructor(
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
     }
 
-    val userInfoState: LiveData<Boolean> = userInfoRepository.userInfoFound
+    val userInfoGetState: LiveData<Boolean> = userInfoRepository.userInfoFound
+
+    val userInfoSaveState: LiveData<Boolean> = userInfoRepository.userInfoSaved
+
+    val errorResultMessage: LiveData<String?> = userInfoRepository.errorResultMessage
+
+    val saveErrorMessage: LiveData<String?> = userInfoRepository.saveErrorMessage
+
+
 
     private var _userPhoneNumber: MutableLiveData<String> = MutableLiveData<String>()
 

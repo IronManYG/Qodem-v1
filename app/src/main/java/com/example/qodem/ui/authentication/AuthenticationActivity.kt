@@ -3,13 +3,13 @@ package com.example.qodem.ui.authentication
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.navigation.NavDeepLinkBuilder
 import com.example.qodem.ui.MainActivity
 import com.example.qodem.R
+import com.example.qodem.databinding.ActivityAuthenticationBinding
 import com.example.qodem.ui.signup.SignUpActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -28,17 +28,19 @@ class AuthenticationActivity : AppCompatActivity() {
         const val TAG = "AuthenticationActivity"
     }
 
+    private lateinit var binding: ActivityAuthenticationBinding
+
     // Get a reference to the ViewModel scoped to this Activity.
     private val viewModel: AuthenticationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_authentication)
-
-        val authButton = findViewById<Button>(R.id.auth_button)
+        binding = ActivityAuthenticationBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         // : Implement the create account and sign in using FirebaseUI, use sign in using Phone.
-        authButton.setOnClickListener { startSignIn() }
+        binding.authButton.setOnClickListener { startSignIn() }
 
         // : If the user was authenticated, send him to MainActivity
 
@@ -53,7 +55,7 @@ class AuthenticationActivity : AppCompatActivity() {
                             Log.e(TAG, "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} ")
                             val userPhoneNumber = viewModel.userPhoneNumber.value.toString()
                             viewModel.getUser(userPhoneNumber)
-                            viewModel.userInfoState.observe(this@AuthenticationActivity, Observer {
+                            viewModel.userInfoGetState.observe(this@AuthenticationActivity, Observer {
                                 when (it) {
                                     true -> {
                                         val intent = Intent(
@@ -75,14 +77,17 @@ class AuthenticationActivity : AppCompatActivity() {
                                         Log.e(TAG, "user not founded")
                                     }
                                 }
+                                binding.progressBar3.visibility = View.GONE
+                                binding.authButton.visibility = View.VISIBLE
                             })
                         }
                     }
                 }
-                else -> Log.e(
-                    TAG,
-                    "Authentication state that doesn't require any UI change $authenticationState"
-                )
+                else ->{
+                    binding.progressBar3.visibility = View.GONE
+                    binding.authButton.visibility = View.VISIBLE
+                    Log.e(TAG,"Authentication state that doesn't require any UI change $authenticationState")
+                }
             }
         })
     }

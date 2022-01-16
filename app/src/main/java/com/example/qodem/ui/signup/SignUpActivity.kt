@@ -3,24 +3,26 @@ package com.example.qodem.ui.signup
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.qodem.R
+import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.data.userinfo.remote.UserNetworkEntity
 import com.example.qodem.databinding.ActivitySignUpBinding
+import com.example.qodem.ui.MainActivity
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.authentication.AuthenticationViewModel
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -168,9 +170,31 @@ class SignUpActivity : AppCompatActivity() {
             if (valuesValidToSignUp) {
                 // Sign up user
                 CoroutineScope(Dispatchers.Main).launch {
-                    viewModel.saveUserInfo(userInfo)
+                    withContext(Dispatchers.Main) {
+                        viewModel.saveUserInfo(userInfo)
+                        viewModel.userInfoSaveState.observe(this@SignUpActivity, Observer {
+                            when (it) {
+                                true -> {
+                                    val intent = Intent(
+                                        this@SignUpActivity,
+                                        MainActivity::class.java
+                                    )
+                                    startActivity(intent)
+                                    finish()
+                                    Log.e(TAG, "user Saved!")
+                                }
+                                false -> {
+                                    Toast.makeText(this@SignUpActivity, viewModel.saveErrorMessage.value, Toast.LENGTH_LONG).show()
+                                    Log.e(TAG, "user not Saved")
+                                }
+                            }
+                        })
+                    }
                 }
+            } else {
+                Toast.makeText(this, "Please enter all info", Toast.LENGTH_LONG).show()
             }
+
         }
 
     }
