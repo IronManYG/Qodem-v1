@@ -25,6 +25,7 @@ class UserFirestore {
             if (userInfoQuery.documents.isNotEmpty()) {
                 for (document in userInfoQuery.documents) {
                     userInfo = document.toObject<UserNetworkEntity>()!!
+                    userInfo.id = document.id
                 }
                 return@withContext Result.Success(userInfo)
             } else {
@@ -44,7 +45,9 @@ class UserFirestore {
         }
     }
 
-    suspend fun getAppointments(){}
+    suspend fun getAllDonations() {
+
+    }
 
     suspend fun saveAppointment(){}
 
