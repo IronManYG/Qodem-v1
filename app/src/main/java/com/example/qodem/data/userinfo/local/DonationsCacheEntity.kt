@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "Donations")
 class DonationsCacheEntity (
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
-    var id: Int,
+    var id: String,
 
     @ColumnInfo(name = "bloodBankID")
     var bloodBankID: String,

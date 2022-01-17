@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.qodem.ui.MainActivity
 import com.example.qodem.R
+import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.databinding.ActivityAuthenticationBinding
 import com.example.qodem.ui.signup.SignUpActivity
 import com.firebase.ui.auth.AuthUI
@@ -54,7 +55,7 @@ class AuthenticationActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main) {
                             Log.e(TAG, "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} ")
                             val userPhoneNumber = viewModel.userPhoneNumber.value.toString()
-                            viewModel.getUser(userPhoneNumber)
+                            viewModel.getUserInfo(userPhoneNumber)
                             viewModel.userInfoGetState.observe(this@AuthenticationActivity, Observer {
                                 when (it) {
                                     true -> {
@@ -80,6 +81,13 @@ class AuthenticationActivity : AppCompatActivity() {
                                 binding.progressBar3.visibility = View.GONE
                                 binding.authButton.visibility = View.VISIBLE
                             })
+                            // getting user donations for fire store if there is user info
+                            if (viewModel.userInfoGetState.value == true) {
+                                Log.d(TAG,"Start geting all donations")
+                                withContext(Dispatchers.IO) {
+                                    viewModel.getAllDonations()
+                                }
+                            }
                         }
                     }
                 }

@@ -5,8 +5,10 @@ import com.example.qodem.data.bloodbanks.local.BloodBankCacheMapper
 import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
 import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
+import com.example.qodem.data.userinfo.local.DonationsCacheMapper
 import com.example.qodem.data.userinfo.local.UserCacheMapper
 import com.example.qodem.data.userinfo.local.UserDao
+import com.example.qodem.data.userinfo.remote.DonationsNetworkMapper
 import com.example.qodem.data.userinfo.remote.UserFirestore
 import com.example.qodem.data.userinfo.remote.UserNetworkMapper
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
@@ -37,8 +39,10 @@ object RepositoryModule {
         userDao: UserDao,
         userFirestore: UserFirestore,
         userCacheMapper: UserCacheMapper,
-        userNetworkMapper: UserNetworkMapper
+        userNetworkMapper: UserNetworkMapper,
+        donationsCacheMapper: DonationsCacheMapper,
+        donationsNetworkMapper: DonationsNetworkMapper
     ): UserInfoRepository {
-        return UserInfoRepository(userDao,userFirestore,userCacheMapper,userNetworkMapper)
+        return UserInfoRepository(userDao,userFirestore,userCacheMapper,userNetworkMapper,donationsCacheMapper,donationsNetworkMapper)
     }
 }

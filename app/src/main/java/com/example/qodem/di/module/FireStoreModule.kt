@@ -1,5 +1,6 @@
 package com.example.qodem.di.module
 
+import com.example.qodem.data.userinfo.local.UserDao
 import com.example.qodem.data.userinfo.remote.UserFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

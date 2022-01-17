@@ -47,4 +47,8 @@ constructor() : EntityMapper<UserCacheEntity, User> {
         return entities.map {mapFromEntity(it)}
     }
 
+    fun mapToEntityList(entities: List<User>): List<UserCacheEntity>{
+        return entities.map {mapToEntity(it)}
+    }
+
 }

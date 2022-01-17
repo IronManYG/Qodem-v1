@@ -2,7 +2,7 @@ package com.example.qodem.data.userinfo.remote
 
 class DonationNetworkEntity (
 
-    var id: Int = -1,
+    var id: String = "",
 
     var bloodBankID: String = "",
 

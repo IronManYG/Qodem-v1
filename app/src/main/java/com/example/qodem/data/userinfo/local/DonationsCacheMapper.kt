@@ -35,4 +35,8 @@ constructor() : EntityMapper<DonationsCacheEntity, Donation> {
     fun mapFromEntityList(entities: List<DonationsCacheEntity>): List<Donation>{
         return entities.map {mapFromEntity(it)}
     }
+
+    fun mapToEntityList(entities: List<Donation>): List<DonationsCacheEntity>{
+        return entities.map {mapToEntity(it)}
+    }
 }

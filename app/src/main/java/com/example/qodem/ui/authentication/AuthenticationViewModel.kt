@@ -3,6 +3,7 @@ package com.example.qodem.ui.authentication
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
+import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.data.userinfo.remote.UserNetworkEntity
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import com.google.firebase.auth.PhoneAuthCredential
@@ -53,7 +54,7 @@ constructor(
         }
     }
 
-    suspend fun getUser(phoneNumber: String){
+    suspend fun getUserInfo(phoneNumber: String){
         if (phoneNumber != ""){
             userInfoRepository.getUserInfo(phoneNumber)
         }
@@ -61,6 +62,14 @@ constructor(
 
     suspend fun saveUserInfo(userNetworkEntity: UserNetworkEntity){
         userInfoRepository.saveUserInfo(userNetworkEntity)
+    }
+
+    suspend fun getAllDonations() {
+        userInfoRepository.getAllDonations()
+    }
+
+    suspend fun saveDonation(donationNetworkEntity: DonationNetworkEntity) {
+        userInfoRepository.saveDonation(donationNetworkEntity)
     }
 
 }

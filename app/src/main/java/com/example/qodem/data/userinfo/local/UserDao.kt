@@ -38,7 +38,7 @@ interface UserDao {
      * @param isAuthenticated the state of donation to be return.
      */
     @Query("SELECT * FROM donations WHERE authenticated = :isAuthenticated")
-    fun getDonations(isAuthenticated: Boolean): LiveData<List<DonationsCacheEntity>>
+    fun getAuthenticatedDonations(isAuthenticated: Boolean): LiveData<List<DonationsCacheEntity>>
 
     /**
      * Insert donations in the database. If the donations already exists, replace it.
@@ -46,7 +46,7 @@ interface UserDao {
      * @param donationsEntity are donations to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveDonations(donationsEntity: DonationsCacheEntity)
+    fun saveDonations(donationsEntity: List<DonationsCacheEntity>)
 
     /**
      * @return active or inactive donation in the database.
@@ -54,5 +54,5 @@ interface UserDao {
      * @param active the state of donation to be inserted.
      */
     @Query("SELECT *  FROM donations WHERE active = :isActive")
-    fun getDonation(isActive: Boolean): LiveData<DonationsCacheEntity>
+    fun getActiveDonation(isActive: Boolean): LiveData<DonationsCacheEntity>
 }
