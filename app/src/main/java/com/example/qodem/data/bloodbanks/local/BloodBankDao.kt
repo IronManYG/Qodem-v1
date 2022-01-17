@@ -9,9 +9,17 @@ import androidx.room.Query
 @Dao
 interface BloodBankDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(bloodBankEntity: BloodBankCacheEntity)
-
+    /**
+     * @return all blood banks.
+     */
     @Query("SELECT * FROM bloodBanks")
-    fun get(): LiveData<List<BloodBankCacheEntity>>
+    fun getBloodBanks(): LiveData<List<BloodBankCacheEntity>>
+
+    /**
+     * Insert a blood bank in the database. If the user info already exists, replace it.
+     *
+     * @param bloodBankEntity the blood bank to be inserted.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveBloodBank(bloodBankEntity: BloodBankCacheEntity)
 }

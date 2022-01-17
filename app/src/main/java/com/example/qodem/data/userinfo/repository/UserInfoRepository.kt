@@ -22,6 +22,11 @@ constructor(
     private val donationsCacheMapper: DonationsCacheMapper,
     private val donationsNetworkMapper: DonationsNetworkMapper
 ) {
+
+    companion object {
+        const val TAG = "UserInfoRepository"
+    }
+
     //
     val userInfo : LiveData<User> = Transformations.map(userDao.getUserInfo()){
         userCacheMapper.mapFromEntity(it)
@@ -68,16 +73,16 @@ constructor(
                     val userInfo = userNetworkMapper.mapFromEntity(networkUser.data)
                     userDao.saveUserInfo(userCacheMapper.mapToEntity(userInfo))
                     _userInfoFound.postValue(true)
-                    Log.d("UserInfoRepository", "User found!")
+                    Log.d(TAG, "User found!")
                 }
                 is Result.Error -> {
                     val message = networkUser.message
                     if (message == "User not found!"){
                         _errorResultMessage.postValue(message)
-                        Log.e("UserInfoRepository", "User not found")
+                        Log.e(TAG, "User not found")
                         _userInfoFound.postValue(false)
                     } else {
-                        Log.e("UserInfoRepository", message!!)
+                        Log.e(TAG, message!!)
                     }
                 }
             }
@@ -90,12 +95,12 @@ constructor(
             when (saveResult) {
                 is Result.Success -> {
                     _userInfoSaved.postValue(true)
-                    Log.d("UserInfoRepository", "User Successful Saved!")
+                    Log.d(TAG, "User Successful Saved!")
                 }
                 is Result.Error -> {
                     val message = saveResult.message
                     _saveErrorMessage.postValue(message)
-                    Log.d("UserInfoRepository", message!!)
+                    Log.d(TAG, message!!)
                     _userInfoSaved.postValue(false)
                 }
             }
@@ -107,20 +112,20 @@ constructor(
             val networkDonations = userFirestore.getAllDonations()
             when (networkDonations) {
                 is Result.Success -> {
-                    Log.d("UserInfoRepository", "Donation 1 id ${networkDonations.data[0].id}")
+                    Log.d(TAG, "Donation 1 id ${networkDonations.data[0].id}")
                     val donations = donationsNetworkMapper.mapFromEntityList(networkDonations.data)
                     userDao.saveDonations(donationsCacheMapper.mapToEntityList(donations))
                     _donationsFound.postValue(true)
-                    Log.d("UserInfoRepository", "Donations found!")
+                    Log.d(TAG, "Donations found!")
                 }
                 is Result.Error -> {
                     val message = networkDonations.message
                     if (message == "There is no donations") {
                         _errorResultMessage.postValue(message)
-                        Log.e("UserInfoRepository", "There is no donations")
+                        Log.e(TAG, "There is no donations")
                         _donationsFound.postValue(false)
                     } else {
-                        Log.e("UserInfoRepository", message!!)
+                        Log.e(TAG, message!!)
                     }
                 }
             }
@@ -133,12 +138,12 @@ constructor(
             when (saveResult) {
                 is Result.Success -> {
                     _donationSaved.postValue(true)
-                    Log.d("UserInfoRepository", "Donation Successful Saved!")
+                    Log.d(TAG, "Donation Successful Saved!")
                 }
                 is Result.Error -> {
                     val message = saveResult.message
                     _saveErrorMessage.postValue(message)
-                    Log.d("UserInfoRepository", message!!)
+                    Log.d(TAG, message!!)
                     _donationSaved.postValue(false)
                 }
             }
