@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentHomeBinding
@@ -44,6 +45,31 @@ class HomeFragment : Fragment() {
 
         //d
         setupRecyclerView()
+
+        viewModel.activeDonationFoundState.observe(viewLifecycleOwner,{
+            when (it) {
+                true -> {
+                    //
+                    binding.layoutProgressDonation.visibility = View.GONE
+                    binding.layoutAppointmentDetails.visibility = View.VISIBLE
+                }
+                false -> {
+                    //
+                    binding.layoutProgressDonation.visibility = View.GONE
+                    binding.layoutNoAppointment.visibility = View.VISIBLE
+                }
+            }
+        })
+
+//        viewModel.activeDonation.observe(viewLifecycleOwner,{ activeDonation ->
+//            if(activeDonation != null) {
+//                binding.layoutProgressDonation.visibility = View.GONE
+//                binding.layoutAppointmentDetails.visibility = View.VISIBLE
+//            } else {
+//                binding.layoutProgressDonation.visibility = View.GONE
+//                binding.layoutNoAppointment.visibility = View.VISIBLE
+//            }
+//        })
 
 //        subscribeObservers()
 

@@ -8,6 +8,7 @@ import com.example.qodem.data.userinfo.local.DonationsCacheMapper
 import com.example.qodem.data.userinfo.local.UserCacheMapper
 import com.example.qodem.data.userinfo.local.UserDao
 import com.example.qodem.data.userinfo.remote.*
+import com.example.qodem.model.Donation
 import com.example.qodem.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -32,6 +33,18 @@ constructor(
         userCacheMapper.mapFromEntity(it)
     }
 
+    val donations : LiveData<List<Donation>> = Transformations.map(userDao.getAllDonations()){
+        donationsCacheMapper.mapFromEntityList(it)
+    }
+
+    val authenticatedDonations : LiveData<List<Donation>> = Transformations.map(userDao.getAuthenticatedDonations(true)){
+        donationsCacheMapper.mapFromEntityList(it)
+    }
+
+    val activeDonation : LiveData<Donation> = Transformations.map(userDao.getActiveDonation(true)){
+        donationsCacheMapper.mapFromEntity(it)
+    }
+
     //
     private var _userInfoFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
@@ -48,6 +61,11 @@ constructor(
 
     val donationsFound: LiveData<Boolean>
         get() = _donationsFound
+
+    private var _activeDonationFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    val activeDonationFound: LiveData<Boolean>
+        get() = _activeDonationFound
 
     private var _donationSaved: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
@@ -82,6 +100,7 @@ constructor(
                         Log.e(TAG, "User not found")
                         _userInfoFound.postValue(false)
                     } else {
+                        _userInfoFound.postValue(false)
                         Log.e(TAG, message!!)
                     }
                 }
@@ -114,6 +133,14 @@ constructor(
                 is Result.Success -> {
                     Log.d(TAG, "Donation 1 id ${networkDonations.data[0].id}")
                     val donations = donationsNetworkMapper.mapFromEntityList(networkDonations.data)
+                    //
+                    _activeDonationFound.postValue(false)
+                    for (donation in donations){
+                        if (donation.active) {
+                            _activeDonationFound.postValue(true)
+                        }
+                    }
+                    //
                     userDao.saveDonations(donationsCacheMapper.mapToEntityList(donations))
                     _donationsFound.postValue(true)
                     Log.d(TAG, "Donations found!")
@@ -124,7 +151,10 @@ constructor(
                         _errorResultMessage.postValue(message)
                         Log.e(TAG, "There is no donations")
                         _donationsFound.postValue(false)
+                        _activeDonationFound.postValue(false)
                     } else {
+                        _donationsFound.postValue(false)
+                        _activeDonationFound.postValue(false)
                         Log.e(TAG, message!!)
                     }
                 }

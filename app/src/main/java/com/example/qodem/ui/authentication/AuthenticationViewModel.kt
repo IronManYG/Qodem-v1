@@ -21,20 +21,22 @@ constructor(
     private val savedStateHandle: SavedStateHandle
 ):  ViewModel() {
 
+    //
     enum class AuthenticationState {
         AUTHENTICATED, UNAUTHENTICATED, INVALID_AUTHENTICATION
     }
 
-    val userInfoGetState: LiveData<Boolean> = userInfoRepository.userInfoFound
+    //
+    val userInfoFoundState: LiveData<Boolean> = userInfoRepository.userInfoFound
 
     val userInfoSaveState: LiveData<Boolean> = userInfoRepository.userInfoSaved
 
+    //
     val errorResultMessage: LiveData<String?> = userInfoRepository.errorResultMessage
 
     val saveErrorMessage: LiveData<String?> = userInfoRepository.saveErrorMessage
 
-
-
+    //
     private var _userPhoneNumber: MutableLiveData<String> = MutableLiveData<String>()
 
     val userPhoneNumber: LiveData<String>
@@ -66,10 +68,6 @@ constructor(
 
     suspend fun getAllDonations() {
         userInfoRepository.getAllDonations()
-    }
-
-    suspend fun saveDonation(donationNetworkEntity: DonationNetworkEntity) {
-        userInfoRepository.saveDonation(donationNetworkEntity)
     }
 
 }

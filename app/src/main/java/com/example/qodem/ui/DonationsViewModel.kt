@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
+import com.example.qodem.model.Donation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
@@ -18,10 +19,19 @@ constructor(
     private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
-    val donationsGetState: LiveData<Boolean> = userInfoRepository.donationsFound
+    //
+    val donations: LiveData<List<Donation>> = userInfoRepository.donations
+
+    val authenticatedDonations : LiveData<List<Donation>> = userInfoRepository.authenticatedDonations
+
+    val activeDonation : LiveData<Donation> = userInfoRepository.activeDonation
+
+    //
+    val donationsFoundState: LiveData<Boolean> = userInfoRepository.donationsFound
 
     val donationSaveState: LiveData<Boolean> = userInfoRepository.donationSaved
 
+    //
     val errorResultMessage: LiveData<String?> = userInfoRepository.errorResultMessage
 
     val saveErrorMessage: LiveData<String?> = userInfoRepository.saveErrorMessage
