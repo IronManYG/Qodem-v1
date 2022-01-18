@@ -2,6 +2,7 @@ package com.example.qodem.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -11,11 +12,15 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentHomeBinding
+import com.example.qodem.model.BloodBank
+import com.example.qodem.model.Donation
 import com.example.qodem.ui.BloodBankAdapter
 import com.example.qodem.ui.authentication.AuthenticationActivity
+import com.example.qodem.ui.signup.SignUpActivity
 import com.firebase.ui.auth.AuthUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -25,7 +30,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    //d
+    //
     private lateinit var bloodBankAdapter: BloodBankAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,35 +48,8 @@ class HomeFragment : Fragment() {
                 R.layout.fragment_home, container, false
             )
 
-        //d
+        //
         setupRecyclerView()
-
-        viewModel.activeDonationFoundState.observe(viewLifecycleOwner,{
-            when (it) {
-                true -> {
-                    //
-                    binding.layoutProgressDonation.visibility = View.GONE
-                    binding.layoutAppointmentDetails.visibility = View.VISIBLE
-                }
-                false -> {
-                    //
-                    binding.layoutProgressDonation.visibility = View.GONE
-                    binding.layoutNoAppointment.visibility = View.VISIBLE
-                }
-            }
-        })
-
-//        viewModel.activeDonation.observe(viewLifecycleOwner,{ activeDonation ->
-//            if(activeDonation != null) {
-//                binding.layoutProgressDonation.visibility = View.GONE
-//                binding.layoutAppointmentDetails.visibility = View.VISIBLE
-//            } else {
-//                binding.layoutProgressDonation.visibility = View.GONE
-//                binding.layoutNoAppointment.visibility = View.VISIBLE
-//            }
-//        })
-
-//        subscribeObservers()
 
         return binding.root
     }
@@ -79,7 +57,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.bloodBanksList.observe(viewLifecycleOwner,{ bloodBanks ->
+            //
             bloodBankAdapter.bloodBanks = bloodBanks
+            //
+            updateAppointmentState(bloodBanks)
         })
     }
 
@@ -88,32 +69,64 @@ class HomeFragment : Fragment() {
         super.onCreateOptionsMenu(menu, menuInflater)
     }
 
-    // d
+    //
     private fun setupRecyclerView() = binding.recyclerViewDonationCampaigns.apply {
         bloodBankAdapter = BloodBankAdapter()
         adapter = bloodBankAdapter
         layoutManager = LinearLayoutManager(requireContext())
     }
 
-//    private fun subscribeObservers() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.dataState.collect { dataState ->
-//                when (dataState) {
-//                    is DataState.Success<List<BloodBank>> -> {
-//                        displayProgressBar(false)
-//                        bloodBankAdapter.bloodBanks = dataState.data
-//                    }
-//                    is DataState.Error -> {
-//                        displayProgressBar(false)
-//                        displayError(dataState.exception.message)
-//                    }
-//                    is DataState.Loading -> {
-//                        displayProgressBar(true)
-//                    }
-//                }
-//            }
-//        }
-//    }
+    private fun updateAppointmentState(bloodBanks: List<BloodBank>) {
+        //
+        viewModel.activeDonationFoundState.observe(viewLifecycleOwner,{
+            when (it) {
+                true -> {
+
+                    //
+                    viewModel.activeDonation.observe(viewLifecycleOwner,{ activeDonation ->
+
+                        //
+                        var activeDonationBloodBank: BloodBank? = null
+
+                        //
+                        for(bloodBank in bloodBanks) {
+                            if(bloodBank.id.toString() == activeDonation.bloodBankID) {
+                                activeDonationBloodBank = bloodBank
+                            }
+                        }
+
+                        //
+                        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                        Log.d("timeStamp 2", "${activeDonation.timeStamp}")
+                        calendar.time = Date(activeDonation.timeStamp)
+                        calendar.add(Calendar.MONTH, 1)
+                        val donationDate = "${calendar.get(Calendar.DAY_OF_MONTH)}/" +
+                                "${calendar.get(Calendar.MONTH)}/" +
+                                "${calendar.get(Calendar.YEAR)}"
+                        val donationTime = "${calendar.get(Calendar.HOUR)}:" +
+                                "${calendar.get(Calendar.MINUTE)}"
+                        //
+                        binding.textAppointmentPlace.text = activeDonationBloodBank!!.name_en
+                        binding.textAppointmentCity.text = activeDonationBloodBank.city
+                        binding.textAppointmentDate.text = donationDate
+                        binding.textAppointmentTime.text = donationTime
+
+
+                    })
+
+                    //
+                    binding.layoutProgressDonation.visibility = View.GONE
+                    binding.layoutAppointmentDetails.visibility = View.VISIBLE
+
+                }
+                false -> {
+                    //
+                    binding.layoutProgressDonation.visibility = View.GONE
+                    binding.layoutNoAppointment.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
 
     private fun displayError(message: String?) {
         if (message != null) {
