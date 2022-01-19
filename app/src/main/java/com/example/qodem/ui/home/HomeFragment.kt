@@ -17,6 +17,7 @@ import com.example.qodem.model.Donation
 import com.example.qodem.ui.BloodBankAdapter
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.signup.SignUpActivity
+import com.example.qodem.utils.CustomCountDownTimer
 import com.firebase.ui.auth.AuthUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,6 +26,10 @@ import java.util.*
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+
+    companion object {
+        const val TAG = "HomeFragment"
+    }
 
     private val viewModel: HomeViewModel by viewModels()
 
@@ -86,6 +91,10 @@ class HomeFragment : Fragment() {
                     viewModel.activeDonation.observe(viewLifecycleOwner,{ activeDonation ->
 
                         //
+                        val donationDateCountDownTimer = CustomCountDownTimer(activeDonation.timeStamp)
+                        donationDateCountDownTimer.start()
+
+                        //
                         var activeDonationBloodBank: BloodBank? = null
 
                         //
@@ -100,17 +109,37 @@ class HomeFragment : Fragment() {
                         Log.d("timeStamp 2", "${activeDonation.timeStamp}")
                         calendar.time = Date(activeDonation.timeStamp)
                         calendar.add(Calendar.MONTH, 1)
-                        val donationDate = "${calendar.get(Calendar.DAY_OF_MONTH)}/" +
-                                "${calendar.get(Calendar.MONTH)}/" +
+
+                        val dayOfWeekString = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH)
+
+                        val monthString = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH)
+
+                        val amPmString = calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH)
+
+                        val donationDate = "$dayOfWeekString, " +
+                                "${calendar.get(Calendar.DAY_OF_MONTH)} " +
+                                "$monthString " +
                                 "${calendar.get(Calendar.YEAR)}"
                         val donationTime = "${calendar.get(Calendar.HOUR)}:" +
-                                "${calendar.get(Calendar.MINUTE)}"
-                        //
+                                "${calendar.get(Calendar.MINUTE)}"+
+                                " $amPmString"
+                        // Publish & update Appointment info
                         binding.textAppointmentPlace.text = activeDonationBloodBank!!.name_en
                         binding.textAppointmentCity.text = activeDonationBloodBank.city
                         binding.textAppointmentDate.text = donationDate
                         binding.textAppointmentTime.text = donationTime
-
+                        donationDateCountDownTimer.countDownDays.observe(viewLifecycleOwner,{ remainingDays ->
+                            binding.textRemainingDaysField.text = remainingDays
+                        })
+                        donationDateCountDownTimer.countDownHours.observe(viewLifecycleOwner,{ remainingHours ->
+                            binding.textRemainingHoursField.text = remainingHours
+                        })
+                        donationDateCountDownTimer.countDownMinutes.observe(viewLifecycleOwner,{ remainingMinutes ->
+                            binding.textRemainingMinutesField.text = remainingMinutes
+                        })
+                        donationDateCountDownTimer.countDownSeconds.observe(viewLifecycleOwner,{ remainingSeconds ->
+                            binding.textRemainingSecondsField.text = remainingSeconds
+                        })
 
                     })
 
