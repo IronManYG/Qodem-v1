@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.qodem.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_preScreeningRequestFragment"
+            app:destination="@id/preScreeningRequestFragment" />
+    </fragment>
     <fragment
         android:id="@+id/locationFragment"
         android:name="com.example.qodem.ui.bloodbanklocation.LocationFragment"
@@ -20,4 +24,9 @@
         android:name="com.example.qodem.ui.community.CommunityFragment"
         android:label="community_fragment"
         tools:layout="@layout/community_fragment" />
+    <fragment
+        android:id="@+id/preScreeningRequestFragment"
+        android:name="com.example.qodem.ui.appointment.PreScreeningRequestFragment"
+        android:label="fragment_pre_screening_request"
+        tools:layout="@layout/fragment_pre_screening_request" />
 </navigation>

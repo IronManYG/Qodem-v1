@@ -9,7 +9,7 @@
     <string name="home_add_donor">Add Donor</string>
     <string name="home_snap_and_share"><![CDATA[snap & share]]></string>
     <string name="home_blood_journey">blood journey</string>
-    <string name="item_home" >Home</string>
+    <string name="item_home">Home</string>
     <string name="item_map">Map</string>
     <string name="item_Community">Community</string>
     <string name="button_book_an__appointment">book an appointment</string>
@@ -51,4 +51,7 @@
         <item>Passport</item>
         <item>National ID</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pre_screening_request_explain">These questions will help you to determine your eligibility for blood donation, and will save you time and effort, It won\'t take you more than 30 secs!</string>
 </resources>

@@ -35,6 +35,20 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.fragmentContainerView)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id) {
+                R.id.homeFragment, R.id.locationFragment, R.id.communityFragment -> {
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                }
+                else -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                    supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+                }
+            }
+        }
+
         bottomNavigationView(navController)
 
         setupDrawerView(navController)
