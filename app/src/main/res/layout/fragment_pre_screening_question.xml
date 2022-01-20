@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.appointment.PreScreeningQuestionFragment">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="To complete the booking process, you must answer the following questions"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_book_an_appointment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/text_pre_screening_qusetion_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pre_screening_qusetion_1"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_1_yes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/qusetion_answer_yes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_pre_screening_qusetion_1" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_1_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_1_yes" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/materialDivider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_1_no" />
+
+                <TextView
+                    android:id="@+id/text_pre_screening_qusetion_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pre_screening_qusetion_2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/materialDivider1" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_2_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_yes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_pre_screening_qusetion_2" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_2_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_2_yes" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/materialDivider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_2_no" />
+
+                <TextView
+                    android:id="@+id/text_pre_screening_qusetion_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pre_screening_qusetion_3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_2_no" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_3_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_yes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_pre_screening_qusetion_3" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_3_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_3_yes" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/materialDivider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_3_no"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/text_pre_screening_qusetion_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pre_screening_qusetion_4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_3_no" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_4_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_yes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_pre_screening_qusetion_4" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_4_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_4_yes" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/materialDivider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_4_no"
+                    tools:layout_editor_absoluteX="16dp" />
+
+                <TextView
+                    android:id="@+id/text_pre_screening_qusetion_5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pre_screening_qusetion_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_4_no" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_5_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_yes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_pre_screening_qusetion_5" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_5_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_5_yes" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/materialDivider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_5_no" />
+
+                <TextView
+                    android:id="@+id/text_pre_screening_qusetion_6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pre_screening_qusetion_6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_5_no" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_6_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_yes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_pre_screening_qusetion_6" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_6_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_6_yes" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/materialDivider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_6_no" />
+
+                <TextView
+                    android:id="@+id/text_pre_screening_qusetion_7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pre_screening_qusetion_7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/materialDivider6" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_7_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_yes"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_pre_screening_qusetion_7" />
+
+                <CheckBox
+                    android:id="@+id/checkBox_pre_screening_qusetion_7_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qusetion_answer_no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkBox_pre_screening_qusetion_7_yes" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button_book_an_appointment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/button_book_an__appointment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

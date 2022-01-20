@@ -28,5 +28,26 @@
         android:id="@+id/preScreeningRequestFragment"
         android:name="com.example.qodem.ui.appointment.PreScreeningRequestFragment"
         android:label="fragment_pre_screening_request"
-        tools:layout="@layout/fragment_pre_screening_request" />
+        tools:layout="@layout/fragment_pre_screening_request" >
+        <action
+            android:id="@+id/action_preScreeningRequestFragment_to_preScreeningQuestion"
+            app:destination="@id/preScreeningQuestion" />
+    </fragment>
+    <fragment
+        android:id="@+id/preScreeningQuestion"
+        android:name="com.example.qodem.ui.appointment.PreScreeningQuestionFragment"
+        android:label="fragment_pre_screening_question"
+        tools:layout="@layout/fragment_pre_screening_question" >
+        <action
+            android:id="@+id/action_preScreeningQuestion_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_preScreeningQuestion_to_appointmentLocationFragment"
+            app:destination="@id/appointmentLocationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appointmentLocationFragment"
+        android:name="com.example.qodem.ui.appointment.AppointmentLocationFragment"
+        android:label="fragment_appointment_location"
+        tools:layout="@layout/fragment_appointment_location" />
 </navigation>

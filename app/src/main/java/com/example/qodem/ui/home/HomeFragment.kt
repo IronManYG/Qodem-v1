@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() = binding.recyclerViewDonationCampaigns.apply {
         bloodBankAdapter = BloodBankAdapter()
         adapter = bloodBankAdapter
-        layoutManager = LinearLayoutManager(requireContext())
+        layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun updateAppointmentState(bloodBanks: List<BloodBank>) {
