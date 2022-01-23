@@ -31,10 +31,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:text="hospital name"
             app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank"
-            app:layout_constraintEnd_toStartOf="@+id/image_blood_bank_place"
+            app:layout_constraintEnd_toStartOf="@+id/image_work_hours"
             app:layout_constraintStart_toEndOf="@+id/image_blood_bank"
             app:layout_constraintTop_toTopOf="@+id/image_blood_bank" />
 
@@ -42,9 +41,10 @@
             android:id="@+id/image_blood_bank_place"
             android:layout_width="18dp"
             android:layout_height="16dp"
+            android:layout_marginStart="8dp"
             android:contentDescription="TODO"
             app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank"
-            app:layout_constraintEnd_toStartOf="@+id/text_time_to_place"
+            app:layout_constraintStart_toStartOf="@+id/image_work_hours"
             app:layout_constraintTop_toTopOf="@+id/image_blood_bank"
             app:srcCompat="@drawable/ic_place" />
 
@@ -52,11 +52,10 @@
             android:id="@+id/text_time_to_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:text="15 min"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_place"
-            app:layout_constraintEnd_toStartOf="@+id/text_add_time"
+            app:layout_constraintStart_toEndOf="@+id/image_blood_bank_place"
             app:layout_constraintTop_toTopOf="@+id/image_blood_bank_place" />
 
         <ImageView
@@ -81,23 +80,26 @@
 
         <TextView
             android:id="@+id/text_working_days_field"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:text="Sunday to Thursday"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/divider2"
             app:layout_constraintStart_toStartOf="@+id/text_working_days_label"
             app:layout_constraintTop_toBottomOf="@+id/text_working_days_label" />
 
         <ImageView
             android:id="@+id/image_work_hours"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:contentDescription="TODO"
             app:layout_constraintBottom_toBottomOf="@+id/image_working_days"
-            app:layout_constraintEnd_toStartOf="@+id/text_work_hours_label"
+            app:layout_constraintStart_toEndOf="@+id/divider2"
             app:layout_constraintTop_toTopOf="@+id/image_working_days"
             app:srcCompat="@drawable/ic_time" />
 
@@ -112,21 +114,27 @@
 
         <TextView
             android:id="@+id/text_work_hours_field"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="08:00 AM - 03:00 PM"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_working_days_field"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_work_hours"
             app:layout_constraintTop_toTopOf="@+id/text_working_days_field" />
 
         <TextView
             android:id="@+id/text_add_time"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="5 days ago"
             android:textSize="11sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/text_time_to_place"
-            app:layout_constraintEnd_toEndOf="@+id/text_work_hours_field" />
+            app:layout_constraintEnd_toEndOf="@+id/text_work_hours_field"
+            app:layout_constraintStart_toEndOf="@+id/text_time_to_place" />
 
         <View
             android:id="@+id/divider"
@@ -149,5 +157,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_work_hours" />
+
+        <ImageView
+            android:id="@+id/image_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/text_time_to_place"
+            app:layout_constraintEnd_toEndOf="@+id/text_work_hours_field"
+            app:layout_constraintStart_toEndOf="@+id/text_time_to_place"
+            app:layout_constraintTop_toTopOf="@+id/text_time_to_place"
+            app:srcCompat="@drawable/ic_phone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

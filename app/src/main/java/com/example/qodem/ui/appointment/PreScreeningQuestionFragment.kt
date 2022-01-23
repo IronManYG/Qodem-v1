@@ -103,12 +103,12 @@ class PreScreeningQuestionFragment : Fragment() {
     }
 
     private fun isAllAnswersValueValid(): Boolean {
-        return binding.checkBoxPreScreeningQusetion1Yes.isChecked &&
-                binding.checkBoxPreScreeningQusetion2Yes.isChecked &&
-                binding.checkBoxPreScreeningQusetion3Yes.isChecked &&
-                binding.checkBoxPreScreeningQusetion4Yes.isChecked &&
-                binding.checkBoxPreScreeningQusetion5Yes.isChecked &&
-                binding.checkBoxPreScreeningQusetion6Yes.isChecked &&
-                binding.checkBoxPreScreeningQusetion7Yes.isChecked
+        return binding.checkBoxPreScreeningQusetion1No.isChecked &&
+                binding.checkBoxPreScreeningQusetion2No.isChecked &&
+                binding.checkBoxPreScreeningQusetion3No.isChecked &&
+                binding.checkBoxPreScreeningQusetion4No.isChecked &&
+                binding.checkBoxPreScreeningQusetion5No.isChecked &&
+                binding.checkBoxPreScreeningQusetion6No.isChecked &&
+                binding.checkBoxPreScreeningQusetion7No.isChecked
     }
 }
