@@ -9,9 +9,36 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.qodem.model.BloodBank
 import com.example.qodem.databinding.ItemBloodBankBinding
 
-class BloodBankAdapter() : RecyclerView.Adapter<BloodBankAdapter.BloodBankViewHolder>() {
+class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<BloodBankAdapter.BloodBankViewHolder>() {
 
-    inner class BloodBankViewHolder(val binding: ItemBloodBankBinding): RecyclerView.ViewHolder(binding.root)
+    inner class BloodBankViewHolder(val binding: ItemBloodBankBinding): RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener{
+
+        init {
+            itemView.setOnClickListener(this)
+            binding.imagePhoneNumber.setOnClickListener(this)
+            binding.imageBloodBankPlace.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                if (v != null) {
+                    when (v.id){
+                        itemView.id -> {
+                            listener.onItemClick(position)
+                        }
+                        binding.imagePhoneNumber.id -> {
+                            listener.onPhoneNumberImageClick(position)
+                        }
+                        binding.imageBloodBankPlace.id -> {
+                            listener.onBloodBankPlaceImageClick(position)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     private val diffCallback = object : DiffUtil.ItemCallback<BloodBank>() {
         override fun areItemsTheSame(oldItem: BloodBank, newItem: BloodBank): Boolean {
@@ -48,5 +75,11 @@ class BloodBankAdapter() : RecyclerView.Adapter<BloodBankAdapter.BloodBankViewHo
 
     override fun getItemCount(): Int {
         return bloodBanks.size
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+        fun onPhoneNumberImageClick(position: Int)
+        fun onBloodBankPlaceImageClick(position: Int)
     }
 }
