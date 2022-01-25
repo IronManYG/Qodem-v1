@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.qodem.R
 import com.example.qodem.model.BloodBank
 import com.example.qodem.databinding.ItemBloodBankBinding
 
@@ -26,7 +27,7 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
                 if (v != null) {
                     when (v.id){
                         itemView.id -> {
-                            listener.onItemClick(position)
+                            listener.onItemClick(itemView,position)
                         }
                         binding.imagePhoneNumber.id -> {
                             listener.onPhoneNumberImageClick(position)
@@ -74,11 +75,11 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
     }
 
     override fun getItemCount(): Int {
-        return bloodBanks.size
+        return bloodBanks.count()
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(itemView: View,position: Int)
         fun onPhoneNumberImageClick(position: Int)
         fun onBloodBankPlaceImageClick(position: Int)
     }

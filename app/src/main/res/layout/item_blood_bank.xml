@@ -39,10 +39,12 @@
 
         <ImageView
             android:id="@+id/image_blood_bank_place"
-            android:layout_width="29dp"
-            android:layout_height="29dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
+            android:clickable="true"
             android:contentDescription="TODO"
+            android:padding="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank"
             app:layout_constraintStart_toStartOf="@+id/image_work_hours"
             app:layout_constraintTop_toTopOf="@+id/image_blood_bank"
@@ -160,10 +162,12 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_phone_number"
-            android:layout_width="35dp"
-            android:layout_height="34dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@color/secondaryLightColor"
-            android:padding="2dp"
+            android:clickable="true"
+            android:contentDescription="TODO"
+            android:padding="12dp"
             android:tint="@color/secondaryColor"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/text_time_to_place"
@@ -173,6 +177,7 @@
             app:shapeAppearanceOverlay="@style/Circular"
             app:srcCompat="@drawable/ic_phone"
             app:strokeColor="@color/secondaryColor"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="2dp"
+            android:focusable="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
