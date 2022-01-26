@@ -21,6 +21,7 @@ import com.example.qodem.databinding.FragmentAppointmentLocationBinding
 import com.example.qodem.ui.BloodBankAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -33,6 +34,8 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
     private val viewModel: AppointmentLocationViewModel by viewModels()
 
     private lateinit var binding: FragmentAppointmentLocationBinding
+
+    private var isBloodBankSelected = false
 
     //
     private lateinit var bloodBankAdapter: BloodBankAdapter
@@ -51,15 +54,23 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
         //
         setupRecyclerView()
 
+        binding.buttonNextStep.setOnClickListener {
+            if (isBloodBankSelected) {
+                Toast.makeText(requireActivity(), "You select blood bank", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireActivity(), "Please select blood bank", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.bloodBanksList.observe(viewLifecycleOwner,{ bloodBanks ->
+        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
             //
             bloodBankAdapter.bloodBanks = bloodBanks
-        })
+        }
     }
 
     //
@@ -69,35 +80,11 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
         layoutManager = LinearLayoutManager(requireContext())
     }
 
-    override fun onItemClick(itemView: View, position: Int) {
-        Toast.makeText(requireActivity(), "Item $position clicked", Toast.LENGTH_SHORT).show()
-        val recyclerViewItem = itemView as CardView
-        val itemBackground = recyclerViewItem.cardBackgroundColor.defaultColor
-        if (itemBackground == ContextCompat.getColor(requireActivity(), R.color.white)) {
-            binding.recyclerViewBloodBanks.children.iterator().forEach { item ->
-                item.setBackgroundColor(
-                    ContextCompat.getColor(
-                       requireContext(),
-                        R.color.white
-                    )
-                )
-                Log.d(TAG,"Changed Background color White")
-            }
-            itemView.setBackgroundColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.secondaryLightColor))
-            Log.d(TAG,"Background color changed")
-        } else {
-            binding.recyclerViewBloodBanks.children.iterator().forEach { item ->
-                item.setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.white
-                    )
-                )
-            }
+    override fun onItemClick(position: Int) {
+        bloodBankAdapter.bloodBanks.forEach{
+            it.isSelected = it == bloodBankAdapter.bloodBanks[position]
         }
+        isBloodBankSelected = true
     }
 
     override fun onPhoneNumberImageClick(position: Int) {

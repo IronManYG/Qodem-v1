@@ -167,6 +167,7 @@
             android:background="@color/secondaryLightColor"
             android:clickable="true"
             android:contentDescription="TODO"
+            android:focusable="true"
             android:padding="12dp"
             android:tint="@color/secondaryColor"
             android:visibility="visible"
@@ -177,7 +178,6 @@
             app:shapeAppearanceOverlay="@style/Circular"
             app:srcCompat="@drawable/ic_phone"
             app:strokeColor="@color/secondaryColor"
-            app:strokeWidth="2dp"
-            android:focusable="true" />
+            app:strokeWidth="2dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

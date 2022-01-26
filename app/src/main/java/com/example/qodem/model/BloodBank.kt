@@ -18,6 +18,10 @@ data class BloodBank(
     var bloodDonationCampaign: Boolean,
     var campaignPeriod: Int?
 ): ClusterItem {
+
+    // used in recyclerView to if item selected or not
+    var isSelected = false
+
     override fun getPosition(): LatLng =
         coordinates
 

@@ -1,8 +1,11 @@
 package com.example.qodem.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -27,9 +30,10 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
                 if (v != null) {
                     when (v.id){
                         itemView.id -> {
-                            listener.onItemClick(itemView,position)
+                            listener.onItemClick(position)
+                            notifyDataSetChanged()
                         }
-                        binding.imagePhoneNumber.id -> {
+                         binding.imagePhoneNumber.id -> {
                             listener.onPhoneNumberImageClick(position)
                         }
                         binding.imageBloodBankPlace.id -> {
@@ -71,6 +75,11 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
             textBloodBank.text = bloodBank.name_en
             imagePhoneNumber.visibility = View.VISIBLE
             textAddTime.visibility = View.GONE
+            if(bloodBanks[position].isSelected){
+                cardView.setBackgroundColor(ContextCompat.getColor(cardView.context, R.color.secondaryLightColor))
+            } else {
+                cardView.setBackgroundColor(ContextCompat.getColor(cardView.context, R.color.white))
+            }
         }
     }
 
@@ -79,7 +88,7 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
     }
 
     interface OnItemClickListener {
-        fun onItemClick(itemView: View,position: Int)
+        fun onItemClick(position: Int)
         fun onPhoneNumberImageClick(position: Int)
         fun onBloodBankPlaceImageClick(position: Int)
     }
