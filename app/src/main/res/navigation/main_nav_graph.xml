@@ -49,5 +49,18 @@
         android:id="@+id/appointmentLocationFragment"
         android:name="com.example.qodem.ui.appointment.AppointmentLocationFragment"
         android:label="fragment_appointment_location"
-        tools:layout="@layout/fragment_appointment_location" />
+        tools:layout="@layout/fragment_appointment_location">
+        <action
+            android:id="@+id/action_appointmentLocationFragment_to_appointmentDataFragment"
+            app:destination="@id/appointmentDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/appointmentDataFragment"
+        android:name="com.example.qodem.ui.appointment.AppointmentDateFragment"
+        android:label="fragment_appointment_data"
+        tools:layout="@layout/fragment_appointment_date" >
+        <argument
+            android:name="bloodBankID"
+            app:argType="integer" />
+    </fragment>
 </navigation>

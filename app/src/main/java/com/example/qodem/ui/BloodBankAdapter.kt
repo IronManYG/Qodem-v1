@@ -1,11 +1,9 @@
 package com.example.qodem.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat.getColor
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -65,8 +63,7 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
         return BloodBankViewHolder(ItemBloodBankBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
-            false,
-        ))
+            false,))
     }
 
     override fun onBindViewHolder(holder: BloodBankViewHolder, position: Int) {
@@ -76,9 +73,12 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
             imagePhoneNumber.visibility = View.VISIBLE
             textAddTime.visibility = View.GONE
             if(bloodBanks[position].isSelected){
-                cardView.setBackgroundColor(ContextCompat.getColor(cardView.context, R.color.secondaryLightColor))
+                //cardView.setBackgroundColor(ContextCompat.getColor(cardView.context, R.color.secondaryLightColor))
+                cardView.strokeColor = ContextCompat.getColor(cardView.context, R.color.secondaryColor)
+                cardView.strokeWidth = 5
             } else {
                 cardView.setBackgroundColor(ContextCompat.getColor(cardView.context, R.color.white))
+                cardView.strokeColor = ContextCompat.getColor(cardView.context, R.color.white)
             }
         }
     }

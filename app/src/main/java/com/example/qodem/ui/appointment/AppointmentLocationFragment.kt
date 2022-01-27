@@ -1,27 +1,21 @@
 package com.example.qodem.ui.appointment
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
-import androidx.core.view.children
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.qodem.R
 import com.example.qodem.databinding.FragmentAppointmentLocationBinding
+import com.example.qodem.model.BloodBank
 import com.example.qodem.ui.BloodBankAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -35,10 +29,13 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
 
     private lateinit var binding: FragmentAppointmentLocationBinding
 
+    //
+    private lateinit var bloodBankAdapter: BloodBankAdapter
+
     private var isBloodBankSelected = false
 
     //
-    private lateinit var bloodBankAdapter: BloodBankAdapter
+    private var bloodBankID = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +53,9 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
 
         binding.buttonNextStep.setOnClickListener {
             if (isBloodBankSelected) {
-                Toast.makeText(requireActivity(), "You select blood bank", Toast.LENGTH_SHORT).show()
+                val amount = bloodBankID
+                val action = AppointmentLocationFragmentDirections.actionAppointmentLocationFragmentToAppointmentDataFragment(amount)
+                findNavController().navigate(action)
             } else {
                 Toast.makeText(requireActivity(), "Please select blood bank", Toast.LENGTH_SHORT).show()
             }
@@ -82,7 +81,12 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
 
     override fun onItemClick(position: Int) {
         bloodBankAdapter.bloodBanks.forEach{
-            it.isSelected = it == bloodBankAdapter.bloodBanks[position]
+            if(it == bloodBankAdapter.bloodBanks[position]){
+                bloodBankID = it.id
+                it.isSelected = true
+            } else {
+                it.isSelected = false
+            }
         }
         isBloodBankSelected = true
     }
@@ -91,7 +95,6 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
         val dialIntent = Intent(Intent.ACTION_DIAL)
         dialIntent.data = Uri.parse("tel:" + bloodBankAdapter.bloodBanks[position].phoneNumber)
         startActivity(dialIntent)
-        bloodBankAdapter.notifyItemChanged(position)
     }
 
     override fun onBloodBankPlaceImageClick(position: Int) {
