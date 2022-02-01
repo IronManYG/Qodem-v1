@@ -61,18 +61,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.bloodBanksList.observe(viewLifecycleOwner,{ bloodBanks ->
+        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
             val campaignBloodBanks: MutableList<BloodBank> = mutableListOf()
             // Show only campaign blood banks
-            for (bloodBank in bloodBanks){
-                if (bloodBank.bloodDonationCampaign){
+            for (bloodBank in bloodBanks) {
+                if (bloodBank.bloodDonationCampaign) {
                     campaignBloodBanks.add(bloodBank)
                 }
             }
             campaignBloodBankAdapter.bloodBanks = campaignBloodBanks
             //
             updateAppointmentState(bloodBanks)
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -89,23 +89,24 @@ class HomeFragment : Fragment() {
 
     private fun updateAppointmentState(bloodBanks: List<BloodBank>) {
         //
-        viewModel.activeDonationFoundState.observe(viewLifecycleOwner,{
+        viewModel.activeDonationFoundState.observe(viewLifecycleOwner) {
             when (it) {
                 true -> {
 
                     //
-                    viewModel.activeDonation.observe(viewLifecycleOwner,{ activeDonation ->
+                    viewModel.activeDonation.observe(viewLifecycleOwner) { activeDonation ->
 
                         //
-                        val donationDateCountDownTimer = CustomCountDownTimer(activeDonation.timeStamp)
+                        val donationDateCountDownTimer =
+                            CustomCountDownTimer(activeDonation.timeStamp)
                         donationDateCountDownTimer.start()
 
                         //
                         var activeDonationBloodBank: BloodBank? = null
 
                         //
-                        for(bloodBank in bloodBanks) {
-                            if(bloodBank.id.toString() == activeDonation.bloodBankID) {
+                        for (bloodBank in bloodBanks) {
+                            if (bloodBank.id.toString() == activeDonation.bloodBankID) {
                                 activeDonationBloodBank = bloodBank
                             }
                         }
@@ -116,38 +117,41 @@ class HomeFragment : Fragment() {
                         calendar.time = Date(activeDonation.timeStamp)
                         calendar.add(Calendar.MONTH, 1)
 
-                        val dayOfWeekString = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH)
+                        val dayOfWeekString =
+                            calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH)
 
-                        val monthString = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH)
+                        val monthString =
+                            calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH)
 
-                        val amPmString = calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH)
+                        val amPmString =
+                            calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH)
 
                         val donationDate = "$dayOfWeekString, " +
                                 "${calendar.get(Calendar.DAY_OF_MONTH)} " +
                                 "$monthString " +
                                 "${calendar.get(Calendar.YEAR)}"
                         val donationTime = "${calendar.get(Calendar.HOUR)}:" +
-                                "${calendar.get(Calendar.MINUTE)}"+
+                                "${calendar.get(Calendar.MINUTE)}" +
                                 " $amPmString"
                         // Publish & update Appointment info
                         binding.textAppointmentPlace.text = activeDonationBloodBank!!.name_en
                         binding.textAppointmentCity.text = activeDonationBloodBank.city
                         binding.textAppointmentDate.text = donationDate
                         binding.textAppointmentTime.text = donationTime
-                        donationDateCountDownTimer.countDownDays.observe(viewLifecycleOwner,{ remainingDays ->
+                        donationDateCountDownTimer.countDownDays.observe(viewLifecycleOwner) { remainingDays ->
                             binding.textRemainingDaysField.text = remainingDays
-                        })
-                        donationDateCountDownTimer.countDownHours.observe(viewLifecycleOwner,{ remainingHours ->
+                        }
+                        donationDateCountDownTimer.countDownHours.observe(viewLifecycleOwner) { remainingHours ->
                             binding.textRemainingHoursField.text = remainingHours
-                        })
-                        donationDateCountDownTimer.countDownMinutes.observe(viewLifecycleOwner,{ remainingMinutes ->
+                        }
+                        donationDateCountDownTimer.countDownMinutes.observe(viewLifecycleOwner) { remainingMinutes ->
                             binding.textRemainingMinutesField.text = remainingMinutes
-                        })
-                        donationDateCountDownTimer.countDownSeconds.observe(viewLifecycleOwner,{ remainingSeconds ->
+                        }
+                        donationDateCountDownTimer.countDownSeconds.observe(viewLifecycleOwner) { remainingSeconds ->
                             binding.textRemainingSecondsField.text = remainingSeconds
-                        })
+                        }
 
-                    })
+                    }
 
                     //
                     binding.layoutProgressDonation.visibility = View.GONE
@@ -160,7 +164,7 @@ class HomeFragment : Fragment() {
                     binding.layoutNoAppointment.visibility = View.VISIBLE
                 }
             }
-        })
+        }
     }
 
     private fun displayError(message: String?) {

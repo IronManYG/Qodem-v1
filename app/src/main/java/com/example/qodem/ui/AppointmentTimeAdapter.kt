@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.qodem.databinding.ItemDayDateBinding
-import com.example.qodem.model.BloodBank
+import com.example.qodem.databinding.ItemTimeDateBinding
+import com.example.qodem.model.AppointmentDay
+import com.example.qodem.model.AppointmentTime
 
-class AppointmentDataAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<AppointmentDataAdapter.DateViewHolder>() {
 
-    inner class DateViewHolder(val binding: ItemDayDateBinding): RecyclerView.ViewHolder(binding.root),
+class AppointmentTimeAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<AppointmentTimeAdapter.TimeViewHolder>(){
+
+    inner class TimeViewHolder(val binding: ItemTimeDateBinding): RecyclerView.ViewHolder(binding.root),
         View.OnClickListener{
 
         init {
@@ -24,7 +26,7 @@ class AppointmentDataAdapter(private val listener: OnItemClickListener) : Recycl
                 if (v != null) {
                     when (v.id){
                         itemView.id -> {
-                            listener.onItemClick(position)
+                            listener.onTimeItemClick(position)
                             notifyDataSetChanged()
                         }
                     }
@@ -33,40 +35,40 @@ class AppointmentDataAdapter(private val listener: OnItemClickListener) : Recycl
         }
     }
 
-    private val diffCallback = object : DiffUtil.ItemCallback<BloodBank>() {
-        override fun areItemsTheSame(oldItem: BloodBank, newItem: BloodBank): Boolean {
-            return oldItem.id == newItem.id
+    private val diffCallback = object : DiffUtil.ItemCallback<AppointmentTime>() {
+        override fun areItemsTheSame(oldItem: AppointmentTime, newItem: AppointmentTime): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: BloodBank, newItem: BloodBank): Boolean {
+        override fun areContentsTheSame(oldItem: AppointmentTime, newItem: AppointmentTime): Boolean {
             return oldItem == newItem
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
-    var bloodBanks: List<BloodBank>
+    var appointmentTimes: List<AppointmentTime>
         get() = differ.currentList
         set(value) { differ.submitList(value) }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateViewHolder {
-        return DateViewHolder(ItemDayDateBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {
+        return TimeViewHolder(
+            ItemTimeDateBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false,))
     }
 
-    override fun onBindViewHolder(holder: DateViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TimeViewHolder, position: Int) {
         holder.binding.apply {
-            val bloodBank = bloodBanks[position]
-            textWeekDay.text = bloodBank.name_en
+
         }
     }
 
     override fun getItemCount(): Int {
-        return bloodBanks.count()
+        return appointmentTimes.count()
     }
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onTimeItemClick(position: Int)
     }
 }
