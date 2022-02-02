@@ -1,14 +1,18 @@
 package com.example.qodem.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.qodem.R
 import com.example.qodem.databinding.ItemTimeDateBinding
 import com.example.qodem.model.AppointmentDay
 import com.example.qodem.model.AppointmentTime
+import java.util.*
 
 
 class AppointmentTimeAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<AppointmentTimeAdapter.TimeViewHolder>(){
@@ -59,8 +63,22 @@ class AppointmentTimeAdapter (private val listener: OnItemClickListener) : Recyc
     }
 
     override fun onBindViewHolder(holder: TimeViewHolder, position: Int) {
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         holder.binding.apply {
-
+            val selectedTime = appointmentTimes[position]
+            calendar.time = Date(selectedTime.timeInMilli)
+            val amPmString =
+                calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH)
+            val donationTime = "${String.format("%02d",calendar.get(Calendar.HOUR))}:" +
+                    String.format("%02d",calendar.get(Calendar.MINUTE))
+            Log.d("hereTime", "Time: $donationTime")
+            textTime.text = donationTime
+            textAmPm.text = amPmString
+            if(appointmentTimes[position].isSelected){
+                cardViewTime.strokeColor = ContextCompat.getColor(cardViewTime.context, R.color.primaryColor)
+            } else {
+                cardViewTime.strokeColor = ContextCompat.getColor(cardViewTime.context, R.color.secondaryColor)
+            }
         }
     }
 

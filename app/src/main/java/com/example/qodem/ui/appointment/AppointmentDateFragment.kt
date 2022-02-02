@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qodem.databinding.FragmentAppointmentDateBinding
 import com.example.qodem.model.AppointmentDay
+import com.example.qodem.model.AppointmentTime
 import com.example.qodem.model.BloodBank
 import com.example.qodem.ui.AppointmentDayAdapter
 import com.example.qodem.ui.AppointmentTimeAdapter
@@ -77,6 +78,7 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         super.onViewCreated(view, savedInstanceState)
         //
         appointmentDayAdapter.appointmentDays = appointmentDaysList()
+        appointmentTimeAdapter.appointmentTimes = appointmentTimesList()
     }
 
     //
@@ -90,7 +92,7 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
     private fun setupTimesRecyclerView() = binding.recyclerViewTimeSelector.apply {
         appointmentTimeAdapter = AppointmentTimeAdapter(this@AppointmentDateFragment)
         adapter = appointmentTimeAdapter
-        layoutManager = GridLayoutManager(requireContext(),4)
+        layoutManager = GridLayoutManager(requireContext(),3)
     }
 
     override fun onDayItemClick(position: Int) {
@@ -123,24 +125,22 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         return daysList.toList()
     }
 
-    private fun appointmentTimesList() {
+    private fun appointmentTimesList(): List<AppointmentTime> {
         val secondsInMilli: Long = 1000
         val minutesInMilli = secondsInMilli * 60
         val hoursInMilli = minutesInMilli * 60
-        val workingHours = selectedBloodBank.workingHours.numberOfHours
-        val startTime =  8
+        val startTime =  selectedBloodBank.workingHours.startTime
         val endTime = selectedBloodBank.workingHours.endTime
-
-        //
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-        calendar.time = Date(startTime*hoursInMilli)
-
-        val amPmString =
-            calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH)
-
-        val donationTime = "${calendar.get(Calendar.HOUR)}:" +
-                "${calendar.get(Calendar.MINUTE)}" +
-                " $amPmString"
-        Log.d("hereTime", "Time: $donationTime")
+        val workingHours = endTime - startTime
+        var startTimeInMilli = startTime * hoursInMilli
+        val endTimeInMilli = endTime * hoursInMilli
+        val workingHoursInMilli = endTimeInMilli - startTimeInMilli
+        val timesListAsLong: MutableList<Long> = listOf(startTimeInMilli).toMutableList()
+        for(i in (workingHours*2) downTo 1) {
+            startTimeInMilli += hoursInMilli/2
+            timesListAsLong.add(startTimeInMilli)
+        }
+        val timesList: MutableList<AppointmentTime> = timesListAsLong.map{AppointmentTime(it)}.toMutableList()
+        return timesList.toList()
     }
 }

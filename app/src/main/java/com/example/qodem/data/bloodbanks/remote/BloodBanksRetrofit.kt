@@ -8,6 +8,6 @@ interface BloodBanksRetrofit {
     /**
      * @return all blood banks.
      */
-    @GET("/b/61b1ae6e01558c731cd0e806/3")
+    @GET("/b/61b1ae6e01558c731cd0e806/4")
     suspend fun getBloodBanks(): Response<List<BloodBankNetworkEntity>>
 }
