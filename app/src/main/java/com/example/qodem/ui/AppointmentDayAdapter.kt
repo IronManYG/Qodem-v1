@@ -62,7 +62,7 @@ class AppointmentDayAdapter(private val listener: OnItemClickListener) : Recycle
         //
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         holder.binding.apply {
-            val selectedDay = appointmentDays[position]
+            var selectedDay = appointmentDays[position]
             calendar.time = Date(selectedDay.dayInMilli)
             val dayOfWeekString =
                 calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.ENGLISH)

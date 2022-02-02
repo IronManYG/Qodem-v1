@@ -62,5 +62,8 @@
         <argument
             android:name="bloodBankID"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_appointmentDataFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

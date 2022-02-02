@@ -90,6 +90,7 @@ class HomeFragment : Fragment() {
     private fun updateAppointmentState(bloodBanks: List<BloodBank>) {
         //
         viewModel.activeDonationFoundState.observe(viewLifecycleOwner) {
+            binding.layoutProgressDonation.visibility = View.VISIBLE
             when (it) {
                 true -> {
 
@@ -130,25 +131,25 @@ class HomeFragment : Fragment() {
                                 "${calendar.get(Calendar.DAY_OF_MONTH)} " +
                                 "$monthString " +
                                 "${calendar.get(Calendar.YEAR)}"
-                        val donationTime = "${calendar.get(Calendar.HOUR)}:" +
-                                "${calendar.get(Calendar.MINUTE)}" +
+                        val donationTime = "${String.format("%02d",calendar.get(Calendar.HOUR))}:" +
+                                String.format("%02d",calendar.get(Calendar.MINUTE)) +
                                 " $amPmString"
                         // Publish & update Appointment info
-                        binding.textAppointmentPlace.text = activeDonationBloodBank!!.name_en
-                        binding.textAppointmentCity.text = activeDonationBloodBank.city
+                        binding.textAppointmentPlace.text = activeDonationBloodBank?.name_en
+                        binding.textAppointmentCity.text = activeDonationBloodBank?.city
                         binding.textAppointmentDate.text = donationDate
                         binding.textAppointmentTime.text = donationTime
                         donationDateCountDownTimer.countDownDays.observe(viewLifecycleOwner) { remainingDays ->
-                            binding.textRemainingDaysField.text = remainingDays
+                            binding.textRemainingDaysField.text = String.format("%02d",remainingDays.toInt())
                         }
                         donationDateCountDownTimer.countDownHours.observe(viewLifecycleOwner) { remainingHours ->
-                            binding.textRemainingHoursField.text = remainingHours
+                            binding.textRemainingHoursField.text = String.format("%02d",remainingHours.toInt())
                         }
                         donationDateCountDownTimer.countDownMinutes.observe(viewLifecycleOwner) { remainingMinutes ->
-                            binding.textRemainingMinutesField.text = remainingMinutes
+                            binding.textRemainingMinutesField.text = String.format("%02d",remainingMinutes.toInt())
                         }
                         donationDateCountDownTimer.countDownSeconds.observe(viewLifecycleOwner) { remainingSeconds ->
-                            binding.textRemainingSecondsField.text = remainingSeconds
+                            binding.textRemainingSecondsField.text = String.format("%02d",remainingSeconds.toInt())
                         }
 
                     }

@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.databinding.FragmentAppointmentDateBinding
 import com.example.qodem.model.AppointmentDay
 import com.example.qodem.model.AppointmentTime
@@ -18,7 +20,7 @@ import com.example.qodem.model.BloodBank
 import com.example.qodem.ui.AppointmentDayAdapter
 import com.example.qodem.ui.AppointmentTimeAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -43,6 +45,16 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
 
     //
     private lateinit var selectedBloodBank: BloodBank
+
+    //
+    private var isAppointmentDaySelected = false
+    private var isAppointmentTimeSelected = false
+
+    // selected appointment Day by user
+    var appointmentDay: Long = 0L
+
+    // selected appointment Time by user
+    private var appointmentTime: Long = 0L
 
     private val args: AppointmentDateFragmentArgs by navArgs()
 
@@ -70,6 +82,49 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         //
         setupDaysRecyclerView()
         setupTimesRecyclerView()
+
+        binding.buttonBookAppointment.setOnClickListener {
+            if (isAppointmentDaySelected && isAppointmentTimeSelected) {
+                binding.progressBar2.visibility = View.VISIBLE
+                binding.buttonBookAppointment.isEnabled = false
+                val donationNetworkEntity = DonationNetworkEntity(
+                    bloodBankID = "${args.bloodBankID}",
+                    donationData= "",
+                    donationTime = "",
+                    active = true,
+                    authenticated= false,
+                    timeStamp= appointmentDay+appointmentTime)
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        viewModel.saveDonation(donationNetworkEntity)
+                        viewModel.donationSaveState.observe(viewLifecycleOwner){
+                            when (it) {
+                                true -> {
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        withContext(Dispatchers.IO) {
+                                            viewModel.getAllDonations()
+                                        }
+                                    }
+                                    findNavController().navigate(AppointmentDateFragmentDirections.actionAppointmentDataFragmentToHomeFragment())
+                                }
+                                false -> {
+                                    Toast.makeText(requireActivity(), viewModel.saveErrorMessage.value, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                        }
+                        binding.progressBar2.visibility = View.GONE
+                        binding.buttonBookAppointment.isEnabled = true
+                    }
+                }
+            } else if(!isAppointmentDaySelected && isAppointmentTimeSelected) {
+                Toast.makeText(requireActivity(), "Please select day", Toast.LENGTH_SHORT).show()
+            } else if(isAppointmentDaySelected && !isAppointmentTimeSelected) {
+                Toast.makeText(requireActivity(), "Please select time", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireActivity(), "Please select day & time", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         return binding.root
     }
@@ -99,6 +154,16 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         appointmentDayAdapter.appointmentDays.forEach{
             it.isSelected = it == appointmentDayAdapter.appointmentDays[position]
         }
+        isAppointmentDaySelected = true
+
+        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        calendar.time = Date(appointmentDayAdapter.appointmentDays[position].dayInMilli)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        appointmentDay = calendar.timeInMillis
+        Log.d("here Date","day in mill is: $appointmentDay ")
         Toast.makeText(requireContext(), "Day position $position",Toast.LENGTH_SHORT ).show()
     }
 
@@ -106,6 +171,9 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         appointmentTimeAdapter.appointmentTimes.forEach{
             it.isSelected = it == appointmentTimeAdapter.appointmentTimes[position]
         }
+        isAppointmentTimeSelected = true
+        appointmentTime = appointmentTimeAdapter.appointmentTimes[position].timeInMilli
+        Log.d("here Date","time in mill is: $appointmentTime")
         Toast.makeText(requireContext(), "Time position $position",Toast.LENGTH_SHORT ).show()
     }
 
