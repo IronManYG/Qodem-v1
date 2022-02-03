@@ -22,4 +22,12 @@ interface BloodBankDao {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveBloodBank(bloodBankEntity: BloodBankCacheEntity)
+
+    /**
+     * Clear all bloodBanks form date base.
+     *
+     * used only when sign out.
+     */
+    @Query("DELETE FROM bloodBanks")
+    fun deleteAllBloodBanks()
 }

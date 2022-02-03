@@ -55,4 +55,20 @@ interface UserDao {
      */
     @Query("SELECT *  FROM donations WHERE active = :isActive")
     fun getActiveDonation(isActive: Boolean): LiveData<DonationsCacheEntity>
+
+    /**
+     * Clear user info form date base.
+     *
+     * used only when sign out.
+     */
+    @Query("DELETE FROM user")
+    fun deleteUserInfo()
+
+    /**
+     * Clear all donations form date base.
+     *
+     * used only when sign out.
+     */
+    @Query("DELETE FROM donations")
+    fun deleteAllDonations()
 }

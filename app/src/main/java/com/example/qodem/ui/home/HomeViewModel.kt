@@ -6,8 +6,10 @@ import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -45,4 +47,11 @@ constructor(
         userInfoRepository.updateDonationActiveState(donationID,isActive)
     }
 
+    suspend fun clearBloodBanks(){
+        bloodBankRepository.clearBloodBanks()
+    }
+
+    suspend fun clearUserInfo() {
+        userInfoRepository.clearUserInfo()
+    }
 }

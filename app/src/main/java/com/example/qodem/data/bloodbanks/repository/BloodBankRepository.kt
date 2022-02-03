@@ -59,4 +59,10 @@ constructor(
             }
         }
     }
+
+    suspend fun clearBloodBanks(){
+        withContext(Dispatchers.IO) {
+            bloodBankDao.deleteAllBloodBanks()
+        }
+    }
 }

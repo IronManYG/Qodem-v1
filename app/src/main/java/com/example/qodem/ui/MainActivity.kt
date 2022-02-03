@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,14 +16,17 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.ActivityMainBinding
 import com.example.qodem.ui.authentication.AuthenticationActivity
+import com.example.qodem.ui.home.HomeViewModel
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 
@@ -77,7 +82,13 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
-              R.id.signOut -> onClick(navView.findViewById(R.id.signOut))
+              R.id.signOut -> {
+//                  CoroutineScope(Dispatchers.IO).launch {
+//                      viewModel.clearUserInfo()
+//                      viewModel.clearBloodBanks()
+//                  }
+                  onClick(navView.findViewById(R.id.signOut))
+              }
             }
             true
         }

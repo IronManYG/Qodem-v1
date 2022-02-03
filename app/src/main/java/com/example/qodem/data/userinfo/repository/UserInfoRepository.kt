@@ -209,4 +209,11 @@ constructor(
         }
     }
 
+    suspend fun clearUserInfo(){
+        withContext(Dispatchers.IO) {
+            userDao.deleteUserInfo()
+            userDao.deleteAllDonations()
+        }
+    }
+
 }
