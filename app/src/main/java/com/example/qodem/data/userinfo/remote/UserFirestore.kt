@@ -79,4 +79,14 @@ class UserFirestore {
             }
         }
 
+    suspend fun updateDonationActiveState(donationID: String, isActive: Boolean) = withContext(Dispatchers.IO) {
+        val donationDocumentRef = donationsCollectionRef.document(donationID)
+        try {
+            donationDocumentRef.update("active",isActive).await()
+            return@withContext Result.Success("Donation active state Successful Update")
+        } catch (e: Exception) {
+            return@withContext Result.Error(e.localizedMessage)
+        }
+    }
+
 }

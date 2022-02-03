@@ -31,10 +31,18 @@ constructor(
 
     val activeDonation : LiveData<Donation> = userInfoRepository.activeDonation
 
+    val donation : LiveData<List<Donation>> = userInfoRepository.donations
+
     //
     val activeDonationFoundState: LiveData<Boolean> = userInfoRepository.activeDonationFound
+    val donationUpdatedState: LiveData<Boolean> = userInfoRepository.donationUpdated
 
     //
     val errorResultMessage: LiveData<String?> = bloodBankRepository.errorResultMessage
+    val updateErrorMessage: LiveData<String?> = userInfoRepository.updateErrorMessage
+
+    suspend fun updateDonationActiveState(donationID: String, isActive: Boolean){
+        userInfoRepository.updateDonationActiveState(donationID,isActive)
+    }
 
 }

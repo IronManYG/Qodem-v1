@@ -72,6 +72,11 @@ constructor(
     val donationSaved: LiveData<Boolean>
         get() = _donationSaved
 
+    private var _donationUpdated: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    val donationUpdated: LiveData<Boolean>
+        get() = _donationUpdated
+
     //
     private var _errorResultMessage: MutableLiveData<String?> = MutableLiveData<String?>()
 
@@ -82,6 +87,11 @@ constructor(
 
     val saveErrorMessage: LiveData<String?>
         get() = _saveErrorMessage
+
+    private var _updateErrorMessage: MutableLiveData<String?> = MutableLiveData<String?>()
+
+    val updateErrorMessage: LiveData<String?>
+        get() = _updateErrorMessage
 
     suspend fun getUserInfo(phoneNumber: String) {
         withContext(Dispatchers.IO){
@@ -175,6 +185,25 @@ constructor(
                     _saveErrorMessage.postValue(message)
                     Log.d(TAG, message!!)
                     _donationSaved.postValue(false)
+                }
+            }
+        }
+    }
+
+    suspend fun updateDonationActiveState(donationID: String, isActive: Boolean) {
+        withContext(Dispatchers.IO) {
+            val updateStatusResult = userFirestore.updateDonationActiveState(donationID,isActive)
+            when (updateStatusResult) {
+                is Result.Success -> {
+                    getAllDonations()
+                    _donationUpdated.postValue(true)
+                    Log.d(TAG, "Donation active state Successful Update!")
+                }
+                is Result.Error -> {
+                    val message = updateStatusResult.message
+                    _updateErrorMessage.postValue(message)
+                    Log.d(TAG, message!!)
+                    _donationUpdated.postValue(false)
                 }
             }
         }
