@@ -83,10 +83,11 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
               R.id.signOut -> {
-//                  CoroutineScope(Dispatchers.IO).launch {
+//                  CoroutineScope(Dispatchers.Main).launch {
 //                      viewModel.clearUserInfo()
 //                      viewModel.clearBloodBanks()
 //                  }
+                  this@MainActivity.cacheDir.deleteRecursively()
                   onClick(navView.findViewById(R.id.signOut))
               }
             }

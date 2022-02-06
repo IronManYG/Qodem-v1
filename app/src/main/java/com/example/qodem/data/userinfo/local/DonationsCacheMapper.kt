@@ -16,7 +16,7 @@ constructor() : EntityMapper<DonationsCacheEntity, Donation> {
             donationTime = entity.donationTime,
             active = entity.active,
             authenticated = entity.authenticated,
-            timeStamp = entity.timeStamp
+            donationDataTimeStamp = entity.timeStamp
         )
     }
 
@@ -28,7 +28,7 @@ constructor() : EntityMapper<DonationsCacheEntity, Donation> {
             donationTime = domainModel.donationTime,
             active = domainModel.active,
             authenticated = domainModel.authenticated,
-            timeStamp = domainModel.timeStamp
+            timeStamp = domainModel.donationDataTimeStamp
         )
     }
 

@@ -7,6 +7,6 @@ data class Donation(
     var donationTime: String,
     var active:Boolean,
     var authenticated: Boolean,
-    var timeStamp: Long
+    var donationDataTimeStamp: Long
 )
 

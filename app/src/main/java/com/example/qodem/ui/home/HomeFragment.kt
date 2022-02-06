@@ -107,6 +107,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateAppointmentState(bloodBanks: List<BloodBank>) {
+
         viewModel.activeDonationFoundState.observe(viewLifecycleOwner) {
             //
             binding.layoutProgressDonation.visibility = View.VISIBLE
@@ -123,7 +124,7 @@ class HomeFragment : Fragment() {
 
                                 //
                                 val donationDateCountDownTimer =
-                                    CustomCountDownTimer(activeDonation.timeStamp)
+                                    CustomCountDownTimer(activeDonation.donationDataTimeStamp)
                                 donationDateCountDownTimer.start()
 
                                 //
@@ -138,8 +139,8 @@ class HomeFragment : Fragment() {
 
                                 //
                                 val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-                                Log.d("timeStamp 2", "${activeDonation.timeStamp}")
-                                calendar.time = Date(activeDonation.timeStamp)
+                                Log.d("timeStamp 2", "${activeDonation.donationDataTimeStamp}")
+                                calendar.time = Date(activeDonation.donationDataTimeStamp)
                                 calendar.add(Calendar.MONTH, 1)
 
                                 val dayOfWeekString =
