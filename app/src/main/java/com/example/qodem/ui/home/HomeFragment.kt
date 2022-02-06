@@ -14,6 +14,7 @@ import com.example.qodem.databinding.FragmentHomeBinding
 import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import com.example.qodem.ui.CampaignBloodBankAdapter
+import com.example.qodem.ui.appointment.AppointmentLocationFragmentDirections
 import com.example.qodem.utils.CustomCountDownTimer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -48,12 +49,15 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(
                 inflater,
                 R.layout.fragment_home, container, false
             )
+
+        //
+        setupRecyclerView()
 
         //
         binding.buttonBookAnAppointment.setOnClickListener {
@@ -72,7 +76,11 @@ class HomeFragment : Fragment() {
         }
 
         //
-        setupRecyclerView()
+        binding.buttonVerifyAppointment.setOnClickListener {
+            val amount = _activeDonation.id
+            val action = HomeFragmentDirections.actionHomeFragmentToAuthenticationAppointmentFragment(amount)
+            findNavController().navigate(action)
+        }
 
         return binding.root
     }

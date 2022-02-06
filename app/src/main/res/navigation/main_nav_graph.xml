@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_preScreeningRequestFragment"
             app:destination="@id/preScreeningRequestFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_authenticationAppointmentFragment"
+            app:destination="@id/authenticationAppointmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
@@ -65,5 +68,16 @@
         <action
             android:id="@+id/action_appointmentDataFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authenticationAppointmentFragment"
+        android:name="com.example.qodem.ui.appointment.AuthenticationAppointmentFragment"
+        android:label="authenticationAppointmentFragment" >
+        <action
+            android:id="@+id/action_authenticationAppointmentFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <argument
+            android:name="activeDonationID"
+            app:argType="string" />
     </fragment>
 </navigation>

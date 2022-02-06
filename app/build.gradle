@@ -63,6 +63,9 @@ dependencies {
     // Coroutine Lifecycle Scopes
     implementation "androidx.lifecycle:lifecycle-runtime-ktx: $lifecycle_version"
 
+    // Code Scanner
+    implementation "com.budiyev.android:code-scanner:2.1.0"
+
     // Kotlin
 
     // Constraint Layout

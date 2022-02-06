@@ -209,6 +209,25 @@ constructor(
         }
     }
 
+    suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) {
+        withContext(Dispatchers.IO) {
+            val updateStatusResult = userFirestore.updateDonationAuthenticatedState(donationID,isActive)
+            when (updateStatusResult) {
+                is Result.Success -> {
+                    getAllDonations()
+                    _donationUpdated.postValue(true)
+                    Log.d(TAG, "Donation authenticated state Successful Update!")
+                }
+                is Result.Error -> {
+                    val message = updateStatusResult.message
+                    _updateErrorMessage.postValue(message)
+                    Log.d(TAG, message!!)
+                    _donationUpdated.postValue(false)
+                }
+            }
+        }
+    }
+
     suspend fun clearUserInfo(){
         withContext(Dispatchers.IO) {
             userDao.deleteUserInfo()
