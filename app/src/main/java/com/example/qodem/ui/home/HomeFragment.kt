@@ -19,6 +19,7 @@ import com.example.qodem.utils.CustomCountDownTimer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.util.*
+import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -40,6 +41,12 @@ class HomeFragment : Fragment() {
 
     //
     private lateinit var _activeDonation: Donation
+
+    //
+    private var dayToEnableVerify by Delegates.notNull<Int>()
+    private var hoursToEnableVerify by Delegates.notNull<Int>()
+    private var minuteToEnableVerify by Delegates.notNull<Int>()
+    private var secondsToEnableVerify by Delegates.notNull<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,9 +84,13 @@ class HomeFragment : Fragment() {
 
         //
         binding.buttonVerifyAppointment.setOnClickListener {
-            val amount = _activeDonation.id
-            val action = HomeFragmentDirections.actionHomeFragmentToAuthenticationAppointmentFragment(amount)
-            findNavController().navigate(action)
+            if(dayToEnableVerify == 0 && hoursToEnableVerify == 0 && minuteToEnableVerify <= 30 && secondsToEnableVerify <= 59){
+                val amount = _activeDonation.id
+                val action = HomeFragmentDirections.actionHomeFragmentToAuthenticationAppointmentFragment(amount)
+                findNavController().navigate(action)
+            } else {
+                Toast.makeText(requireActivity(), "It can only be done on Appointment time.", Toast.LENGTH_LONG).show()
+            }
         }
 
         return binding.root
@@ -188,22 +199,22 @@ class HomeFragment : Fragment() {
                                 donationDateCountDownTimer.countDownDays.observe(viewLifecycleOwner) { remainingDays ->
                                     binding.textRemainingDaysField.text =
                                         String.format("%02d", remainingDays.toInt())
+                                    dayToEnableVerify = remainingDays.toInt()
                                 }
                                 donationDateCountDownTimer.countDownHours.observe(viewLifecycleOwner) { remainingHours ->
                                     binding.textRemainingHoursField.text =
                                         String.format("%02d", remainingHours.toInt())
+                                    hoursToEnableVerify = remainingHours.toInt()
                                 }
-                                donationDateCountDownTimer.countDownMinutes.observe(
-                                    viewLifecycleOwner
-                                ) { remainingMinutes ->
+                                donationDateCountDownTimer.countDownMinutes.observe(viewLifecycleOwner) { remainingMinutes ->
                                     binding.textRemainingMinutesField.text =
                                         String.format("%02d", remainingMinutes.toInt())
+                                    minuteToEnableVerify = remainingMinutes.toInt()
                                 }
-                                donationDateCountDownTimer.countDownSeconds.observe(
-                                    viewLifecycleOwner
-                                ) { remainingSeconds ->
+                                donationDateCountDownTimer.countDownSeconds.observe(viewLifecycleOwner) { remainingSeconds ->
                                     binding.textRemainingSecondsField.text =
                                         String.format("%02d", remainingSeconds.toInt())
+                                    secondsToEnableVerify = remainingSeconds.toInt()
                                 }
                             }
                         }

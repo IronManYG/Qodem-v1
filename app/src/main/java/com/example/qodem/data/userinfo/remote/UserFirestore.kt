@@ -92,7 +92,11 @@ class UserFirestore {
     suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) = withContext(Dispatchers.IO) {
         val donationDocumentRef = donationsCollectionRef.document(donationID)
         try {
-            donationDocumentRef.update("authenticated",isActive).await()
+            Firebase.firestore.runBatch { batch ->
+                batch.update(donationDocumentRef,"authenticated",isActive)
+                batch.update(donationDocumentRef,"active",!isActive)
+            }.await()
+            //donationDocumentRef.update("authenticated",isActive).await()
             return@withContext Result.Success("Donation Authenticated state Successful Update")
         } catch (e: Exception) {
             return@withContext Result.Error(e.localizedMessage)

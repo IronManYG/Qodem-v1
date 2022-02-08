@@ -235,4 +235,8 @@ constructor(
         }
     }
 
+    fun resetDonationUpdatedState(){
+        _donationUpdated.postValue(false)
+    }
+
 }
