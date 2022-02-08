@@ -39,7 +39,7 @@ class BloodBankRenderer(
     ) {
         markerOptions.title(item.name_en)
             .position(item.coordinates)
-            .icon(bloodDropIcon)
+            //.icon(bloodDropIcon)
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.example.qodem.ui.bloodbanklocation
 
+import android.content.Intent
+import android.net.Uri
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -60,9 +62,6 @@ class LocationFragment : Fragment() {
 //        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 //        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
-
-        //addMarkers(googleMap)
-
         addClusteredMarkers(googleMap)
 
         // Ensure all places are visible in the map
@@ -106,38 +105,6 @@ class LocationFragment : Fragment() {
         mapFragment.getMapAsync(callback)
     }
 
-//    private fun subscribeObservers() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.dataState.collect { dataState ->
-//                when (dataState) {
-//                    is DataState.Success<List<BloodBank>> -> {
-//                        displayProgressBar(false)
-//                        bloodBanks = dataState.data
-//                        Log.d("here","${bloodBanks.size}")
-//                        Log.d("here","${dataState.data.size}")
-//                    }
-//                    is DataState.Error -> {
-//                        displayProgressBar(false)
-//                        displayError(dataState.exception.message)
-//                    }
-//                    is DataState.Loading -> {
-//                        displayProgressBar(true)
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-//    private fun displayError(message: String?) {
-//        if (message != null) {
-//            Toast.makeText(requireActivity(), message, Toast.LENGTH_LONG).show()
-//        } else Toast.makeText(requireActivity(), "Unknown error", Toast.LENGTH_LONG).show()
-//    }
-//
-//    private fun displayProgressBar(isDisplayed: Boolean) {
-//        binding.progressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
-//    }
-
     /**
      * Adds markers to the map. These markers won't be clustered.
      */
@@ -173,15 +140,16 @@ class LocationFragment : Fragment() {
 //        clusterManager.markerCollection.setInfoWindowAdapter(MarkerInfoWindowAdapter(this))
 
         // Show polygon
-        clusterManager.setOnClusterItemClickListener { item ->
-            addCircle(googleMap, item)
+        clusterManager.setOnClusterItemClickListener { bloodBank ->
+            updateBloodBankView(bloodBank)
+            addCircle(googleMap, bloodBank)
             return@setOnClusterItemClickListener false
         }
 
         // Add the places to the ClusterManager.
-        viewModel.bloodBanksList.observe(viewLifecycleOwner, Observer { bloodBanks ->
+        viewModel.bloodBanksList.observe(viewLifecycleOwner){ bloodBanks ->
             clusterManager.addItems(bloodBanks)
-        })
+        }
         clusterManager.cluster()
 
         // Set ClusterManager as the OnCameraIdleListener so that it
@@ -213,6 +181,40 @@ class LocationFragment : Fragment() {
             radius(1000.0)
             fillColor(ContextCompat.getColor(requireContext(), R.color.primaryLightColor))
             strokeColor(ContextCompat.getColor(requireActivity(), R.color.primaryColor))
+        }
+    }
+
+    private fun onPhoneNumberImageClick(bloodBank: BloodBank) {
+        val dialIntent = Intent(Intent.ACTION_DIAL)
+        dialIntent.data = Uri.parse("tel:" + bloodBank.phoneNumber)
+        startActivity(dialIntent)
+    }
+
+    private fun onBloodBankPlaceImageClick(bloodBank: BloodBank) {
+        val gmmIntentUri = Uri.parse("geo:0,0?q=" +
+                "${bloodBank.coordinates.latitude}," +
+                "${bloodBank.coordinates.longitude}" +
+                "(${bloodBank.name_en})"
+        )
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        mapIntent.resolveActivity(requireContext().packageManager)?.let {
+            startActivity(mapIntent)
+        }
+    }
+
+    private fun updateBloodBankView(bloodBank: BloodBank){
+        binding.layoutNoSelectedBloodBank.visibility = View.GONE
+        binding.includeItmeBloodBank.root.visibility = View.VISIBLE
+        binding.includeItmeBloodBank.root.strokeWidth = 5
+        binding.cardView.strokeColor = ContextCompat.getColor(requireContext(), R.color.secondaryColor)
+        binding.cardView.strokeWidth = 5
+        binding.includeItmeBloodBank.textBloodBank.text = bloodBank.name_en
+        binding.includeItmeBloodBank.imageBloodBankPlace.setOnClickListener{
+            onBloodBankPlaceImageClick(bloodBank)
+        }
+        binding.includeItmeBloodBank.imagePhoneNumber.setOnClickListener{
+            onPhoneNumberImageClick(bloodBank)
         }
     }
 }
