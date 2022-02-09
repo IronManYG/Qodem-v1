@@ -95,9 +95,18 @@ class LocationFragment : Fragment() {
 
         binding.buttonBookAnAppointment.setOnClickListener {
             if (isBloodBankSelected) {
-                val amount = bloodBankID
-                val action = LocationFragmentDirections.actionLocationFragmentToPreScreeningRequestFragment(amount)
-                findNavController().navigate(action)
+                viewModel.activeDonationFoundState.observe(viewLifecycleOwner){
+                    when (it){
+                        true -> {
+                            Toast.makeText(requireActivity(), "You have a pre-booked appointment.", Toast.LENGTH_LONG).show()
+                        }
+                        false -> {
+                            val amount = bloodBankID
+                            val action = LocationFragmentDirections.actionLocationFragmentToPreScreeningRequestFragment(amount)
+                            findNavController().navigate(action)
+                        }
+                    }
+                }
             } else {
                 Toast.makeText(requireActivity(), "Please select blood bank", Toast.LENGTH_SHORT).show()
             }
