@@ -15,6 +15,7 @@ import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import com.example.qodem.ui.CampaignBloodBankAdapter
 import com.example.qodem.ui.appointment.AppointmentLocationFragmentDirections
+import com.example.qodem.ui.appointment.PreScreeningQuestionFragmentDirections
 import com.example.qodem.utils.CustomCountDownTimer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -68,7 +69,8 @@ class HomeFragment : Fragment() {
 
         //
         binding.buttonBookAnAppointment.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_preScreeningRequestFragment)
+            val action = HomeFragmentDirections.actionHomeFragmentToPreScreeningRequestFragment(-1)
+            findNavController().navigate(action)
         }
 
         //

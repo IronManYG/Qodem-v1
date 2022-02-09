@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentPreScreeningRequestBinding
+import com.example.qodem.ui.bloodbanklocation.LocationFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -16,6 +18,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class PreScreeningRequestFragment : Fragment() {
 
     private lateinit var binding: FragmentPreScreeningRequestBinding
+
+    private val args: PreScreeningRequestFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +34,9 @@ class PreScreeningRequestFragment : Fragment() {
         binding = FragmentPreScreeningRequestBinding.inflate(layoutInflater)
 
         binding.buttonProceedNow.setOnClickListener {
-            findNavController().navigate(R.id.action_preScreeningRequestFragment_to_preScreeningQuestion)
+            val amount = args.bloodBankID
+            val action = PreScreeningRequestFragmentDirections.actionPreScreeningRequestFragmentToPreScreeningQuestion(amount)
+            findNavController().navigate(action)
         }
 
         return binding.root

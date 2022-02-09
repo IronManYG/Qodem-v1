@@ -15,9 +15,11 @@ import androidx.core.graphics.alpha
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentLocationBinding
 import com.example.qodem.model.BloodBank
+import com.example.qodem.ui.appointment.AppointmentLocationFragmentDirections
 import com.example.qodem.utils.BitmapHelper
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -40,6 +42,11 @@ class LocationFragment : Fragment() {
     private val viewModel: LocationViewModel by viewModels()
 
     private lateinit var binding: FragmentLocationBinding
+
+    private var isBloodBankSelected = false
+
+    //
+    private var bloodBankID = -1
 
     private val bloodDropIcon: BitmapDescriptor by lazy {
         val color = ContextCompat.getColor(requireContext(), R.color.primaryDarkColor)
@@ -85,6 +92,16 @@ class LocationFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLocationBinding.inflate(layoutInflater)
+
+        binding.buttonBookAnAppointment.setOnClickListener {
+            if (isBloodBankSelected) {
+                val amount = bloodBankID
+                val action = LocationFragmentDirections.actionLocationFragmentToPreScreeningRequestFragment(amount)
+                findNavController().navigate(action)
+            } else {
+                Toast.makeText(requireActivity(), "Please select blood bank", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         return binding.root
     }
@@ -142,7 +159,9 @@ class LocationFragment : Fragment() {
         // Show polygon
         clusterManager.setOnClusterItemClickListener { bloodBank ->
             updateBloodBankView(bloodBank)
-            addCircle(googleMap, bloodBank)
+            isBloodBankSelected = true
+            bloodBankID = bloodBank.id
+            //addCircle(googleMap, bloodBank)
             return@setOnClusterItemClickListener false
         }
 

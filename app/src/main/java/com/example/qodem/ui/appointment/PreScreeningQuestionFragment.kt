@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentPreScreeningQuestionBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,8 @@ class PreScreeningQuestionFragment : Fragment() {
     private var answersValidToBooking by Delegates.notNull<Boolean>()
 
     private var numberOFAnsweredQuestions by Delegates.notNull<Int>()
+
+    private val args: PreScreeningQuestionFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +57,14 @@ class PreScreeningQuestionFragment : Fragment() {
 
             if(numberOFAnsweredQuestions == 7){
                 if(answersValidToBooking){
-                    findNavController().navigate(R.id.action_preScreeningQuestion_to_appointmentLocationFragment)
+                    if(args.bloodBankID == -1){
+                        val action = PreScreeningQuestionFragmentDirections.actionPreScreeningQuestionToAppointmentLocationFragment()
+                        findNavController().navigate(action)
+                    } else {
+                        val amount = args.bloodBankID
+                        val action = PreScreeningQuestionFragmentDirections.actionPreScreeningQuestionToAppointmentDataFragment(amount)
+                        findNavController().navigate(action)
+                    }
                 } else {
                     findNavController().navigate(R.id.action_preScreeningQuestion_to_homeFragment)
                 }

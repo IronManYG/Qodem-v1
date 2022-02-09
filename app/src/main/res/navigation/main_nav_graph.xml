@@ -21,7 +21,11 @@
         android:id="@+id/locationFragment"
         android:name="com.example.qodem.ui.bloodbanklocation.LocationFragment"
         android:label="fragment_location"
-        tools:layout="@layout/fragment_location" />
+        tools:layout="@layout/fragment_location" >
+        <action
+            android:id="@+id/action_locationFragment_to_preScreeningRequestFragment"
+            app:destination="@id/preScreeningRequestFragment" />
+    </fragment>
     <fragment
         android:id="@+id/communityFragment"
         android:name="com.example.qodem.ui.community.CommunityFragment"
@@ -35,6 +39,9 @@
         <action
             android:id="@+id/action_preScreeningRequestFragment_to_preScreeningQuestion"
             app:destination="@id/preScreeningQuestion" />
+        <argument
+            android:name="bloodBankID"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/preScreeningQuestion"
@@ -47,6 +54,12 @@
         <action
             android:id="@+id/action_preScreeningQuestion_to_appointmentLocationFragment"
             app:destination="@id/appointmentLocationFragment" />
+        <action
+            android:id="@+id/action_preScreeningQuestion_to_appointmentDataFragment"
+            app:destination="@id/appointmentDataFragment" />
+        <argument
+            android:name="bloodBankID"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/appointmentLocationFragment"
