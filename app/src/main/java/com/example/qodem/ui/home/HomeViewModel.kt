@@ -5,6 +5,7 @@ import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
+import com.example.qodem.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,6 +35,8 @@ constructor(
     val activeDonation : LiveData<Donation> = userInfoRepository.activeDonation
 
     val donation : LiveData<List<Donation>> = userInfoRepository.donations
+
+    val userInfo: LiveData<User> = userInfoRepository.userInfo
 
     //
     val activeDonationFoundState: LiveData<Boolean> = userInfoRepository.activeDonationFound

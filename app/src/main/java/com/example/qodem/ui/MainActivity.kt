@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
@@ -83,10 +85,6 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
               R.id.signOut -> {
-//                  CoroutineScope(Dispatchers.Main).launch {
-//                      viewModel.clearUserInfo()
-//                      viewModel.clearBloodBanks()
-//                  }
                   this@MainActivity.cacheDir.deleteRecursively()
                   onClick(navView.findViewById(R.id.signOut))
               }
@@ -94,6 +92,13 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        val headerView = navView.getHeaderView(0)
+        val userName: TextView = headerView.findViewById(R.id.text_user_name)
+        val userImage: ImageView = headerView.findViewById(R.id.image_user)
+        viewModel.userInfo.observe(this){
+            userName.text = "${it.firstName} ${it.lastName}"
+            //userImage.setImageResource(R.drawable.infographic1)
+        }
     }
 
     private fun bottomNavigationView(navController: NavController){
