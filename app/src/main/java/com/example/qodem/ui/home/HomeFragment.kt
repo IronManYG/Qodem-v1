@@ -9,13 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentHomeBinding
 import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import com.example.qodem.ui.CampaignBloodBankAdapter
-import com.example.qodem.ui.appointment.AppointmentLocationFragmentDirections
-import com.example.qodem.ui.appointment.PreScreeningQuestionFragmentDirections
+import com.example.qodem.ui.InfographicViewPagerAdapter
 import com.example.qodem.utils.CustomCountDownTimer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
 
     //
     private lateinit var campaignBloodBankAdapter: CampaignBloodBankAdapter
+    private lateinit var infographicViewPagerAdapter: InfographicViewPagerAdapter
 
     //
     private lateinit var _bloodBanks: List<BloodBank>
@@ -66,6 +67,7 @@ class HomeFragment : Fragment() {
 
         //
         setupRecyclerView()
+        setupInfographicViewPager()
 
         //
         binding.buttonBookAnAppointment.setOnClickListener {
@@ -108,7 +110,9 @@ class HomeFragment : Fragment() {
                     campaignBloodBanks.add(bloodBank)
                 }
             }
+
             campaignBloodBankAdapter.bloodBanks = campaignBloodBanks
+            infographicViewPagerAdapter.infographics = listOf(R.drawable.infographic1,R.drawable.infographic2,R.drawable.infographic3,R.drawable.infographic4)
 
             //
             updateAppointmentState(bloodBanks)
@@ -125,6 +129,12 @@ class HomeFragment : Fragment() {
         campaignBloodBankAdapter = CampaignBloodBankAdapter()
         adapter = campaignBloodBankAdapter
         layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    //
+    private fun setupInfographicViewPager() = binding.viewPagerInfographic.apply {
+        infographicViewPagerAdapter = InfographicViewPagerAdapter()
+        adapter = infographicViewPagerAdapter
     }
 
     private fun updateAppointmentState(bloodBanks: List<BloodBank>) {

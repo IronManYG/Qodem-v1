@@ -3,361 +3,376 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_donation_campaigns"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView" />
+            tools:context=".ui.home.HomeFragment">
 
-        <Button
-            android:id="@+id/button_find_donors"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="@string/home_find_donors"
-            android:textSize="10sp"
-            app:icon="@drawable/ic_search"
-            app:iconGravity="top"
-            app:layout_constraintEnd_toStartOf="@+id/button_add_donor"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView_donation_campaigns" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_donation_campaigns"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-        <Button
-            android:id="@+id/button_add_donor"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="@string/home_add_donor"
-            android:textSize="10sp"
-            app:icon="@drawable/ic_add"
-            app:iconGravity="top"
-            app:layout_constraintEnd_toStartOf="@+id/button_snap_and_share"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_find_donors"
-            app:layout_constraintTop_toTopOf="@+id/button_find_donors" />
+            <Button
+                android:id="@+id/button_find_donors"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:text="@string/home_find_donors"
+                android:textSize="10sp"
+                app:icon="@drawable/ic_search"
+                app:iconGravity="top"
+                app:layout_constraintEnd_toStartOf="@+id/button_add_donor"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView_donation_campaigns" />
 
-        <Button
-            android:id="@+id/button_snap_and_share"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="@string/home_snap_and_share"
-            android:textSize="10sp"
-            app:icon="@drawable/ic_camera_alt"
-            app:iconGravity="top"
-            app:layout_constraintEnd_toStartOf="@+id/button_blood_journey"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_add_donor"
-            app:layout_constraintTop_toTopOf="@+id/button_add_donor" />
+            <Button
+                android:id="@+id/button_add_donor"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:text="@string/home_add_donor"
+                android:textSize="10sp"
+                app:icon="@drawable/ic_add"
+                app:iconGravity="top"
+                app:layout_constraintEnd_toStartOf="@+id/button_snap_and_share"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_find_donors"
+                app:layout_constraintTop_toTopOf="@+id/button_find_donors" />
 
-        <Button
-            android:id="@+id/button_blood_journey"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:text="@string/home_blood_journey"
-            android:textSize="10sp"
-            app:icon="@drawable/ic_blood_drop"
-            app:iconGravity="top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_snap_and_share"
-            app:layout_constraintTop_toTopOf="@+id/button_snap_and_share" />
+            <Button
+                android:id="@+id/button_snap_and_share"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:text="@string/home_snap_and_share"
+                android:textSize="10sp"
+                app:icon="@drawable/ic_camera_alt"
+                app:iconGravity="top"
+                app:layout_constraintEnd_toStartOf="@+id/button_blood_journey"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_add_donor"
+                app:layout_constraintTop_toTopOf="@+id/button_add_donor" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/button_blood_journey"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:text="@string/home_blood_journey"
+                android:textSize="10sp"
+                app:icon="@drawable/ic_blood_drop"
+                app:iconGravity="top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_snap_and_share"
+                app:layout_constraintTop_toTopOf="@+id/button_snap_and_share" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_progress_donation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ProgressBar
-                    android:id="@+id/progressBar_donation"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_progress_donation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_no_appointment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
+                    <ProgressBar
+                        android:id="@+id/progressBar_donation"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
-                    android:id="@+id/button_book_an_appointment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_book_an__appointment"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_no_records_massage" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_no_appointment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/text_no_records_massage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="64dp"
-                    android:text="@string/no_records_massage"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <Button
+                        android:id="@+id/button_book_an_appointment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/button_book_an__appointment"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_no_records_massage" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_appointment_details"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:visibility="gone">
+                    <TextView
+                        android:id="@+id/text_no_records_massage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="64dp"
+                        android:text="@string/no_records_massage"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/text_appointment_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/appointment_info"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_remaining_days_field"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_appointment_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/text_remaining_days_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/remaining_days"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toStartOf="@+id/text_remaining_hours_label"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/text_appointment_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/appointment_info"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_remaining_days_field"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
 
-                <TextView
-                    android:id="@+id/text_remaining_hours_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/remaining_hours"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toStartOf="@+id/text_remaining_minutes_label"
-                    app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+                    <TextView
+                        android:id="@+id/text_remaining_days_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/remaining_days"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toStartOf="@+id/text_remaining_hours_label"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/text_remaining_minutes_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/remaining_minutes"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toStartOf="@+id/text_remaining_seconds_label"
-                    app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+                    <TextView
+                        android:id="@+id/text_remaining_hours_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/remaining_hours"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toStartOf="@+id/text_remaining_minutes_label"
+                        app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
 
-                <TextView
-                    android:id="@+id/text_remaining_seconds_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/remaining_seconds"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
+                    <TextView
+                        android:id="@+id/text_remaining_minutes_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="@string/remaining_minutes"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toStartOf="@+id/text_remaining_seconds_label"
+                        app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
 
-                <TextView
-                    android:id="@+id/text_remaining_days_field"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_days_label"
-                    app:layout_constraintHorizontal_bias="0.437"
-                    app:layout_constraintStart_toStartOf="@+id/text_remaining_days_label"
-                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_label" />
+                    <TextView
+                        android:id="@+id/text_remaining_seconds_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/remaining_seconds"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
 
-                <TextView
-                    android:id="@+id/text_remaining_hours_field"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_hours_label"
-                    app:layout_constraintStart_toStartOf="@+id/text_remaining_hours_label"
-                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_hours_label" />
+                    <TextView
+                        android:id="@+id/text_remaining_days_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/text_remaining_days_label"
+                        app:layout_constraintHorizontal_bias="0.437"
+                        app:layout_constraintStart_toStartOf="@+id/text_remaining_days_label"
+                        app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_label" />
 
-                <TextView
-                    android:id="@+id/text_remaining_minutes_field"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_minutes_label"
-                    app:layout_constraintStart_toStartOf="@+id/text_remaining_minutes_label"
-                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_minutes_label" />
+                    <TextView
+                        android:id="@+id/text_remaining_hours_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/text_remaining_hours_label"
+                        app:layout_constraintStart_toStartOf="@+id/text_remaining_hours_label"
+                        app:layout_constraintTop_toBottomOf="@+id/text_remaining_hours_label" />
 
-                <TextView
-                    android:id="@+id/text_remaining_seconds_field"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00"
-                    android:textColor="@color/primaryColor"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
-                    app:layout_constraintStart_toStartOf="@+id/text_remaining_seconds_label"
-                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_seconds_label" />
+                    <TextView
+                        android:id="@+id/text_remaining_minutes_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/text_remaining_minutes_label"
+                        app:layout_constraintStart_toStartOf="@+id/text_remaining_minutes_label"
+                        app:layout_constraintTop_toBottomOf="@+id/text_remaining_minutes_label" />
 
-                <View
-                    android:id="@+id/divider3"
-                    android:layout_width="0dp"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="?android:attr/listDivider"
-                    android:backgroundTint="@color/primaryDarkColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_field" />
+                    <TextView
+                        android:id="@+id/text_remaining_seconds_field"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
+                        app:layout_constraintStart_toStartOf="@+id/text_remaining_seconds_label"
+                        app:layout_constraintTop_toBottomOf="@+id/text_remaining_seconds_label" />
 
-                <ImageView
-                    android:id="@+id/image_blood_bank_appointment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
-                    app:layout_constraintTop_toBottomOf="@+id/divider3"
-                    app:srcCompat="@drawable/ic_local_hospital" />
+                    <View
+                        android:id="@+id/divider3"
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="?android:attr/listDivider"
+                        android:backgroundTint="@color/primaryDarkColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_field" />
 
-                <TextView
-                    android:id="@+id/text_appointment_place"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="al raqi unversity hospital"
-                    android:textColor="@color/primaryColor"
-                    app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_appointment"
-                    app:layout_constraintEnd_toStartOf="@+id/text_appointment_city"
-                    app:layout_constraintStart_toEndOf="@+id/image_blood_bank_appointment"
-                    app:layout_constraintTop_toTopOf="@+id/image_blood_bank_appointment" />
+                    <ImageView
+                        android:id="@+id/image_blood_bank_appointment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
+                        app:layout_constraintTop_toBottomOf="@+id/divider3"
+                        app:srcCompat="@drawable/ic_local_hospital" />
 
-                <TextView
-                    android:id="@+id/text_appointment_city"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="Khartoum"
-                    app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
-                    app:layout_constraintTop_toTopOf="@+id/text_appointment_place" />
+                    <TextView
+                        android:id="@+id/text_appointment_place"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="al raqi unversity hospital"
+                        android:textColor="@color/primaryColor"
+                        app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_appointment"
+                        app:layout_constraintEnd_toStartOf="@+id/text_appointment_city"
+                        app:layout_constraintStart_toEndOf="@+id/image_blood_bank_appointment"
+                        app:layout_constraintTop_toTopOf="@+id/image_blood_bank_appointment" />
 
-                <TextView
-                    android:id="@+id/text_appointment_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="Monday, 5 December 2022"
-                    app:layout_constraintEnd_toStartOf="@+id/divider4"
-                    app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
-                    app:layout_constraintTop_toBottomOf="@+id/image_blood_bank_appointment" />
+                    <TextView
+                        android:id="@+id/text_appointment_city"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="Khartoum"
+                        app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
+                        app:layout_constraintTop_toTopOf="@+id/text_appointment_place" />
 
-                <View
-                    android:id="@+id/divider4"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="-8dp"
-                    android:background="?android:attr/listDivider"
-                    android:backgroundTint="@color/primaryDarkColor"
-                    app:layout_constraintBottom_toBottomOf="@+id/text_appointment_date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_appointment_place" />
+                    <TextView
+                        android:id="@+id/text_appointment_date"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Monday, 5 December 2022"
+                        app:layout_constraintEnd_toStartOf="@+id/divider4"
+                        app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
+                        app:layout_constraintTop_toBottomOf="@+id/image_blood_bank_appointment" />
 
-                <TextView
-                    android:id="@+id/text_appointment_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="03:00 PM"
-                    app:layout_constraintStart_toEndOf="@+id/divider4"
-                    app:layout_constraintTop_toTopOf="@+id/text_appointment_date" />
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="2dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="-8dp"
+                        android:background="?android:attr/listDivider"
+                        android:backgroundTint="@color/primaryDarkColor"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_appointment_date"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_appointment_place" />
 
-                <ImageView
-                    android:id="@+id/text_appointment_qr"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/text_appointment_time"
-                    app:layout_constraintTop_toTopOf="@+id/text_appointment_date"
-                    app:srcCompat="@drawable/ic_qr_code" />
+                    <TextView
+                        android:id="@+id/text_appointment_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="03:00 PM"
+                        app:layout_constraintStart_toEndOf="@+id/divider4"
+                        app:layout_constraintTop_toTopOf="@+id/text_appointment_date" />
 
-                <Button
-                    android:id="@+id/button_verify_appointment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/verify_appointment"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    <ImageView
+                        android:id="@+id/text_appointment_qr"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/text_appointment_time"
+                        app:layout_constraintTop_toTopOf="@+id/text_appointment_date"
+                        app:srcCompat="@drawable/ic_qr_code" />
 
-                <Button
-                    android:id="@+id/button_cancel_appointment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@android:string/cancel"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button_verify_appointment" />
+                    <Button
+                        android:id="@+id/button_verify_appointment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/verify_appointment"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
-                <ImageView
-                    android:id="@+id/image_appointment_directions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/button_cancel_appointment"
-                    app:layout_constraintEnd_toStartOf="@+id/text_appointment_qr"
-                    app:layout_constraintStart_toEndOf="@+id/button_cancel_appointment"
-                    app:layout_constraintTop_toTopOf="@+id/button_cancel_appointment"
-                    app:srcCompat="@drawable/ic_map" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+                    <Button
+                        android:id="@+id/button_cancel_appointment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@android:string/cancel"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/button_verify_appointment" />
+
+                    <ImageView
+                        android:id="@+id/image_appointment_directions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/button_cancel_appointment"
+                        app:layout_constraintEnd_toStartOf="@+id/text_appointment_qr"
+                        app:layout_constraintStart_toEndOf="@+id/button_cancel_appointment"
+                        app:layout_constraintTop_toTopOf="@+id/button_cancel_appointment"
+                        app:srcCompat="@drawable/ic_map" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager_infographic"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_add_donor" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </layout>
