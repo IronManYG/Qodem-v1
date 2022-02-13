@@ -77,6 +77,11 @@ constructor(
     val donationUpdated: LiveData<Boolean>
         get() = _donationUpdated
 
+    private var _userInfoUpdated: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    val userInfoUpdated: LiveData<Boolean>
+        get() = _userInfoUpdated
+
     //
     private var _errorResultMessage: MutableLiveData<String?> = MutableLiveData<String?>()
 
@@ -223,6 +228,120 @@ constructor(
                     _updateErrorMessage.postValue(message)
                     Log.d(TAG, message!!)
                     _donationUpdated.postValue(false)
+                }
+            }
+        }
+    }
+
+    suspend fun updateUserName(userID: String, firstName: String, lastName: String, phoneNumber: String){
+        withContext(Dispatchers.IO) {
+            val updateStatusResult = userFirestore.updateUserName(userID,firstName,lastName)
+            when (updateStatusResult) {
+                is Result.Success -> {
+                    getUserInfo(phoneNumber)
+                    _userInfoUpdated.postValue(true)
+                    Log.d(TAG, "User name Successful Update!")
+                }
+                is Result.Error -> {
+                    val message = updateStatusResult.message
+                    _updateErrorMessage.postValue(message)
+                    Log.d(TAG, message!!)
+                    _userInfoUpdated.postValue(false)
+                }
+            }
+        }
+    }
+
+    suspend fun updateUserDateOFBirth(userID: String, dateOfBirth: String, phoneNumber: String){
+        withContext(Dispatchers.IO) {
+            val updateStatusResult = userFirestore.updateUserDateOFBirth(userID,dateOfBirth)
+            when (updateStatusResult) {
+                is Result.Success -> {
+                    getUserInfo(phoneNumber)
+                    _userInfoUpdated.postValue(true)
+                    Log.d(TAG, "User birth Date Successful Update!")
+                }
+                is Result.Error -> {
+                    val message = updateStatusResult.message
+                    _updateErrorMessage.postValue(message)
+                    Log.d(TAG, message!!)
+                    _userInfoUpdated.postValue(false)
+                }
+            }
+        }
+    }
+
+    suspend fun updateUserBloodType(userID: String, bloodType: String, phoneNumber: String){
+        withContext(Dispatchers.IO) {
+            val updateStatusResult = userFirestore.updateUserBloodType(userID,bloodType)
+            when (updateStatusResult) {
+                is Result.Success -> {
+                    getUserInfo(phoneNumber)
+                    _userInfoUpdated.postValue(true)
+                    Log.d(TAG, "User blood type Successful Update!")
+                }
+                is Result.Error -> {
+                    val message = updateStatusResult.message
+                    _updateErrorMessage.postValue(message)
+                    Log.d(TAG, message!!)
+                    _userInfoUpdated.postValue(false)
+                }
+            }
+        }
+    }
+
+    suspend fun updateUserGender(userID: String, gender: String, phoneNumber: String){
+        withContext(Dispatchers.IO) {
+            val updateStatusResult = userFirestore.updateUserGender(userID,gender)
+            when (updateStatusResult) {
+                is Result.Success -> {
+                    getUserInfo(phoneNumber)
+                    _userInfoUpdated.postValue(true)
+                    Log.d(TAG, "User gender Successful Update!")
+                }
+                is Result.Error -> {
+                    val message = updateStatusResult.message
+                    _updateErrorMessage.postValue(message)
+                    Log.d(TAG, message!!)
+                    _userInfoUpdated.postValue(false)
+                }
+            }
+        }
+    }
+
+    suspend fun updateUserCity(userID: String, city: String, phoneNumber: String){
+        withContext(Dispatchers.IO) {
+            val updateStatusResult = userFirestore.updateUserCity(userID,city)
+            when (updateStatusResult) {
+                is Result.Success -> {
+                    getUserInfo(phoneNumber)
+                    _userInfoUpdated.postValue(true)
+                    Log.d(TAG, "User city Successful Update!")
+                }
+                is Result.Error -> {
+                    val message = updateStatusResult.message
+                    _updateErrorMessage.postValue(message)
+                    Log.d(TAG, message!!)
+                    _userInfoUpdated.postValue(false)
+                }
+            }
+        }
+    }
+
+    suspend fun updateUserID(userID: String, idType: String, idNumber: String, phoneNumber: String){
+        withContext(Dispatchers.IO) {
+            val updateStatusResult = userFirestore.updateUserID(userID,idType,idNumber)
+            when (updateStatusResult) {
+                is Result.Success -> {
+                    getUserInfo(phoneNumber)
+                    _userInfoUpdated.postValue(true)
+                    Log.d(TAG, "User id type id number Successful Update!")
+                }
+                is Result.Error -> {
+                    val message = updateStatusResult.message
+                    _updateErrorMessage.postValue(message)
+                    Log.d(TAG, message!!)
+                    _userInfoUpdated.postValue(false)
                 }
             }
         }

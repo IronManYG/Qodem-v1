@@ -93,4 +93,58 @@
             android:id="@+id/action_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/userInfoFragment"
+        android:name="com.example.qodem.ui.settingsandoptions.userinfo.UserInfoFragment"
+        android:label="user_info_fragment"
+        tools:layout="@layout/user_info_fragment" >
+        <action
+            android:id="@+id/action_userInfoFragment_to_editNameFragment"
+            app:destination="@id/editNameFragment" />
+        <action
+            android:id="@+id/action_userInfoFragment_to_editDateOfBirthFragment"
+            app:destination="@id/editDateOfBirthFragment" />
+        <action
+            android:id="@+id/action_userInfoFragment_to_editBloodTypeFragment"
+            app:destination="@id/editBloodTypeFragment" />
+        <action
+            android:id="@+id/action_userInfoFragment_to_editGenderFragment"
+            app:destination="@id/editGenderFragment" />
+        <action
+            android:id="@+id/action_userInfoFragment_to_editCityFragment"
+            app:destination="@id/editCityFragment" />
+        <action
+            android:id="@+id/action_userInfoFragment_to_editIdFragment"
+            app:destination="@id/editIdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editBloodTypeFragment"
+        android:name="com.example.qodem.ui.settingsandoptions.userinfo.EditBloodTypeFragment"
+        android:label="fragment_edit_blood_type"
+        tools:layout="@layout/fragment_edit_blood_type" />
+    <fragment
+        android:id="@+id/editCityFragment"
+        android:name="com.example.qodem.ui.settingsandoptions.userinfo.EditCityFragment"
+        android:label="fragment_edit_city"
+        tools:layout="@layout/fragment_edit_city" />
+    <fragment
+        android:id="@+id/editDateOfBirthFragment"
+        android:name="com.example.qodem.ui.settingsandoptions.userinfo.EditDateOfBirthFragment"
+        android:label="fragment_edit_date_of_birth"
+        tools:layout="@layout/fragment_edit_date_of_birth" />
+    <fragment
+        android:id="@+id/editGenderFragment"
+        android:name="com.example.qodem.ui.settingsandoptions.userinfo.EditGenderFragment"
+        android:label="fragment_edit_gender"
+        tools:layout="@layout/fragment_edit_gender" />
+    <fragment
+        android:id="@+id/editIdFragment"
+        android:name="com.example.qodem.ui.settingsandoptions.userinfo.EditIdFragment"
+        android:label="fragment_edit_id"
+        tools:layout="@layout/fragment_edit_id" />
+    <fragment
+        android:id="@+id/editNameFragment"
+        android:name="com.example.qodem.ui.settingsandoptions.userinfo.EditNameFragment"
+        android:label="fragment_edit_name"
+        tools:layout="@layout/fragment_edit_name" />
 </navigation>

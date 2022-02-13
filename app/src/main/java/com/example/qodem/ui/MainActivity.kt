@@ -19,6 +19,7 @@ import com.example.qodem.R
 import com.example.qodem.databinding.ActivityMainBinding
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.home.HomeViewModel
+import com.example.qodem.ui.settingsandoptions.userinfo.UserInfoFragment
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,6 +99,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.userInfo.observe(this){
             userName.text = "${it.firstName} ${it.lastName}"
             //userImage.setImageResource(R.drawable.infographic1)
+        }
+
+        headerView.setOnClickListener {
+            navController.navigate(R.id.userInfoFragment)
+            binding.drawerLayout.closeDrawers()
         }
     }
 
