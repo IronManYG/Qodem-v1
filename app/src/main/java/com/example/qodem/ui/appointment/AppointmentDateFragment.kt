@@ -111,7 +111,6 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
                                     Toast.makeText(requireActivity(), viewModel.saveErrorMessage.value, Toast.LENGTH_SHORT).show()
                                 }
                             }
-
                         }
                         binding.progressBar2.visibility = View.GONE
                         binding.buttonBookAppointment.isEnabled = true

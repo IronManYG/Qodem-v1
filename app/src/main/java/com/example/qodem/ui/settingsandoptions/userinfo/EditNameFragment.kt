@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
+import com.example.qodem.databinding.FragmentEditNameBinding
 import com.example.qodem.databinding.UserInfoFragmentBinding
+import com.example.qodem.ui.appointment.AppointmentDateFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -21,7 +25,7 @@ class EditNameFragment : Fragment() {
 
     private val viewModel: UserInfoViewModel by viewModels()
 
-    private lateinit var binding: EditNameFragmentBinding
+    private lateinit var binding: FragmentEditNameBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +34,41 @@ class EditNameFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        binding = EditNameFragmentBinding.inflate(layoutInflater)
+        binding = FragmentEditNameBinding.inflate(layoutInflater)
 
-        return inflater.inflate(R.layout.fragment_edit_name, container, false)
+        viewModel.userInfo.observe(viewLifecycleOwner){ userInfo ->
+            binding.apply {
+                editTextFirstNameField.setText(userInfo.firstName)
+                editTextLastNameField.setText(userInfo.lastName)
+            }
+
+            binding.buttonSave.setOnClickListener {
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.IO) {
+                        viewModel.updateUserName(
+                            userInfo.id,
+                            binding.editTextFirstNameField.text.toString(),
+                            binding.editTextLastNameField.text.toString(),
+                            userInfo.phoneNumber
+                        )
+                    }
+                    viewModel.userInfoUpdated.observe(viewLifecycleOwner){
+                        when (it) {
+                            true -> {
+                                findNavController().popBackStack()
+                            }
+                            false -> {
+                                Toast.makeText(requireActivity(), viewModel.errorResultMessage.value, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return binding.root
     }
 
 }
