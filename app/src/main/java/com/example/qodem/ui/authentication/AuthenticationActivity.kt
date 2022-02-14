@@ -75,10 +75,10 @@ class AuthenticationActivity : AppCompatActivity() {
                                         finish()
 
                                         Log.e(TAG, "user not founded")
+                                        binding.authButton.visibility = View.VISIBLE
                                     }
                                 }
                                 binding.progressBar3.visibility = View.GONE
-                                binding.authButton.visibility = View.VISIBLE
                             })
                             // getting user donations for fire store if there is user info
                             if (viewModel.userInfoFoundState.value == true) {

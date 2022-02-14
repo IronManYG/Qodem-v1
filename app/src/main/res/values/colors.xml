@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primaryColorBackground">#ffebee</color>
     <color name="primaryLightColor">#fa4e59</color>
     <color name="primaryColor">#c10230</color>
     <color name="primaryDarkColor">#89000a</color>
+    <color name="secondaryColorBackground">#eceff1</color>
     <color name="secondaryLightColor">#8aadc7</color>
     <color name="secondaryColor">#5b7e96</color>
     <color name="secondaryDarkColor">#2e5268</color>
