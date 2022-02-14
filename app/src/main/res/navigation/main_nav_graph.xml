@@ -12,10 +12,18 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_preScreeningRequestFragment"
-            app:destination="@id/preScreeningRequestFragment" />
+            app:destination="@id/preScreeningRequestFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left" />
         <action
             android:id="@+id/action_homeFragment_to_authenticationAppointmentFragment"
-            app:destination="@id/authenticationAppointmentFragment" />
+            app:destination="@id/authenticationAppointmentFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/locationFragment"
@@ -24,7 +32,11 @@
         tools:layout="@layout/fragment_location" >
         <action
             android:id="@+id/action_locationFragment_to_preScreeningRequestFragment"
-            app:destination="@id/preScreeningRequestFragment" />
+            app:destination="@id/preScreeningRequestFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
@@ -38,7 +50,12 @@
         tools:layout="@layout/fragment_pre_screening_request" >
         <action
             android:id="@+id/action_preScreeningRequestFragment_to_preScreeningQuestion"
-            app:destination="@id/preScreeningQuestion" />
+            app:destination="@id/preScreeningQuestion"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left"
+            app:popUpTo="@id/homeFragment" />
         <argument
             android:name="bloodBankID"
             app:argType="integer" />
@@ -50,13 +67,27 @@
         tools:layout="@layout/fragment_pre_screening_question" >
         <action
             android:id="@+id/action_preScreeningQuestion_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left" />
         <action
             android:id="@+id/action_preScreeningQuestion_to_appointmentLocationFragment"
-            app:destination="@id/appointmentLocationFragment" />
+            app:destination="@id/appointmentLocationFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left"
+            app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_preScreeningQuestion_to_appointmentDataFragment"
-            app:destination="@id/appointmentDataFragment" />
+            app:destination="@id/appointmentDataFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left"
+            app:popUpTo="@id/homeFragment" />
         <argument
             android:name="bloodBankID"
             app:argType="integer" />
@@ -68,7 +99,11 @@
         tools:layout="@layout/fragment_appointment_location">
         <action
             android:id="@+id/action_appointmentLocationFragment_to_appointmentDataFragment"
-            app:destination="@id/appointmentDataFragment" />
+            app:destination="@id/appointmentDataFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/appointmentDataFragment"
@@ -80,7 +115,10 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_appointmentDataFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/authenticationAppointmentFragment"
@@ -91,7 +129,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@anim/fui_slide_in_right"
+            app:popExitAnim="@anim/fui_slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/userInfoFragment"
@@ -100,22 +142,47 @@
         tools:layout="@layout/user_info_fragment" >
         <action
             android:id="@+id/action_userInfoFragment_to_editNameFragment"
-            app:destination="@id/editNameFragment" />
+            app:destination="@id/editNameFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_userInfoFragment_to_editDateOfBirthFragment"
-            app:destination="@id/editDateOfBirthFragment" />
+            app:destination="@id/editDateOfBirthFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:launchSingleTop="false"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_userInfoFragment_to_editBloodTypeFragment"
-            app:destination="@id/editBloodTypeFragment" />
+            app:destination="@id/editBloodTypeFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_userInfoFragment_to_editGenderFragment"
-            app:destination="@id/editGenderFragment" />
+            app:destination="@id/editGenderFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_userInfoFragment_to_editCityFragment"
-            app:destination="@id/editCityFragment" />
+            app:destination="@id/editCityFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_userInfoFragment_to_editIdFragment"
-            app:destination="@id/editIdFragment" />
+            app:destination="@id/editIdFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/editBloodTypeFragment"
