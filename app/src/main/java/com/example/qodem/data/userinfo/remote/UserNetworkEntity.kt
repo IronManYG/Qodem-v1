@@ -16,6 +16,8 @@ class UserNetworkEntity(
 
     var birthDate: String = "",
 
+    var gender: String = "",
+
     var city:String = "",
 
     var phoneNumber: String = "",

@@ -154,6 +154,7 @@ class SignUpActivity : AppCompatActivity() {
                 lastName = binding.textLastNameLabel.editText?.text.toString(),
                 bloodType = binding.menuBloodType.editText?.text.toString(),
                 birthDate = binding.textDateOfBirthLabel.editText?.text.toString(),
+                gender = binding.menuGender.editText?.text.toString(),
                 city = binding.menuCity.editText?.text.toString(),
                 phoneNumber = userPhone!!,
                 IDType = binding.menuIdType.editText?.text.toString(),

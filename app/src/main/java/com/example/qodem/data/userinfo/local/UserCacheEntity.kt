@@ -27,6 +27,9 @@ class UserCacheEntity(
     @ColumnInfo(name = "birthDate")
     var birthDate: String,
 
+    @ColumnInfo(name = "gender")
+    var gender: String,
+
     @ColumnInfo(name = "city")
     var city:String,
 

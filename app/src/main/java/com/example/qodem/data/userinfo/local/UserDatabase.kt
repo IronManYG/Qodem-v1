@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.qodem.data.Converters
 
-@Database(entities = [UserCacheEntity::class, DonationsCacheEntity::class], version = 5)
+@Database(entities = [UserCacheEntity::class, DonationsCacheEntity::class], version = 6)
 @TypeConverters(Converters::class)
 abstract class UserDatabase: RoomDatabase()  {
 

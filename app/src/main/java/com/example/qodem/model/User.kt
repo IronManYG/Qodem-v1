@@ -7,6 +7,7 @@ data class User(
     var imageName: String?,
     var bloodType: String,
     var birthDate: String,
+    var gender: String,
     var city:String,
     var phoneNumber: String,
     var numberOfDonations: Int,
