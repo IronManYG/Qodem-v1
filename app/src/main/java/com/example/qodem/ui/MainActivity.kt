@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when(it.itemId){
               R.id.signOut -> {
-                  this@MainActivity.cacheDir.deleteRecursively()
                   onClick(navView.findViewById(R.id.signOut))
               }
             }

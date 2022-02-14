@@ -104,6 +104,8 @@ constructor(
             when(networkUser) {
                 is Result.Success -> {
                     val userInfo = userNetworkMapper.mapFromEntity(networkUser.data)
+                    //
+                    userDao.deleteUserInfo()
                     userDao.saveUserInfo(userCacheMapper.mapToEntity(userInfo))
                     _userInfoFound.postValue(true)
                     Log.d(TAG, "User found!")
@@ -155,6 +157,8 @@ constructor(
                             _activeDonationFound.postValue(true)
                         }
                     }
+                    //
+                    userDao.deleteAllDonations()
                     //
                     userDao.saveDonations(donationsCacheMapper.mapToEntityList(donations))
                     _donationsFound.postValue(true)
