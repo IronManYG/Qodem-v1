@@ -1,13 +1,36 @@
 package com.example.qodem.ui.settingsandoptions.userinfo
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.qodem.R
+import android.widget.EditText
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.qodem.databinding.FragmentEditDateOfBirthBinding
+import com.example.qodem.ui.signup.SignUpActivity
+import com.google.android.material.datepicker.MaterialDatePicker
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import java.util.*
+import kotlin.properties.Delegates
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class EditDateOfBirthFragment : Fragment() {
+
+    companion object {
+        const val TAG = "EditDateOfBirthFragment"
+    }
+
+    private val viewModel: UserInfoViewModel by viewModels()
+
+    private lateinit var binding: FragmentEditDateOfBirthBinding
+
+    private var valueValidToSignUp by Delegates.notNull<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,8 +39,105 @@ class EditDateOfBirthFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_date_of_birth, container, false)
+        binding = FragmentEditDateOfBirthBinding.inflate(layoutInflater)
+
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setInputMode(MaterialDatePicker.INPUT_MODE_TEXT)
+                .setTitleText("Enter Date")
+                .build()
+
+        datePicker.addOnPositiveButtonClickListener {
+            val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+            calendar.time = Date(it)
+            calendar.add(Calendar.MONTH, 1)
+            val birthDate = "${calendar.get(Calendar.DAY_OF_MONTH)}/" +
+                    "${calendar.get(Calendar.MONTH)}/" +
+                    "${calendar.get(Calendar.YEAR)}"
+            binding.editTextDateOfBirthField.setText(birthDate)
+        }
+
+        // Clear the error once more than x (textLength) characters are typed.
+        binding.textDateOfBirthLabel.setStartIconOnClickListener {
+            // Show date picker in calendar
+            datePicker.show(parentFragmentManager, SignUpActivity.TAG)
+            // Clear the error.
+            binding.editTextDateOfBirthField.error = null
+        }
+
+        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+            binding.editTextDateOfBirthField.setText(userInfo.birthDate)
+
+            binding.buttonSave.setOnClickListener {
+                // Check Error State of date field
+                changeErrorStateInEditTextView(
+                    binding.editTextDateOfBirthField,
+                    6,
+                    "Enter your birth date"
+                )
+
+                // Check Value of date field
+                valueValidToSignUp = isAllEditTextValueValid()
+
+                // Update value if all value are valid
+                if (valueValidToSignUp) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        withContext(Dispatchers.IO) {
+                            viewModel.updateUserDateOFBirth(
+                                userInfo.id,
+                                binding.editTextDateOfBirthField.text.toString(),
+                                userInfo.phoneNumber
+                            )
+                        }
+                    }
+                    viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
+                        when (it) {
+                            true -> {
+                                findNavController().popBackStack()
+                            }
+                            false -> {
+                                Toast.makeText(
+                                    requireActivity(),
+                                    viewModel.errorResultMessage.value,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Please enter your birth date",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+        return binding.root
+    }
+
+    private fun isEditTextValueValid(text: Editable?, textLength: Int): Boolean {
+        return text != null && text.length >= textLength
+    }
+
+    private fun changeErrorStateInEditTextView(
+        editText: EditText,
+        textLength: Int,
+        errorMassage: String,
+    ) {
+        // Set an error if the EditTextValue is less than x (textLength) characters.
+        if (!isEditTextValueValid(editText.text, textLength)) {
+            editText.error = errorMassage
+        } else {
+            // Clear the error.
+            editText.error = null
+        }
+    }
+
+    private fun isAllEditTextValueValid(): Boolean {
+        return isEditTextValueValid(binding.editTextDateOfBirthField.text, 6)
     }
 }

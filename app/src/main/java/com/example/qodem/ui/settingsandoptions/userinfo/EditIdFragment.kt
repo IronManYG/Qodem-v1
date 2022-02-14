@@ -1,13 +1,38 @@
 package com.example.qodem.ui.settingsandoptions.userinfo
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.EditText
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
+import com.example.qodem.databinding.FragmentEditDateOfBirthBinding
+import com.example.qodem.databinding.FragmentEditIdBinding
+import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import kotlin.properties.Delegates
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class EditIdFragment : Fragment() {
+
+    companion object {
+        const val TAG = "EditIdFragment"
+    }
+
+    private val viewModel: UserInfoViewModel by viewModels()
+
+    private lateinit var binding: FragmentEditIdBinding
+
+    private var valueValidToSignUp by Delegates.notNull<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,8 +41,117 @@ class EditIdFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_id, container, false)
+        binding = FragmentEditIdBinding.inflate(layoutInflater)
+
+        val idItems = resources.getStringArray(R.array.id_types)
+
+        setItemsToExposedDropdownMenu(idItems, binding.menuIdType)
+
+        // Clear the error once more than x (textLength) characters are typed.
+        binding.menuIdTypeField.setOnDismissListener {
+            // Clear the error.
+            binding.menuIdType.editText?.error = null
+            // Enable edit text in ID number field
+            binding.menuIdType.editText?.text.isNullOrEmpty().let {
+                when (it) {
+                    true -> binding.editTextIdNumberField.isEnabled = false
+                    false -> binding.editTextIdNumberField.isEnabled = true
+                }
+            }
+        }
+
+        // Clear the error once more than x (textLength) characters are typed.
+        binding.editTextIdNumberField.setOnKeyListener { _, _, _ ->
+            // Clear the error.
+            binding.editTextIdNumberField.error = null
+            false
+        }
+
+        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+
+            binding.buttonSave.setOnClickListener {
+                // Check Error State of id type field
+                changeErrorStateInEditTextView(
+                    binding.menuIdType.editText!!,
+                    1,
+                    "Enter Your ID Type"
+                )
+                // Check Error State of id number field
+                changeErrorStateInEditTextView(
+                    binding.editTextIdNumberField,
+                    9,
+                    "Minimum Character are 9"
+                )
+
+                // Check Value of id fields
+                valueValidToSignUp = isAllEditTextValueValid()
+
+                // Update value if all value are valid
+                if (valueValidToSignUp) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        withContext(Dispatchers.IO) {
+                            viewModel.updateUserID(
+                                userInfo.id,
+                                binding.menuIdTypeField.text.toString(),
+                                binding.editTextIdNumberField.text.toString(),
+                                userInfo.phoneNumber
+                            )
+                        }
+                    }
+                    viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
+                        when (it) {
+                            true -> {
+                                findNavController().popBackStack()
+                            }
+                            false -> {
+                                Toast.makeText(
+                                    requireActivity(),
+                                    viewModel.errorResultMessage.value,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Please enter your id detail",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+        return binding.root
+    }
+
+    private fun setItemsToExposedDropdownMenu(items: Array<String>, layout: TextInputLayout) {
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        (layout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+    }
+
+    private fun isEditTextValueValid(text: Editable?, textLength: Int): Boolean {
+        return text != null && text.length >= textLength
+    }
+
+    private fun changeErrorStateInEditTextView(
+        editText: EditText,
+        textLength: Int,
+        errorMassage: String,
+    ) {
+        // Set an error if the EditTextValue is less than x (textLength) characters.
+        if (!isEditTextValueValid(editText.text, textLength)) {
+            editText.error = errorMassage
+        } else {
+            // Clear the error.
+            editText.error = null
+        }
+    }
+
+    private fun isAllEditTextValueValid(): Boolean {
+        return  isEditTextValueValid(binding.menuIdType.editText!!.text, 1) &&
+                isEditTextValueValid(binding.editTextIdNumberField.text, 9)
     }
 }

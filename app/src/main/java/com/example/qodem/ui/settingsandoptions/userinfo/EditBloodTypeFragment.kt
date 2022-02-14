@@ -1,12 +1,14 @@
 package com.example.qodem.ui.settingsandoptions.userinfo
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +18,7 @@ import com.example.qodem.databinding.FragmentEditNameBinding
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -28,6 +31,8 @@ class EditBloodTypeFragment : Fragment() {
     private val viewModel: UserInfoViewModel by viewModels()
 
     private lateinit var binding: FragmentEditBloodTypeBinding
+
+    private var valueValidToSignUp by Delegates.notNull<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,17 +49,35 @@ class EditBloodTypeFragment : Fragment() {
 
         setItemsToExposedDropdownMenu(bloodTypeItems, binding.menuBloodType)
 
+        // Clear the error once more than x (textLength) characters are typed.
+        binding.menuBloodTypeField.setOnDismissListener {
+            // Clear the error.
+            binding.menuBloodType.editText?.error = null
+        }
+
         viewModel.userInfo.observe(viewLifecycleOwner){ userInfo ->
-            binding.menuBloodTypeField.setText(userInfo.bloodType)
 
             binding.buttonSave.setOnClickListener {
-                CoroutineScope(Dispatchers.Main).launch {
-                    withContext(Dispatchers.IO) {
-                        viewModel.updateUserBloodType(
-                            userInfo.id,
-                            binding.menuBloodTypeField.text.toString(),
-                            userInfo.phoneNumber
-                        )
+                // Check Error State of blood type field
+                changeErrorStateInEditTextView(
+                    binding.menuBloodType.editText!!,
+                    1,
+                    "Enter your Blood Type"
+                )
+
+                // Check Value of blood Type field
+                valueValidToSignUp = isAllEditTextValueValid()
+
+                // Update value if all value are valid
+                if (valueValidToSignUp) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        withContext(Dispatchers.IO) {
+                            viewModel.updateUserBloodType(
+                                userInfo.id,
+                                binding.menuBloodTypeField.text.toString(),
+                                userInfo.phoneNumber
+                            )
+                        }
                     }
                     viewModel.userInfoUpdated.observe(viewLifecycleOwner){
                         when (it) {
@@ -66,6 +89,12 @@ class EditBloodTypeFragment : Fragment() {
                             }
                         }
                     }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Please enter your Blood Type",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
@@ -75,5 +104,27 @@ class EditBloodTypeFragment : Fragment() {
     private fun setItemsToExposedDropdownMenu(items: Array<String>, layout: TextInputLayout) {
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         (layout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+    }
+
+    private fun isEditTextValueValid(text: Editable?, textLength: Int): Boolean {
+        return text != null && text.length >= textLength
+    }
+
+    private fun changeErrorStateInEditTextView(
+        editText: EditText,
+        textLength: Int,
+        errorMassage: String,
+    ) {
+        // Set an error if the EditTextValue is less than x (textLength) characters.
+        if (!isEditTextValueValid(editText.text, textLength)) {
+            editText.error = errorMassage
+        } else {
+            // Clear the error.
+            editText.error = null
+        }
+    }
+
+    private fun isAllEditTextValueValid(): Boolean {
+        return isEditTextValueValid(binding.menuBloodType.editText!!.text, 1)
     }
 }
