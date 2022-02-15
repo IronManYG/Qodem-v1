@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -93,6 +94,7 @@ class AuthenticationActivity : AppCompatActivity() {
                 else ->{
                     binding.progressBar3.visibility = View.GONE
                     binding.authButton.visibility = View.VISIBLE
+                    binding.authenticationLayout.visibility = View.VISIBLE
                     Log.e(TAG,"Authentication state that doesn't require any UI change $authenticationState")
                 }
             }
