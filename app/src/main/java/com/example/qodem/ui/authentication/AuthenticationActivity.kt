@@ -110,6 +110,7 @@ class AuthenticationActivity : AppCompatActivity() {
             .createSignInIntentBuilder()
             // ... options ...
             .setAvailableProviders(providers)
+            .setTheme(R.style.Theme_Qodem)
             .build()
         signInLauncher.launch(signInIntent)
     }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColorBackground"
     android:padding="16dp"
     tools:context=".ui.appointment.AppointmentDateFragment">
 
@@ -12,6 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select Day"
+        android:textIsSelectable="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,6 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select Time"
+        android:textIsSelectable="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView_day_selector" />
 
@@ -42,6 +49,7 @@
 
     <Button
         android:id="@+id/button_book_appointment"
+        style="@style/Widget.Qodem.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_book_an__appointment"

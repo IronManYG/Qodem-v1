@@ -61,7 +61,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_last_name_label"
-            app:startIconDrawable="@drawable/ic_menu_calendar">
+            app:startIconDrawable="@drawable/ic_menu_calendar"
+            app:startIconTint="@color/primaryColor">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_date_of_birth_field"
@@ -178,11 +179,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:text="@android:string/cancel"
+            android:textColor="@color/secondaryColor"
             app:layout_constraintEnd_toStartOf="@+id/button_sign_up"
             app:layout_constraintTop_toBottomOf="@+id/text_id_number_label" />
 
         <Button
             android:id="@+id/button_sign_up"
+            style="@style/Widget.Qodem.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_up"

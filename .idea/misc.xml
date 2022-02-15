@@ -17,6 +17,12 @@
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_appointment_date.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_appointment_location.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_authentication_appointment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_edit_blood_type.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_edit_city.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_edit_date_of_birth.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_edit_gender.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_edit_id.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_edit_name.xml" value="0.36102564102564105" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_location.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/fragment_pre_screening_question.xml" value="0.25" />
@@ -25,12 +31,14 @@
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/item_blood_bank.xml" value="0.5255544840887174" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/item_day.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/item_day_date.xml" value="0.67" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/item_infographic.xml" value="0.36102564102564105" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/item_marker_info_contents.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/item_time_date.xml" value="0.48922863099374564" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/list_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/nav_drawer_header.xml" value="0.5" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/nav_header.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/test.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/layout/user_info_fragment.xml" value="0.36102564102564105" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/menu/bottom_nav.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/menu/menu_bottom_nav.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Hussain/AndroidStudioProjects/Qodem/app/src/main/res/menu/menu_drawer_nav.xml" value="0.36666666666666664" />

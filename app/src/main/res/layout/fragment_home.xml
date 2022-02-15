@@ -23,15 +23,13 @@
 
             <Button
                 android:id="@+id/button_find_donors"
+                style="@style/Widget.Qodem.Button"
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/secondaryLightColor"
                 android:text="@string/home_find_donors"
-                android:textColor="@color/secondaryDarkColor"
                 android:textSize="10sp"
                 app:icon="@drawable/ic_search"
                 app:iconGravity="top"
-                app:iconTint="@color/secondaryDarkColor"
                 app:layout_constraintEnd_toStartOf="@+id/button_add_donor"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,15 +37,13 @@
 
             <Button
                 android:id="@+id/button_add_donor"
+                style="@style/Widget.Qodem.Button"
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/secondaryLightColor"
                 android:text="@string/home_add_donor"
-                android:textColor="@color/secondaryDarkColor"
                 android:textSize="10sp"
                 app:icon="@drawable/ic_add"
                 app:iconGravity="top"
-                app:iconTint="@color/secondaryDarkColor"
                 app:layout_constraintEnd_toStartOf="@+id/button_snap_and_share"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_find_donors"
@@ -55,15 +51,13 @@
 
             <Button
                 android:id="@+id/button_snap_and_share"
+                style="@style/Widget.Qodem.Button"
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/secondaryLightColor"
                 android:text="@string/home_snap_and_share"
-                android:textColor="@color/secondaryDarkColor"
                 android:textSize="10sp"
                 app:icon="@drawable/ic_camera_alt"
                 app:iconGravity="top"
-                app:iconTint="@color/secondaryDarkColor"
                 app:layout_constraintEnd_toStartOf="@+id/button_blood_journey"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_add_donor"
@@ -71,15 +65,13 @@
 
             <Button
                 android:id="@+id/button_blood_journey"
+                style="@style/Widget.Qodem.Button"
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/secondaryLightColor"
                 android:text="@string/home_blood_journey"
-                android:textColor="@color/secondaryDarkColor"
                 android:textSize="10sp"
                 app:icon="@drawable/ic_blood_drop"
                 app:iconGravity="top"
-                app:iconTint="@color/secondaryDarkColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_snap_and_share"
@@ -131,6 +123,7 @@
 
                     <Button
                         android:id="@+id/button_book_an_appointment"
+                        style="@style/Widget.Qodem.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/button_book_an__appointment"
@@ -272,6 +265,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:tint="@color/primaryColor"
                         app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
                         app:layout_constraintTop_toBottomOf="@+id/divider3"
                         app:srcCompat="@drawable/ic_local_hospital" />
@@ -283,7 +277,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:text="al raqi unversity hospital"
-                        android:textColor="@color/primaryColor"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_appointment"
                         app:layout_constraintEnd_toStartOf="@+id/text_appointment_city"
                         app:layout_constraintStart_toEndOf="@+id/image_blood_bank_appointment"
@@ -336,6 +330,7 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
+                        android:tint="@color/primaryColor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/text_appointment_time"
@@ -344,6 +339,7 @@
 
                     <Button
                         android:id="@+id/button_verify_appointment"
+                        style="@style/Widget.Qodem.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/verify_appointment"
@@ -353,6 +349,7 @@
 
                     <Button
                         android:id="@+id/button_cancel_appointment"
+                        style="@style/Widget.Qodem.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -367,6 +364,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
+                        android:tint="@color/primaryColor"
                         app:layout_constraintBottom_toBottomOf="@+id/button_cancel_appointment"
                         app:layout_constraintEnd_toStartOf="@+id/text_appointment_qr"
                         app:layout_constraintStart_toEndOf="@+id/button_cancel_appointment"

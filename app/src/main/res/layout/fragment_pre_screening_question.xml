@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColorBackground"
     tools:context=".ui.appointment.PreScreeningQuestionFragment">
 
     <TextView
@@ -290,6 +291,7 @@
 
     <Button
         android:id="@+id/button_book_an_appointment"
+        style="@style/Widget.Qodem.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

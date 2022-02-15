@@ -30,6 +30,7 @@
 
     <Button
         android:id="@+id/button_book_an__appointment"
+        style="@style/Widget.Qodem.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
