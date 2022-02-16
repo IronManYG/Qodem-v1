@@ -26,13 +26,14 @@ To verify blood donation scan this QR code
 
 Setup Project
 ------------
-To use poject privacly & make map work you need to do these steps:
+
+To use project in private & make the map work you need to do these steps:
 
 1- Delete google-services.json form /AndroidStudioProjects/Qodem/app/src folder(from project view).
 
-2- In android studio tool bar open tools and click Firebase.
+2- In the android studio toolbar open tools and click Firebase.
 
-3- In Firebase assistant window click in cloud firestore and choose Get started with Cloud Firestore (KOLILIN).
+3- In the Firebase assistant window click on cloud firestore and choose to Get started with Cloud Firestore (KOLILIN).
 
 4- Do the required steps as explained Get started with Cloud Firestore (KOLILIN).
 
