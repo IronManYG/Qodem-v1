@@ -30,13 +30,11 @@ constructor(
 
     //
     private var _bloodBanksFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-
     val bloodBanksFound: LiveData<Boolean>
         get() = _bloodBanksFound
 
     //
     private var _errorResultMessage: MutableLiveData<String?> = MutableLiveData<String?>()
-
     val errorResultMessage: LiveData<String?>
         get() = _errorResultMessage
 
@@ -60,7 +58,7 @@ constructor(
         }
     }
 
-    suspend fun clearBloodBanks(){
+    suspend fun clearBloodBanks() {
         withContext(Dispatchers.IO) {
             bloodBankDao.deleteAllBloodBanks()
         }

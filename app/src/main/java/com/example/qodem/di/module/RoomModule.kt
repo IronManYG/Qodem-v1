@@ -24,7 +24,8 @@ object RoomModule {
             .databaseBuilder(
                 context,
                 BloodBankDatabase::class.java,
-                BloodBankDatabase.DATABASE_NAME,)
+                BloodBankDatabase.DATABASE_NAME,
+            )
             .fallbackToDestructiveMigration()
             .build()
     }
@@ -42,7 +43,8 @@ object RoomModule {
             .databaseBuilder(
                 context,
                 UserDatabase::class.java,
-                UserDatabase.DATABASE_NAME,)
+                UserDatabase.DATABASE_NAME,
+            )
             .fallbackToDestructiveMigration()
             .build()
     }

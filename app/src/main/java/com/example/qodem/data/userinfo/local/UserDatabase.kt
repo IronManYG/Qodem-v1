@@ -7,12 +7,12 @@ import com.example.qodem.data.Converters
 
 @Database(entities = [UserCacheEntity::class, DonationsCacheEntity::class], version = 6)
 @TypeConverters(Converters::class)
-abstract class UserDatabase: RoomDatabase()  {
+abstract class UserDatabase : RoomDatabase() {
 
-    abstract fun userDao() : UserDao
+    abstract fun userDao(): UserDao
 
-    companion object{
-        const  val DATABASE_NAME: String = "user_db"
+    companion object {
+        const val DATABASE_NAME: String = "user_db"
     }
 
 }

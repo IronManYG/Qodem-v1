@@ -1,9 +1,9 @@
 package com.example.qodem.di.module
 
-import com.example.qodem.data.bloodbanks.local.BloodBankDao
 import com.example.qodem.data.bloodbanks.local.BloodBankCacheMapper
-import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
+import com.example.qodem.data.bloodbanks.local.BloodBankDao
 import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
+import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
 import com.example.qodem.data.userinfo.local.DonationsCacheMapper
 import com.example.qodem.data.userinfo.local.UserCacheMapper
@@ -30,7 +30,12 @@ object RepositoryModule {
         bloodBankCacheMapper: BloodBankCacheMapper,
         bloodBankNetworkMapper: BloodBankNetworkMapper
     ): BloodBankRepository {
-        return BloodBankRepository(bloodBanksDao, retrofit, bloodBankCacheMapper, bloodBankNetworkMapper)
+        return BloodBankRepository(
+            bloodBanksDao,
+            retrofit,
+            bloodBankCacheMapper,
+            bloodBankNetworkMapper
+        )
     }
 
     @Singleton
@@ -43,6 +48,13 @@ object RepositoryModule {
         donationsCacheMapper: DonationsCacheMapper,
         donationsNetworkMapper: DonationsNetworkMapper
     ): UserInfoRepository {
-        return UserInfoRepository(userDao,userFirestore,userCacheMapper,userNetworkMapper,donationsCacheMapper,donationsNetworkMapper)
+        return UserInfoRepository(
+            userDao,
+            userFirestore,
+            userCacheMapper,
+            userNetworkMapper,
+            donationsCacheMapper,
+            donationsNetworkMapper
+        )
     }
 }

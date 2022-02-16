@@ -10,9 +10,9 @@ import com.example.qodem.data.userinfo.local.UserDao
 import com.example.qodem.data.userinfo.remote.*
 import com.example.qodem.model.Donation
 import com.example.qodem.model.User
+import com.example.qodem.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import com.example.qodem.utils.Result
 
 class UserInfoRepository
 constructor(
@@ -29,19 +29,20 @@ constructor(
     }
 
     //
-    val userInfo : LiveData<User> = Transformations.map(userDao.getUserInfo()){
+    val userInfo: LiveData<User> = Transformations.map(userDao.getUserInfo()) {
         userCacheMapper.mapFromEntity(it)
     }
 
-    val donations : LiveData<List<Donation>> = Transformations.map(userDao.getAllDonations()){
+    val donations: LiveData<List<Donation>> = Transformations.map(userDao.getAllDonations()) {
         donationsCacheMapper.mapFromEntityList(it)
     }
 
-    val authenticatedDonations : LiveData<List<Donation>> = Transformations.map(userDao.getAuthenticatedDonations(true)){
-        donationsCacheMapper.mapFromEntityList(it)
-    }
+    val authenticatedDonations: LiveData<List<Donation>> =
+        Transformations.map(userDao.getAuthenticatedDonations(true)) {
+            donationsCacheMapper.mapFromEntityList(it)
+        }
 
-    val activeDonation : LiveData<Donation> = Transformations.map(userDao.getActiveDonation(true)){
+    val activeDonation: LiveData<Donation> = Transformations.map(userDao.getActiveDonation(true)) {
         donationsCacheMapper.mapFromEntity(it)
     }
 
@@ -55,6 +56,11 @@ constructor(
 
     val userInfoSaved: LiveData<Boolean>
         get() = _userInfoSaved
+
+    private var _userInfoUpdated: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    val userInfoUpdated: LiveData<Boolean>
+        get() = _userInfoUpdated
 
     //
     private var _donationsFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -77,11 +83,6 @@ constructor(
     val donationUpdated: LiveData<Boolean>
         get() = _donationUpdated
 
-    private var _userInfoUpdated: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-
-    val userInfoUpdated: LiveData<Boolean>
-        get() = _userInfoUpdated
-
     //
     private var _errorResultMessage: MutableLiveData<String?> = MutableLiveData<String?>()
 
@@ -99,20 +100,22 @@ constructor(
         get() = _updateErrorMessage
 
     suspend fun getUserInfo(phoneNumber: String) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             val networkUser = userFirestore.getUserInfo(phoneNumber)
-            when(networkUser) {
+            when (networkUser) {
                 is Result.Success -> {
                     val userInfo = userNetworkMapper.mapFromEntity(networkUser.data)
-                    //
+
+                    // pay attention: find another way to delete cache data
                     userDao.deleteUserInfo()
+
                     userDao.saveUserInfo(userCacheMapper.mapToEntity(userInfo))
                     _userInfoFound.postValue(true)
                     Log.d(TAG, "User found!")
                 }
                 is Result.Error -> {
                     val message = networkUser.message
-                    if (message == "User not found!"){
+                    if (message == "User not found!") {
                         _errorResultMessage.postValue(message)
                         Log.e(TAG, "User not found")
                         _userInfoFound.postValue(false)
@@ -152,13 +155,15 @@ constructor(
                     val donations = donationsNetworkMapper.mapFromEntityList(networkDonations.data)
                     //
                     _activeDonationFound.postValue(false)
-                    for (donation in donations){
+                    for (donation in donations) {
                         if (donation.active) {
                             _activeDonationFound.postValue(true)
                         }
                     }
-                    //
+
+                    // pay attention: find another way to delete cache data
                     userDao.deleteAllDonations()
+
                     //
                     userDao.saveDonations(donationsCacheMapper.mapToEntityList(donations))
                     _donationsFound.postValue(true)
@@ -201,7 +206,7 @@ constructor(
 
     suspend fun updateDonationActiveState(donationID: String, isActive: Boolean) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateDonationActiveState(donationID,isActive)
+            val updateStatusResult = userFirestore.updateDonationActiveState(donationID, isActive)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getAllDonations()
@@ -220,7 +225,7 @@ constructor(
 
     suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateDonationAuthenticatedState(donationID,isActive)
+            val updateStatusResult = userFirestore.updateDonationAuthenticatedState(donationID, isActive)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getAllDonations()
@@ -237,9 +242,14 @@ constructor(
         }
     }
 
-    suspend fun updateUserName(userID: String, firstName: String, lastName: String, phoneNumber: String){
+    suspend fun updateUserName(
+        userID: String,
+        firstName: String,
+        lastName: String,
+        phoneNumber: String
+    ) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateUserName(userID,firstName,lastName)
+            val updateStatusResult = userFirestore.updateUserName(userID, firstName, lastName)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
@@ -256,9 +266,9 @@ constructor(
         }
     }
 
-    suspend fun updateUserDateOFBirth(userID: String, dateOfBirth: String, phoneNumber: String){
+    suspend fun updateUserDateOFBirth(userID: String, dateOfBirth: String, phoneNumber: String) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateUserDateOFBirth(userID,dateOfBirth)
+            val updateStatusResult = userFirestore.updateUserDateOFBirth(userID, dateOfBirth)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
@@ -275,9 +285,9 @@ constructor(
         }
     }
 
-    suspend fun updateUserBloodType(userID: String, bloodType: String, phoneNumber: String){
+    suspend fun updateUserBloodType(userID: String, bloodType: String, phoneNumber: String) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateUserBloodType(userID,bloodType)
+            val updateStatusResult = userFirestore.updateUserBloodType(userID, bloodType)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
@@ -294,9 +304,9 @@ constructor(
         }
     }
 
-    suspend fun updateUserGender(userID: String, gender: String, phoneNumber: String){
+    suspend fun updateUserGender(userID: String, gender: String, phoneNumber: String) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateUserGender(userID,gender)
+            val updateStatusResult = userFirestore.updateUserGender(userID, gender)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
@@ -313,9 +323,9 @@ constructor(
         }
     }
 
-    suspend fun updateUserCity(userID: String, city: String, phoneNumber: String){
+    suspend fun updateUserCity(userID: String, city: String, phoneNumber: String) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateUserCity(userID,city)
+            val updateStatusResult = userFirestore.updateUserCity(userID, city)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
@@ -332,9 +342,14 @@ constructor(
         }
     }
 
-    suspend fun updateUserID(userID: String, idType: String, idNumber: String, phoneNumber: String){
+    suspend fun updateUserID(
+        userID: String,
+        idType: String,
+        idNumber: String,
+        phoneNumber: String
+    ) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateUserID(userID,idType,idNumber)
+            val updateStatusResult = userFirestore.updateUserID(userID, idType, idNumber)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
@@ -351,14 +366,16 @@ constructor(
         }
     }
 
-    suspend fun clearUserInfo(){
+    // pay attention: find another way to delete cache data
+    suspend fun clearUserInfo() {
         withContext(Dispatchers.IO) {
             userDao.deleteUserInfo()
             userDao.deleteAllDonations()
         }
     }
 
-    fun resetDonationUpdatedState(){
+    // pay attention: find another way to delete cache data
+    fun resetDonationUpdatedState() {
         _donationUpdated.postValue(false)
     }
 

@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class BloodBankNetworkMapper
 @Inject
-constructor():
+constructor() :
     EntityMapper<BloodBankNetworkEntity, BloodBank> {
 
     override fun mapFromEntity(entity: BloodBankNetworkEntity): BloodBank {
@@ -21,7 +21,7 @@ constructor():
             workingDays = entity.workingDays,
             classification = entity.classification,
             phoneNumber = entity.phoneNumber,
-            coordinates = LatLng(entity.coordinates.lat,entity.coordinates.lng),
+            coordinates = LatLng(entity.coordinates.lat, entity.coordinates.lng),
             gapBetweenAppointment = entity.gapBetweenAppointment,
             donorLimit = entity.donorLimit,
             bloodDonationCampaign = entity.bloodDonationCampaign,
@@ -39,7 +39,7 @@ constructor():
             workingDays = domainModel.workingDays,
             classification = domainModel.classification,
             phoneNumber = domainModel.phoneNumber,
-            coordinates = Coordinates(domainModel.coordinates.latitude,domainModel.coordinates.longitude),
+            coordinates = Coordinates(domainModel.coordinates.latitude, domainModel.coordinates.longitude),
             gapBetweenAppointment = domainModel.gapBetweenAppointment,
             donorLimit = domainModel.donorLimit,
             bloodDonationCampaign = domainModel.bloodDonationCampaign,
@@ -47,8 +47,8 @@ constructor():
         )
     }
 
-    fun mapFromEntityList(entities: List<BloodBankNetworkEntity>): List<BloodBank>{
-        return entities.map {mapFromEntity(it)}
+    fun mapFromEntityList(entities: List<BloodBankNetworkEntity>): List<BloodBank> {
+        return entities.map { mapFromEntity(it) }
     }
 
 }

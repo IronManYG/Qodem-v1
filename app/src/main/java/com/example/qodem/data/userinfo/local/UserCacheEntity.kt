@@ -31,7 +31,7 @@ class UserCacheEntity(
     var gender: String,
 
     @ColumnInfo(name = "city")
-    var city:String,
+    var city: String,
 
     @ColumnInfo(name = "phoneNumber")
     var phoneNumber: String,

@@ -45,12 +45,12 @@ constructor() : EntityMapper<UserCacheEntity, User> {
         )
     }
 
-    fun mapFromEntityList(entities: List<UserCacheEntity>): List<User>{
-        return entities.map {mapFromEntity(it)}
+    fun mapFromEntityList(entities: List<UserCacheEntity>): List<User> {
+        return entities.map { mapFromEntity(it) }
     }
 
-    fun mapToEntityList(entities: List<User>): List<UserCacheEntity>{
-        return entities.map {mapToEntity(it)}
+    fun mapToEntityList(entities: List<User>): List<UserCacheEntity> {
+        return entities.map { mapToEntity(it) }
     }
 
 }

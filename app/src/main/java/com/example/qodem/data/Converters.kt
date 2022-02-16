@@ -16,7 +16,7 @@ class Converters {
 
     @TypeConverter
     fun toWorkingHours(workingHours: String): WorkingHours? {
-        return Gson().fromJson(workingHours,WorkingHours::class.java)
+        return Gson().fromJson(workingHours, WorkingHours::class.java)
     }
 
     @TypeConverter
@@ -26,7 +26,7 @@ class Converters {
 
     @TypeConverter
     fun toWorkingDays(workingDays: String): WorkingDays? {
-        return Gson().fromJson(workingDays,WorkingDays::class.java)
+        return Gson().fromJson(workingDays, WorkingDays::class.java)
     }
 
     @TypeConverter
@@ -36,26 +36,16 @@ class Converters {
 
     @TypeConverter
     fun toCoordinates(coordinates: String): Coordinates? {
-        return Gson().fromJson(coordinates,Coordinates::class.java)
+        return Gson().fromJson(coordinates, Coordinates::class.java)
     }
-
-//    @TypeConverter
-//    fun fromDonation(donation: Donation): String? {
-//        return Gson().toJson(donation)
-//    }
-//
-//    @TypeConverter
-//    fun toDonation(donation: String): Donation? {
-//        return Gson().fromJson(donation,Donation::class.java))
-//    }
 
     @TypeConverter
     fun fromDonation(donations: List<Donation?>): String {
-      return Gson().toJson(donations)
+        return Gson().toJson(donations)
     }
 
     @TypeConverter
     fun toDonation(donation: String): List<Donation?> {
-        return Gson().fromJson(donation,Array<Donation>::class.java).toList()
+        return Gson().fromJson(donation, Array<Donation>::class.java).toList()
     }
 }

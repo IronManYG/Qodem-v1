@@ -18,7 +18,7 @@ class UserNetworkEntity(
 
     var gender: String = "",
 
-    var city:String = "",
+    var city: String = "",
 
     var phoneNumber: String = "",
 

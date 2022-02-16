@@ -31,7 +31,7 @@ constructor() : EntityMapper<DonationNetworkEntity, Donation> {
         )
     }
 
-    fun mapFromEntityList(entities: List<DonationNetworkEntity>): List<Donation>{
-        return entities.map {mapFromEntity(it)}
+    fun mapFromEntityList(entities: List<DonationNetworkEntity>): List<Donation> {
+        return entities.map { mapFromEntity(it) }
     }
 }

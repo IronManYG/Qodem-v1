@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Donations")
-class DonationsCacheEntity (
+class DonationsCacheEntity(
 
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
@@ -21,7 +21,7 @@ class DonationsCacheEntity (
     var donationTime: String,
 
     @ColumnInfo(name = "active")
-    var active:Boolean,
+    var active: Boolean,
 
     @ColumnInfo(name = "authenticated")
     var authenticated: Boolean,

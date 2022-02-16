@@ -1,6 +1,6 @@
 package com.example.qodem.data.userinfo.remote
 
-class DonationNetworkEntity (
+class DonationNetworkEntity(
 
     var id: String = "",
 
@@ -10,7 +10,7 @@ class DonationNetworkEntity (
 
     var donationTime: String = "",
 
-    var active:Boolean = false,
+    var active: Boolean = false,
 
     var authenticated: Boolean = false,
 

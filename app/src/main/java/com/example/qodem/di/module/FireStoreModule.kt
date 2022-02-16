@@ -13,7 +13,7 @@ object FireStoreModule {
 
     @Singleton
     @Provides
-    fun provideFireStore(): UserFirestore{
+    fun provideFireStore(): UserFirestore {
         return UserFirestore()
     }
 

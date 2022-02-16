@@ -5,7 +5,7 @@ data class Donation(
     var bloodBankID: String,
     var donationData: String,
     var donationTime: String,
-    var active:Boolean,
+    var active: Boolean,
     var authenticated: Boolean,
     var donationDataTimeStamp: Long
 )

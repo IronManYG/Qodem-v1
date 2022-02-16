@@ -17,7 +17,7 @@ data class BloodBank(
     var donorLimit: Int,
     var bloodDonationCampaign: Boolean,
     var campaignPeriod: Int?
-): ClusterItem {
+) : ClusterItem {
 
     // used in recyclerView to if item selected or not
     var isSelected = false

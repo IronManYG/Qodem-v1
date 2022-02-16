@@ -8,7 +8,7 @@ data class User(
     var bloodType: String,
     var birthDate: String,
     var gender: String,
-    var city:String,
+    var city: String,
     var phoneNumber: String,
     var numberOfDonations: Int,
     var IDType: String,

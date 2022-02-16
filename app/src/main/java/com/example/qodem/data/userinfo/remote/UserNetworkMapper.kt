@@ -45,7 +45,7 @@ constructor() : EntityMapper<UserNetworkEntity, User> {
         )
     }
 
-    fun mapFromEntityList(entities: List<UserNetworkEntity>): List<User>{
-        return entities.map {mapFromEntity(it)}
+    fun mapFromEntityList(entities: List<UserNetworkEntity>): List<User> {
+        return entities.map { mapFromEntity(it) }
     }
 }

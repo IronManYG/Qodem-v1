@@ -79,94 +79,99 @@ class UserFirestore {
             }
         }
 
-    suspend fun updateDonationActiveState(donationID: String, isActive: Boolean) = withContext(Dispatchers.IO) {
-        val donationDocumentRef = donationsCollectionRef.document(donationID)
-        try {
-            donationDocumentRef.update("active",isActive).await()
-            return@withContext Result.Success("Donation active state Successful Update")
-        } catch (e: Exception) {
-            return@withContext Result.Error(e.localizedMessage)
+    suspend fun updateDonationActiveState(donationID: String, isActive: Boolean) =
+        withContext(Dispatchers.IO) {
+            val donationDocumentRef = donationsCollectionRef.document(donationID)
+            try {
+                donationDocumentRef.update("active", isActive).await()
+                return@withContext Result.Success("Donation active state Successful Update")
+            } catch (e: Exception) {
+                return@withContext Result.Error(e.localizedMessage)
+            }
         }
-    }
 
-    suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) = withContext(Dispatchers.IO) {
-        val donationDocumentRef = donationsCollectionRef.document(donationID)
-        try {
-            Firebase.firestore.runBatch { batch ->
-                batch.update(donationDocumentRef,"authenticated",isActive)
-                batch.update(donationDocumentRef,"active",!isActive)
-            }.await()
-            //donationDocumentRef.update("authenticated",isActive).await()
-            return@withContext Result.Success("Donation Authenticated state Successful Update")
-        } catch (e: Exception) {
-            return@withContext Result.Error(e.localizedMessage)
+    suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) =
+        withContext(Dispatchers.IO) {
+            val donationDocumentRef = donationsCollectionRef.document(donationID)
+            try {
+                Firebase.firestore.runBatch { batch ->
+                    batch.update(donationDocumentRef, "authenticated", isActive)
+                    batch.update(donationDocumentRef, "active", !isActive)
+                }.await()
+                return@withContext Result.Success("Donation Authenticated state Successful Update")
+            } catch (e: Exception) {
+                return@withContext Result.Error(e.localizedMessage)
+            }
         }
-    }
 
-    suspend fun updateUserName(userID: String, firstName: String, lastName: String) = withContext(Dispatchers.IO){
+    suspend fun updateUserName(userID: String, firstName: String, lastName: String) =
+        withContext(Dispatchers.IO) {
+            val userDocumentRef = usersCollectionRef.document(userID)
+            try {
+                Firebase.firestore.runBatch { batch ->
+                    batch.update(userDocumentRef, "firstName", firstName)
+                    batch.update(userDocumentRef, "lastName", lastName)
+                }.await()
+                return@withContext Result.Success("User name Successful Update")
+            } catch (e: Exception) {
+                return@withContext Result.Error(e.localizedMessage)
+            }
+        }
+
+    suspend fun updateUserDateOFBirth(userID: String, dateOfBirth: String) =
+        withContext(Dispatchers.IO) {
+            val userDocumentRef = usersCollectionRef.document(userID)
+            try {
+                userDocumentRef.update("birthDate", dateOfBirth).await()
+                return@withContext Result.Success("User birth Date Successful Update")
+            } catch (e: Exception) {
+                return@withContext Result.Error(e.localizedMessage)
+            }
+        }
+
+    suspend fun updateUserBloodType(userID: String, bloodType: String) =
+        withContext(Dispatchers.IO) {
+            val userDocumentRef = usersCollectionRef.document(userID)
+            try {
+                userDocumentRef.update("bloodType", bloodType).await()
+                return@withContext Result.Success("User blood type Successful Update")
+            } catch (e: Exception) {
+                return@withContext Result.Error(e.localizedMessage)
+            }
+        }
+
+    suspend fun updateUserGender(userID: String, gender: String) = withContext(Dispatchers.IO) {
         val userDocumentRef = usersCollectionRef.document(userID)
         try {
-            Firebase.firestore.runBatch { batch ->
-                batch.update(userDocumentRef,"firstName",firstName)
-                batch.update(userDocumentRef,"lastName",lastName)
-            }.await()
-            return@withContext Result.Success("User name Successful Update")
-        } catch (e: Exception) {
-            return@withContext Result.Error(e.localizedMessage)
-        }
-    }
-
-    suspend fun updateUserDateOFBirth(userID: String, dateOfBirth: String) = withContext(Dispatchers.IO){
-        val userDocumentRef = usersCollectionRef.document(userID)
-        try {
-            userDocumentRef.update("birthDate",dateOfBirth).await()
-            return@withContext Result.Success("User birth Date Successful Update")
-        } catch (e: Exception) {
-            return@withContext Result.Error(e.localizedMessage)
-        }
-    }
-
-    suspend fun updateUserBloodType(userID: String, bloodType: String) = withContext(Dispatchers.IO){
-        val userDocumentRef = usersCollectionRef.document(userID)
-        try {
-            userDocumentRef.update("bloodType",bloodType).await()
-            return@withContext Result.Success("User blood type Successful Update")
-        } catch (e: Exception) {
-            return@withContext Result.Error(e.localizedMessage)
-        }
-    }
-
-    suspend fun updateUserGender(userID: String, gender: String) = withContext(Dispatchers.IO){
-        val userDocumentRef = usersCollectionRef.document(userID)
-        try {
-            userDocumentRef.update("gender",gender).await()
+            userDocumentRef.update("gender", gender).await()
             return@withContext Result.Success("User gender Successful Update")
         } catch (e: Exception) {
             return@withContext Result.Error(e.localizedMessage)
         }
     }
 
-    suspend fun updateUserCity(userID: String, city: String) = withContext(Dispatchers.IO){
+    suspend fun updateUserCity(userID: String, city: String) = withContext(Dispatchers.IO) {
         val userDocumentRef = usersCollectionRef.document(userID)
         try {
-            userDocumentRef.update("city",city).await()
+            userDocumentRef.update("city", city).await()
             return@withContext Result.Success("User city Successful Update")
         } catch (e: Exception) {
             return@withContext Result.Error(e.localizedMessage)
         }
     }
 
-    suspend fun updateUserID(userID: String, idType: String, idNumber: String) = withContext(Dispatchers.IO){
-        val userDocumentRef = usersCollectionRef.document(userID)
-        try {
-            Firebase.firestore.runBatch { batch ->
-                batch.update(userDocumentRef,"idtype",idType)
-                batch.update(userDocumentRef,"idnumber",idNumber)
-            }.await()
-            return@withContext Result.Success("User id type & id number Successful Update")
-        } catch (e: Exception) {
-            return@withContext Result.Error(e.localizedMessage)
+    suspend fun updateUserID(userID: String, idType: String, idNumber: String) =
+        withContext(Dispatchers.IO) {
+            val userDocumentRef = usersCollectionRef.document(userID)
+            try {
+                Firebase.firestore.runBatch { batch ->
+                    batch.update(userDocumentRef, "idtype", idType)
+                    batch.update(userDocumentRef, "idnumber", idNumber)
+                }.await()
+                return@withContext Result.Success("User id type & id number Successful Update")
+            } catch (e: Exception) {
+                return@withContext Result.Error(e.localizedMessage)
+            }
         }
-    }
 
 }

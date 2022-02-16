@@ -25,7 +25,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson:  Gson): Retrofit.Builder {
+    fun provideRetrofit(gson: Gson): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl("https://api.jsonbin.io")
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -33,7 +33,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideBloodBankService(retrofit: Retrofit.Builder): BloodBanksRetrofit{
+    fun provideBloodBankService(retrofit: Retrofit.Builder): BloodBanksRetrofit {
         return retrofit
             .build()
             .create(BloodBanksRetrofit::class.java)
