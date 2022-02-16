@@ -112,7 +112,12 @@ class HomeFragment : Fragment() {
             }
 
             campaignBloodBankAdapter.bloodBanks = campaignBloodBanks
-            infographicViewPagerAdapter.infographics = listOf(R.drawable.infographic1,R.drawable.infographic2,R.drawable.infographic3,R.drawable.infographic4)
+            infographicViewPagerAdapter.infographics = listOf(
+                "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic1.jpg",
+                "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic2.jpg",
+                "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic3.jpg",
+                "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic4.jpg"
+            )
 
             //
             updateAppointmentState(bloodBanks)
