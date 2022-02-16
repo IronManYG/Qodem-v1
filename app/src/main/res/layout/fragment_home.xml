@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:id="@+id/text_appointment_info"
@@ -251,7 +251,7 @@
                         tools:text="03:00 PM" />
 
                     <ImageView
-                        android:id="@+id/text_appointment_qr"
+                        android:id="@+id/image_appointment_qr"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
@@ -292,7 +292,7 @@
                         android:layout_marginEnd="8dp"
                         android:contentDescription="@string/directions_icon"
                         app:layout_constraintBottom_toBottomOf="@+id/button_cancel_appointment"
-                        app:layout_constraintEnd_toStartOf="@+id/text_appointment_qr"
+                        app:layout_constraintEnd_toStartOf="@+id/image_appointment_qr"
                         app:layout_constraintStart_toEndOf="@+id/button_cancel_appointment"
                         app:layout_constraintTop_toTopOf="@+id/button_cancel_appointment"
                         app:srcCompat="@drawable/ic_map"

@@ -20,6 +20,8 @@ class CampaignBloodBankAdapter(private val listener: OnItemClickListener) :
 
         init {
             itemView.setOnClickListener(this)
+            binding.imagePhoneNumber.setOnClickListener(this)
+            binding.imageBloodBankPlace.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
@@ -29,6 +31,12 @@ class CampaignBloodBankAdapter(private val listener: OnItemClickListener) :
                     when (v.id) {
                         itemView.id -> {
                             listener.onItemClick(position)
+                        }
+                        binding.imagePhoneNumber.id -> {
+                            listener.onPhoneNumberImageClick(position)
+                        }
+                        binding.imageBloodBankPlace.id -> {
+                            listener.onBloodBankPlaceImageClick(position)
                         }
                     }
                 }
@@ -81,6 +89,8 @@ class CampaignBloodBankAdapter(private val listener: OnItemClickListener) :
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+        fun onPhoneNumberImageClick(position: Int)
+        fun onBloodBankPlaceImageClick(position: Int)
     }
 
 }

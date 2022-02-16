@@ -1,5 +1,7 @@
 package com.example.qodem.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -40,7 +42,12 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
     private lateinit var infographicViewPagerAdapter: InfographicViewPagerAdapter
 
     //
+    private lateinit var bloodBankList: List<BloodBank>
+
+    //
     private lateinit var _activeDonation: Donation
+
+    //
 
     //
     private var dayToEnableVerify by Delegates.notNull<Int>()
@@ -101,12 +108,66 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
             }
         }
 
+        //
+        binding.imageAppointmentDirections.setOnClickListener {
+            onAppointmentPlaceImageClick(_activeDonation.bloodBankID.toInt())
+        }
+
+        binding.imageAppointmentQr.setOnClickListener {
+            binding.root.showSnackbar(
+                binding.root,
+                "Feature under development.",
+                Snackbar.LENGTH_LONG,
+                null,
+                requireContext()
+            ) {}
+        }
+
+        //
+        binding.buttonFindDonors.setOnClickListener {
+            binding.root.showSnackbar(
+                binding.root,
+                "Feature under development.",
+                Snackbar.LENGTH_LONG,
+                null,
+                requireContext()
+            ) {}
+        }
+        binding.buttonAddDonor.setOnClickListener {
+            binding.root.showSnackbar(
+                binding.root,
+                "Feature under development.",
+                Snackbar.LENGTH_LONG,
+                null,
+                requireContext()
+            ) {}
+        }
+        binding.buttonSnapAndShare.setOnClickListener {
+            binding.root.showSnackbar(
+                binding.root,
+                "Feature under development.",
+                Snackbar.LENGTH_LONG,
+                null,
+                requireContext()
+            ) {}
+        }
+        binding.buttonBloodJourney.setOnClickListener {
+            binding.root.showSnackbar(
+                binding.root,
+                "Feature under development.",
+                Snackbar.LENGTH_LONG,
+                null,
+                requireContext()
+            ) {}
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
+            bloodBankList = bloodBanks
             val campaignBloodBanks: MutableList<BloodBank> = mutableListOf()
             // Show only campaign blood banks
             for (bloodBank in bloodBanks) {
@@ -256,11 +317,45 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
         }
     }
 
+    private fun onAppointmentPlaceImageClick(position: Int) {
+        val gmmIntentUri = Uri.parse(
+            "geo:0,0?q=" +
+                    "${bloodBankList[position-1].coordinates.latitude}," +
+                    "${bloodBankList[position-1].coordinates.longitude}" +
+                    "(${bloodBankList[position-1].name_en})"
+        )
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        mapIntent.resolveActivity(requireContext().packageManager)?.let {
+            startActivity(mapIntent)
+        }
+    }
+
     override fun onItemClick(position: Int) {
         val campaignBloodBank = campaignBloodBankAdapter.bloodBanks[position]
         val amount = campaignBloodBank.id
         val action = HomeFragmentDirections.actionHomeFragmentToPreScreeningRequestFragment(amount)
         findNavController().navigate(action)
+    }
+
+    override fun onPhoneNumberImageClick(position: Int) {
+        val dialIntent = Intent(Intent.ACTION_DIAL)
+        dialIntent.data = Uri.parse("tel:" + campaignBloodBankAdapter.bloodBanks[position].phoneNumber)
+        startActivity(dialIntent)
+    }
+
+    override fun onBloodBankPlaceImageClick(position: Int) {
+        val gmmIntentUri = Uri.parse(
+            "geo:0,0?q=" +
+                    "${campaignBloodBankAdapter.bloodBanks[position].coordinates.latitude}," +
+                    "${campaignBloodBankAdapter.bloodBanks[position].coordinates.longitude}" +
+                    "(${campaignBloodBankAdapter.bloodBanks[position].name_en})"
+        )
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        mapIntent.resolveActivity(requireContext().packageManager)?.let {
+            startActivity(mapIntent)
+        }
     }
 
     private fun displayError(message: String?) {
