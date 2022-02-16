@@ -16,6 +16,7 @@ import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import com.example.qodem.ui.CampaignBloodBankAdapter
 import com.example.qodem.ui.InfographicViewPagerAdapter
+import com.example.qodem.ui.appointment.AppointmentLocationFragmentDirections
 import com.example.qodem.utils.CustomCountDownTimer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -24,7 +25,7 @@ import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
 
     companion object {
         const val TAG = "HomeFragment"
@@ -131,7 +132,7 @@ class HomeFragment : Fragment() {
 
     //
     private fun setupRecyclerView() = binding.recyclerViewDonationCampaigns.apply {
-        campaignBloodBankAdapter = CampaignBloodBankAdapter()
+        campaignBloodBankAdapter = CampaignBloodBankAdapter(this@HomeFragment)
         adapter = campaignBloodBankAdapter
         layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
@@ -248,6 +249,13 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        val campaignBloodBank = campaignBloodBankAdapter.bloodBanks[position]
+        val amount = campaignBloodBank.id
+        val action = HomeFragmentDirections.actionHomeFragmentToPreScreeningRequestFragment(amount)
+        findNavController().navigate(action)
     }
 
     private fun displayError(message: String?) {

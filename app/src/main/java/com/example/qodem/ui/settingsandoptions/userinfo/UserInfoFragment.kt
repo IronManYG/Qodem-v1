@@ -1,6 +1,7 @@
 package com.example.qodem.ui.settingsandoptions.userinfo
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentAppointmentDateBinding
 import com.example.qodem.databinding.UserInfoFragmentBinding
+import com.example.qodem.ui.authentication.AuthenticationActivity
+import com.firebase.ui.auth.AuthUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -38,7 +41,7 @@ class UserInfoFragment : Fragment() {
             binding.textFullNameField.text ="${userInfo.firstName} " + userInfo.lastName
             binding.textDateOfBirthField.text = userInfo.birthDate
             binding.textBloodTypeField.text = userInfo.bloodType
-            //binding.textGenderField.text = userInfo.gender
+            binding.textGenderField.text = userInfo.gender
             binding.textCityField.text = userInfo.city
             binding.textIdType.text = userInfo.IDType
             binding.textIdNumber.text =userInfo.IDNumber
@@ -72,6 +75,14 @@ class UserInfoFragment : Fragment() {
         binding.cardId.setOnClickListener{
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToEditIdFragment()
             findNavController().navigate(action)
+        }
+
+        binding.buttonSignOut.setOnClickListener{
+            AuthUI.getInstance()
+                .signOut(requireContext())
+                .addOnCompleteListener { // user is now signed out
+                    startActivity(Intent(requireContext(), AuthenticationActivity::class.java))
+                }
         }
 
         return binding.root

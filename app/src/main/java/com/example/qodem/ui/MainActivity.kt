@@ -9,19 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.ActivityMainBinding
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.home.HomeViewModel
-import com.example.qodem.ui.settingsandoptions.userinfo.UserInfoFragment
 import com.firebase.ui.auth.AuthUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
@@ -84,11 +79,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         navView.setNavigationItemSelectedListener {
-            when(it.itemId){
-              R.id.signOut -> {
-                  onClick(navView.findViewById(R.id.signOut))
-              }
-            }
+            onClick(it.itemId,navController)
             true
         }
 
@@ -102,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         headerView.setOnClickListener {
             navController.navigate(R.id.userInfoFragment)
-            binding.drawerLayout.closeDrawers()
+            binding.drawerLayout.close()
         }
     }
 
@@ -112,14 +103,28 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setupWithNavController(navController)
     }
 
-    private fun onClick(v: View) {
-        if (v.id == R.id.signOut) {
-            AuthUI.getInstance()
-                .signOut(applicationContext)
-                .addOnCompleteListener { // user is now signed out
-                    startActivity(Intent(applicationContext, AuthenticationActivity::class.java))
-                    finish()
-                }
+    private fun onClick(viewID: Int, navController: NavController) {
+        when (viewID) {
+            R.id.homeFragment -> {
+                navController.navigate(R.id.homeFragment)
+                binding.drawerLayout.close()
+            }
+            R.id.locationFragment -> {
+                navController.navigate(R.id.locationFragment)
+                binding.drawerLayout.close()
+            }
+            R.id.communityFragment -> {
+                navController.navigate(R.id.communityFragment)
+                binding.drawerLayout.close()
+            }
+            R.id.signOut -> {
+                AuthUI.getInstance()
+                    .signOut(applicationContext)
+                    .addOnCompleteListener { // user is now signed out
+                        startActivity(Intent(applicationContext, AuthenticationActivity::class.java))
+                        finish()
+                    }
+            }
         }
     }
 }
