@@ -144,6 +144,9 @@ dependencies {
 
     // View Pager 2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
+
+    //
+    implementation "com.airbnb.android:lottie:4.2.2"
 }
 
 // Allow references to generated code

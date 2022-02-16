@@ -104,4 +104,5 @@
     <string name="blood_donation_campaigns">Blood Donation Campaigns</string>
     <string name="rewards">Rewards</string>
     <string name="notification">Notification</string>
+    <string name="feature_under_development">Feature under development.</string>
 </resources>
