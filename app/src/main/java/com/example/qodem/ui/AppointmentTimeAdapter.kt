@@ -69,7 +69,8 @@ class AppointmentTimeAdapter (private val listener: OnItemClickListener) : Recyc
             calendar.time = Date(selectedTime.timeInMilli)
             val amPmString =
                 calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH)
-            val donationTime = "${String.format("%02d",calendar.get(Calendar.HOUR))}:" +
+            val hour = if (calendar.get(Calendar.HOUR) == 0){12} else {calendar.get(Calendar.HOUR)}
+            val donationTime = "${String.format("%02d",hour)}:" +
                     String.format("%02d",calendar.get(Calendar.MINUTE))
             Log.d("hereTime", "Time: $donationTime")
             textTime.text = donationTime

@@ -163,7 +163,6 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         calendar.set(Calendar.MILLISECOND, 0)
         appointmentDay = calendar.timeInMillis
         Log.d("here Date","day in mill is: $appointmentDay ")
-        Toast.makeText(requireContext(), "Day position $position",Toast.LENGTH_SHORT ).show()
     }
 
     override fun onTimeItemClick(position: Int) {
@@ -173,7 +172,6 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         isAppointmentTimeSelected = true
         appointmentTime = appointmentTimeAdapter.appointmentTimes[position].timeInMilli
         Log.d("here Date","time in mill is: $appointmentTime")
-        Toast.makeText(requireContext(), "Time position $position",Toast.LENGTH_SHORT ).show()
     }
 
     private fun appointmentDaysList(): List<AppointmentDay> {
