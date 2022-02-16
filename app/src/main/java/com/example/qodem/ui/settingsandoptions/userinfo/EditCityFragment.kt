@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentEditCityBinding
+import com.example.qodem.utils.showSnackbar
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -75,22 +76,37 @@ class EditCityFragment : Fragment() {
                             )
                         }
                     }
-                    viewModel.userInfoUpdated.observe(viewLifecycleOwner){
+                    viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
                         when (it) {
                             true -> {
                                 findNavController().popBackStack()
+                                binding.root.showSnackbar(
+                                    binding.root,
+                                    "Successfully updated",
+                                    Snackbar.LENGTH_SHORT,
+                                    null,
+                                    requireContext()
+                                ) {}
                             }
                             false -> {
-                                Toast.makeText(requireActivity(), viewModel.errorResultMessage.value, Toast.LENGTH_SHORT).show()
+                                binding.root.showSnackbar(
+                                    binding.root,
+                                    viewModel.errorResultMessage.value.toString(),
+                                    Snackbar.LENGTH_SHORT,
+                                    null,
+                                    requireContext()
+                                ) {}
                             }
                         }
                     }
                 } else {
-                    Toast.makeText(
-                        requireContext(),
+                    binding.root.showSnackbar(
+                        binding.root,
                         "Please enter your city detail",
-                        Toast.LENGTH_LONG
-                    ).show()
+                        Snackbar.LENGTH_LONG,
+                        null,
+                        requireContext()
+                    ) {}
                 }
             }
         }
@@ -122,6 +138,6 @@ class EditCityFragment : Fragment() {
     }
 
     private fun isAllEditTextValueValid(): Boolean {
-        return  isEditTextValueValid(binding.menuCity.editText!!.text, 1)
+        return isEditTextValueValid(binding.menuCity.editText!!.text, 1)
     }
 }

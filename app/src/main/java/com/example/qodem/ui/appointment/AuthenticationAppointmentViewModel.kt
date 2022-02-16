@@ -15,7 +15,7 @@ class AuthenticationAppointmentViewModel
 constructor(
     private val userInfoRepository: UserInfoRepository,
     private val savedStateHandle: SavedStateHandle
-): ViewModel(){
+) : ViewModel() {
 
     //
     val donationUpdatedState: LiveData<Boolean> = userInfoRepository.donationUpdated
@@ -23,15 +23,15 @@ constructor(
     //
     val updateErrorMessage: LiveData<String?> = userInfoRepository.updateErrorMessage
 
-    suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean){
-        userInfoRepository.updateDonationAuthenticatedState(donationID,isActive)
+    suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) {
+        userInfoRepository.updateDonationAuthenticatedState(donationID, isActive)
     }
 
     suspend fun getAllDonations() {
         userInfoRepository.getAllDonations()
     }
 
-    fun resetDonationUpdatedState(){
+    fun resetDonationUpdatedState() {
         userInfoRepository.resetDonationUpdatedState()
     }
 }

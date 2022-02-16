@@ -8,13 +8,15 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qodem.R
-import com.example.qodem.model.BloodBank
 import com.example.qodem.databinding.ItemBloodBankBinding
+import com.example.qodem.model.BloodBank
 
-class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<BloodBankAdapter.BloodBankViewHolder>() {
+class BloodBankAdapter(private val listener: OnItemClickListener) :
+    RecyclerView.Adapter<BloodBankAdapter.BloodBankViewHolder>() {
 
-    inner class BloodBankViewHolder(val binding: ItemBloodBankBinding): RecyclerView.ViewHolder(binding.root),
-        View.OnClickListener{
+    inner class BloodBankViewHolder(val binding: ItemBloodBankBinding) :
+        RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
 
         init {
             itemView.setOnClickListener(this)
@@ -26,12 +28,12 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 if (v != null) {
-                    when (v.id){
+                    when (v.id) {
                         itemView.id -> {
                             listener.onItemClick(position)
                             notifyDataSetChanged()
                         }
-                         binding.imagePhoneNumber.id -> {
+                        binding.imagePhoneNumber.id -> {
                             listener.onPhoneNumberImageClick(position)
                         }
                         binding.imageBloodBankPlace.id -> {
@@ -56,14 +58,19 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
     private val differ = AsyncListDiffer(this, diffCallback)
     var bloodBanks: List<BloodBank>
         get() = differ.currentList
-        set(value) { differ.submitList(value) }
+        set(value) {
+            differ.submitList(value)
+        }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BloodBankViewHolder {
-        return BloodBankViewHolder(ItemBloodBankBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false,))
+        return BloodBankViewHolder(
+            ItemBloodBankBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: BloodBankViewHolder, position: Int) {
@@ -72,8 +79,7 @@ class BloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView
             textBloodBank.text = bloodBank.name_en
             imagePhoneNumber.visibility = View.VISIBLE
             textAddTime.visibility = View.GONE
-            if(bloodBanks[position].isSelected){
-                //cardView.setBackgroundColor(ContextCompat.getColor(cardView.context, R.color.secondaryLightColor))
+            if (bloodBanks[position].isSelected) {
                 cardView.strokeColor = ContextCompat.getColor(cardView.context, R.color.secondaryColor)
                 cardView.strokeWidth = 5
             } else {

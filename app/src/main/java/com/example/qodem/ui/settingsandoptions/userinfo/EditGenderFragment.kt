@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentEditGenderBinding
+import com.example.qodem.utils.showSnackbar
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -78,22 +79,33 @@ class EditGenderFragment : Fragment() {
                         when (it) {
                             true -> {
                                 findNavController().popBackStack()
+                                binding.root.showSnackbar(
+                                    binding.root,
+                                    "Successfully updated",
+                                    Snackbar.LENGTH_SHORT,
+                                    null,
+                                    requireContext()
+                                ) {}
                             }
                             false -> {
-                                Toast.makeText(
-                                    requireActivity(),
-                                    viewModel.errorResultMessage.value,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                binding.root.showSnackbar(
+                                    binding.root,
+                                    viewModel.errorResultMessage.value.toString(),
+                                    Snackbar.LENGTH_SHORT,
+                                    null,
+                                    requireContext()
+                                ) {}
                             }
                         }
                     }
                 } else {
-                    Toast.makeText(
-                        requireContext(),
+                    binding.root.showSnackbar(
+                        binding.root,
                         "Please enter your Gender",
-                        Toast.LENGTH_LONG
-                    ).show()
+                        Snackbar.LENGTH_LONG,
+                        null,
+                        requireContext()
+                    ) {}
                 }
             }
         }

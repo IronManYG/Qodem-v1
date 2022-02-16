@@ -2,16 +2,17 @@ package com.example.qodem.ui.appointment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentPreScreeningQuestionBinding
+import com.example.qodem.utils.showSnackbar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.properties.Delegates
@@ -45,15 +46,15 @@ class PreScreeningQuestionFragment : Fragment() {
         //
         checkBoxYesNoToggles()
 
-        binding.buttonBookAnAppointment.setOnClickListener{
+        binding.buttonBookAnAppointment.setOnClickListener {
             // Check Values of all answers
             answersValidToBooking = isAllAnswersValueValid()
 
             Log.d(TAG, "answered question are : $numberOFAnsweredQuestions")
 
-            if(numberOFAnsweredQuestions == 7){
-                if(answersValidToBooking){
-                    if(args.bloodBankID == -1){
+            if (numberOFAnsweredQuestions == 7) {
+                if (answersValidToBooking) {
+                    if (args.bloodBankID == -1) {
                         val action = PreScreeningQuestionFragmentDirections.actionPreScreeningQuestionToAppointmentLocationFragment()
                         findNavController().navigate(action)
                     } else {
@@ -63,34 +64,67 @@ class PreScreeningQuestionFragment : Fragment() {
                     }
                 } else {
                     findNavController().navigate(R.id.action_preScreeningQuestion_to_homeFragment)
+                    binding.root.showSnackbar(
+                        binding.root,
+                        "Your are not eligible to donate blood",
+                        Snackbar.LENGTH_LONG,
+                        null,
+                        requireContext()
+                    ) {}
                 }
             } else {
-                Toast.makeText(requireContext(), "All questions are required to be answered", Toast.LENGTH_LONG).show()
+                binding.root.showSnackbar(
+                    binding.root,
+                    "All questions are required to be answered",
+                    Snackbar.LENGTH_LONG,
+                    null,
+                    requireContext()
+                ) {}
             }
         }
-
         return binding.root
     }
 
     private fun checkBoxYesNoToggles() {
         // for question 1
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion1Yes,binding.checkBoxPreScreeningQuestion1No)
+        checkBoxYesNoToggle(
+            binding.checkBoxPreScreeningQuestion1Yes,
+            binding.checkBoxPreScreeningQuestion1No
+        )
         // for question 2
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion2Yes,binding.checkBoxPreScreeningQuestion2No)
+        checkBoxYesNoToggle(
+            binding.checkBoxPreScreeningQuestion2Yes,
+            binding.checkBoxPreScreeningQuestion2No
+        )
         // for question 3
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion3Yes,binding.checkBoxPreScreeningQuestion3No)
+        checkBoxYesNoToggle(
+            binding.checkBoxPreScreeningQuestion3Yes,
+            binding.checkBoxPreScreeningQuestion3No
+        )
         // for question 4
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion4Yes,binding.checkBoxPreScreeningQuestion4No)
+        checkBoxYesNoToggle(
+            binding.checkBoxPreScreeningQuestion4Yes,
+            binding.checkBoxPreScreeningQuestion4No
+        )
         // for question 5
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion5Yes,binding.checkBoxPreScreeningQuestion5No)
+        checkBoxYesNoToggle(
+            binding.checkBoxPreScreeningQuestion5Yes,
+            binding.checkBoxPreScreeningQuestion5No
+        )
         // for question 6
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion6Yes,binding.checkBoxPreScreeningQuestion6No)
+        checkBoxYesNoToggle(
+            binding.checkBoxPreScreeningQuestion6Yes,
+            binding.checkBoxPreScreeningQuestion6No
+        )
         // for question 7
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion7Yes,binding.checkBoxPreScreeningQuestion7No)
+        checkBoxYesNoToggle(
+            binding.checkBoxPreScreeningQuestion7Yes,
+            binding.checkBoxPreScreeningQuestion7No
+        )
     }
 
-    private fun checkBoxYesNoToggle(yesCheckBox: CheckBox, noCheckBox: CheckBox){
-        yesCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+    private fun checkBoxYesNoToggle(yesCheckBox: CheckBox, noCheckBox: CheckBox) {
+        yesCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 noCheckBox.isChecked = false
                 numberOFAnsweredQuestions += 1
@@ -98,7 +132,7 @@ class PreScreeningQuestionFragment : Fragment() {
                 numberOFAnsweredQuestions -= 1
             }
         }
-        noCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        noCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 yesCheckBox.isChecked = false
                 numberOFAnsweredQuestions += 1

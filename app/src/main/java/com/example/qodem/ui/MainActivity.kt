@@ -1,7 +1,6 @@
 package com.example.qodem.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -9,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -18,7 +18,7 @@ import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.home.HomeViewModel
 import com.firebase.ui.auth.AuthUI
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var toggle : ActionBarDrawerToggle
+    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.fragmentContainerView)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id) {
+            when (destination.id) {
                 R.id.homeFragment, R.id.locationFragment, R.id.communityFragment -> {
                     binding.bottomNavigationView.visibility = View.VISIBLE
                     supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //
         bottomNavigationView(navController)
 
         setupDrawerView(navController)
@@ -59,14 +60,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
+        if (toggle.onOptionsItemSelected(item)) {
             return true
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setupDrawerView(navController: NavController){
-        toggle = ActionBarDrawerToggle(this, binding.drawerLayout , R.string.open, R.string.close)
+    private fun setupDrawerView(navController: NavController) {
+        toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
 
         binding.drawerLayout.addDrawerListener(toggle)
 
@@ -79,14 +80,14 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         navView.setNavigationItemSelectedListener {
-            onClick(it.itemId,navController)
+            onClick(it.itemId, navController)
             true
         }
 
         val headerView = navView.getHeaderView(0)
         val userName: TextView = headerView.findViewById(R.id.text_user_name)
         val userImage: ImageView = headerView.findViewById(R.id.image_user)
-        viewModel.userInfo.observe(this){
+        viewModel.userInfo.observe(this) {
             userName.text = "${it.firstName} ${it.lastName}"
             //userImage.setImageResource(R.drawable.infographic1)
         }
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun bottomNavigationView(navController: NavController){
+    private fun bottomNavigationView(navController: NavController) {
         val bottomNavigationView = binding.bottomNavigationView
 
         bottomNavigationView.setupWithNavController(navController)
@@ -121,7 +122,12 @@ class MainActivity : AppCompatActivity() {
                 AuthUI.getInstance()
                     .signOut(applicationContext)
                     .addOnCompleteListener { // user is now signed out
-                        startActivity(Intent(applicationContext, AuthenticationActivity::class.java))
+                        startActivity(
+                            Intent(
+                                applicationContext,
+                                AuthenticationActivity::class.java
+                            )
+                        )
                         finish()
                     }
             }

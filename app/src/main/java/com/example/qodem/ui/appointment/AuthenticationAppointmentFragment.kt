@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.budiyev.android.codescanner.*
 import com.example.qodem.databinding.FragmentAuthenticationAppointmentBinding
+import com.example.qodem.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -45,10 +45,10 @@ class AuthenticationAppointmentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentAuthenticationAppointmentBinding.inflate(layoutInflater,container,false)
+        binding = FragmentAuthenticationAppointmentBinding.inflate(layoutInflater, container, false)
         layout = binding.mainLayout
 
-        viewModel.donationUpdatedState.observe(viewLifecycleOwner){ UpdatedState ->
+        viewModel.donationUpdatedState.observe(viewLifecycleOwner) { UpdatedState ->
             when (UpdatedState) {
                 true -> {
                     CoroutineScope(Dispatchers.IO).launch {
@@ -60,7 +60,13 @@ class AuthenticationAppointmentFragment : Fragment() {
                     viewModel.resetDonationUpdatedState()
                 }
                 false -> {
-                    Toast.makeText(requireActivity(), viewModel.updateErrorMessage.value, Toast.LENGTH_SHORT).show()
+                    binding.root.showSnackbar(
+                        binding.root,
+                        viewModel.updateErrorMessage.value.toString(),
+                        Snackbar.LENGTH_SHORT,
+                        null,
+                        requireContext()
+                    ) {}
                 }
             }
         }
@@ -74,7 +80,7 @@ class AuthenticationAppointmentFragment : Fragment() {
         codeScanner()
     }
 
-    private fun codeScanner(){
+    private fun codeScanner() {
         codeScanner = CodeScanner(requireContext(), binding.scannerView)
 
         codeScanner.apply {
@@ -86,13 +92,16 @@ class AuthenticationAppointmentFragment : Fragment() {
             isAutoFocusEnabled = true
             isFlashEnabled = false
 
-            decodeCallback = DecodeCallback{
+            decodeCallback = DecodeCallback {
                 requireActivity().runOnUiThread {
-                    if(it.text == "Donated by the user, authenticate the appointment"){
+                    if (it.text == "Donated by the user, authenticate the appointment") {
                         CoroutineScope(Dispatchers.Main).launch {
                             binding.progressBar4.visibility = View.VISIBLE
                             withContext(Dispatchers.Main) {
-                                viewModel.updateDonationAuthenticatedState(args.activeDonationID, true)
+                                viewModel.updateDonationAuthenticatedState(
+                                    args.activeDonationID,
+                                    true
+                                )
                                 binding.progressBar4.visibility = View.GONE
                             }
                         }
@@ -101,7 +110,7 @@ class AuthenticationAppointmentFragment : Fragment() {
             }
 
             errorCallback = ErrorCallback {
-                Log.e(TAG,"Camera initialization error: ${it.message}")
+                Log.e(TAG, "Camera initialization error: ${it.message}")
             }
 
             binding.scannerView.setOnClickListener {
@@ -131,7 +140,8 @@ class AuthenticationAppointmentFragment : Fragment() {
                     view,
                     "Please scan QR code to authenticate the appointment.",
                     Snackbar.LENGTH_LONG,
-                    null
+                    null,
+                    requireContext()
                 ) {}
             }
 
@@ -143,7 +153,8 @@ class AuthenticationAppointmentFragment : Fragment() {
                     view,
                     "Permission is granted. You would use the camera now.",
                     Snackbar.LENGTH_INDEFINITE,
-                    "OK"
+                    "OK",
+                    requireContext()
                 ) {
                     requestPermissionLauncher.launch(
                         Manifest.permission.CAMERA
@@ -167,23 +178,5 @@ class AuthenticationAppointmentFragment : Fragment() {
     override fun onPause() {
         codeScanner.releaseResources()
         super.onPause()
-    }
-
-}
-
-fun View.showSnackbar(
-    view: View,
-    msg: String,
-    length: Int,
-    actionMessage: CharSequence?,
-    action: (View) -> Unit
-) {
-    val snackbar = Snackbar.make(view, msg, length)
-    if (actionMessage != null) {
-        snackbar.setAction(actionMessage) {
-            action(this)
-        }.show()
-    } else {
-        snackbar.show()
     }
 }

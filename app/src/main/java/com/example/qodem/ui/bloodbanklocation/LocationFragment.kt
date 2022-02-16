@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +15,7 @@ import com.example.qodem.R
 import com.example.qodem.databinding.FragmentLocationBinding
 import com.example.qodem.model.BloodBank
 import com.example.qodem.utils.BitmapHelper
+import com.example.qodem.utils.showSnackbar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -23,6 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.ktx.addCircle
 import com.google.maps.android.ktx.addMarker
@@ -91,10 +92,16 @@ class LocationFragment : Fragment() {
 
         binding.buttonBookAnAppointment.setOnClickListener {
             if (isBloodBankSelected) {
-                viewModel.activeDonationFoundState.observe(viewLifecycleOwner){
-                    when (it){
+                viewModel.activeDonationFoundState.observe(viewLifecycleOwner) {
+                    when (it) {
                         true -> {
-                            Toast.makeText(requireActivity(), "You have a pre-booked appointment.", Toast.LENGTH_LONG).show()
+                            binding.root.showSnackbar(
+                                binding.root,
+                                "You have a pre-booked appointment.",
+                                Snackbar.LENGTH_LONG,
+                                null,
+                                requireContext()
+                            ) {}
                         }
                         false -> {
                             val amount = bloodBankID
@@ -104,7 +111,13 @@ class LocationFragment : Fragment() {
                     }
                 }
             } else {
-                Toast.makeText(requireActivity(), "Please select blood bank", Toast.LENGTH_SHORT).show()
+                binding.root.showSnackbar(
+                    binding.root,
+                    "Please select blood bank",
+                    Snackbar.LENGTH_LONG,
+                    null,
+                    requireContext()
+                ) {}
             }
         }
 
@@ -171,7 +184,7 @@ class LocationFragment : Fragment() {
         }
 
         // Add the places to the ClusterManager.
-        viewModel.bloodBanksList.observe(viewLifecycleOwner){ bloodBanks ->
+        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
             clusterManager.addItems(bloodBanks)
         }
         clusterManager.cluster()
@@ -215,10 +228,11 @@ class LocationFragment : Fragment() {
     }
 
     private fun onBloodBankPlaceImageClick(bloodBank: BloodBank) {
-        val gmmIntentUri = Uri.parse("geo:0,0?q=" +
-                "${bloodBank.coordinates.latitude}," +
-                "${bloodBank.coordinates.longitude}" +
-                "(${bloodBank.name_en})"
+        val gmmIntentUri = Uri.parse(
+            "geo:0,0?q=" +
+                    "${bloodBank.coordinates.latitude}," +
+                    "${bloodBank.coordinates.longitude}" +
+                    "(${bloodBank.name_en})"
         )
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
@@ -227,17 +241,17 @@ class LocationFragment : Fragment() {
         }
     }
 
-    private fun updateBloodBankView(bloodBank: BloodBank){
+    private fun updateBloodBankView(bloodBank: BloodBank) {
         binding.layoutNoSelectedBloodBank.visibility = View.GONE
         binding.includeItemBloodBank.root.visibility = View.VISIBLE
         binding.includeItemBloodBank.root.strokeWidth = 5
         binding.cardView.strokeColor = ContextCompat.getColor(requireContext(), R.color.secondaryColor)
         binding.cardView.strokeWidth = 5
         binding.includeItemBloodBank.textBloodBank.text = bloodBank.name_en
-        binding.includeItemBloodBank.imageBloodBankPlace.setOnClickListener{
+        binding.includeItemBloodBank.imageBloodBankPlace.setOnClickListener {
             onBloodBankPlaceImageClick(bloodBank)
         }
-        binding.includeItemBloodBank.imagePhoneNumber.setOnClickListener{
+        binding.includeItemBloodBank.imagePhoneNumber.setOnClickListener {
             onPhoneNumberImageClick(bloodBank)
         }
     }

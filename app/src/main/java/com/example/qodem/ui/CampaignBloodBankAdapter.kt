@@ -11,7 +11,8 @@ import com.example.qodem.R
 import com.example.qodem.databinding.ItemBloodBankBinding
 import com.example.qodem.model.BloodBank
 
-class CampaignBloodBankAdapter(private val listener: OnItemClickListener) : RecyclerView.Adapter<CampaignBloodBankAdapter.CampaignBloodBankViewHolder>() {
+class CampaignBloodBankAdapter(private val listener: OnItemClickListener) :
+    RecyclerView.Adapter<CampaignBloodBankAdapter.CampaignBloodBankViewHolder>() {
 
     inner class CampaignBloodBankViewHolder(val binding: ItemBloodBankBinding) :
         RecyclerView.ViewHolder(binding.root),
@@ -69,8 +70,7 @@ class CampaignBloodBankAdapter(private val listener: OnItemClickListener) : Recy
             textBloodBank.text = bloodBank.name_en
             imagePhoneNumber.visibility = View.GONE
             textAddTime.visibility = View.VISIBLE
-            cardView.strokeColor =
-                ContextCompat.getColor(cardView.context, R.color.primaryDarkColor)
+            cardView.strokeColor = ContextCompat.getColor(cardView.context, R.color.primaryDarkColor)
             cardView.strokeWidth = 5
         }
     }

@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.databinding.FragmentEditNameBinding
+import com.example.qodem.utils.showSnackbar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlin.properties.Delegates
@@ -89,22 +90,33 @@ class EditNameFragment : Fragment() {
                         when (it) {
                             true -> {
                                 findNavController().popBackStack()
+                                binding.root.showSnackbar(
+                                    binding.root,
+                                    "Successfully updated",
+                                    Snackbar.LENGTH_SHORT,
+                                    null,
+                                    requireContext()
+                                ) {}
                             }
                             false -> {
-                                Toast.makeText(
-                                    requireActivity(),
-                                    viewModel.errorResultMessage.value,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                binding.root.showSnackbar(
+                                    binding.root,
+                                    viewModel.errorResultMessage.value.toString(),
+                                    Snackbar.LENGTH_SHORT,
+                                    null,
+                                    requireContext()
+                                ) {}
                             }
                         }
                     }
                 } else {
-                    Toast.makeText(
-                        requireContext(),
+                    binding.root.showSnackbar(
+                        binding.root,
                         "Please enter your name",
-                        Toast.LENGTH_LONG
-                    ).show()
+                        Snackbar.LENGTH_LONG,
+                        null,
+                        requireContext()
+                    ) {}
                 }
             }
         }

@@ -14,10 +14,12 @@ import com.example.qodem.model.AppointmentTime
 import java.util.*
 
 
-class AppointmentTimeAdapter (private val listener: OnItemClickListener) : RecyclerView.Adapter<AppointmentTimeAdapter.TimeViewHolder>(){
+class AppointmentTimeAdapter(private val listener: OnItemClickListener) :
+    RecyclerView.Adapter<AppointmentTimeAdapter.TimeViewHolder>() {
 
-    inner class TimeViewHolder(val binding: ItemTimeDateBinding): RecyclerView.ViewHolder(binding.root),
-        View.OnClickListener{
+    inner class TimeViewHolder(val binding: ItemTimeDateBinding) :
+        RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
 
         init {
             itemView.setOnClickListener(this)
@@ -27,7 +29,7 @@ class AppointmentTimeAdapter (private val listener: OnItemClickListener) : Recyc
             val position = adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 if (v != null) {
-                    when (v.id){
+                    when (v.id) {
                         itemView.id -> {
                             listener.onTimeItemClick(position)
                             notifyDataSetChanged()
@@ -43,7 +45,10 @@ class AppointmentTimeAdapter (private val listener: OnItemClickListener) : Recyc
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: AppointmentTime, newItem: AppointmentTime): Boolean {
+        override fun areContentsTheSame(
+            oldItem: AppointmentTime,
+            newItem: AppointmentTime
+        ): Boolean {
             return oldItem == newItem
         }
     }
@@ -51,14 +56,18 @@ class AppointmentTimeAdapter (private val listener: OnItemClickListener) : Recyc
     private val differ = AsyncListDiffer(this, diffCallback)
     var appointmentTimes: List<AppointmentTime>
         get() = differ.currentList
-        set(value) { differ.submitList(value) }
+        set(value) {
+            differ.submitList(value)
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {
         return TimeViewHolder(
             ItemTimeDateBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false,))
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: TimeViewHolder, position: Int) {
@@ -66,15 +75,18 @@ class AppointmentTimeAdapter (private val listener: OnItemClickListener) : Recyc
         holder.binding.apply {
             val selectedTime = appointmentTimes[position]
             calendar.time = Date(selectedTime.timeInMilli)
-            val amPmString =
-                calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH)
-            val hour = if (calendar.get(Calendar.HOUR) == 0){12} else {calendar.get(Calendar.HOUR)}
-            val donationTime = "${String.format("%02d",hour)}:" +
-                    String.format("%02d",calendar.get(Calendar.MINUTE))
+            val amPmString = calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.ENGLISH)
+            val hour = if (calendar.get(Calendar.HOUR) == 0) {
+                12
+            } else {
+                calendar.get(Calendar.HOUR)
+            }
+            val donationTime = "${String.format("%02d", hour)}:" +
+                    String.format("%02d", calendar.get(Calendar.MINUTE))
             Log.d("hereTime", "Time: $donationTime")
             textTime.text = donationTime
             textAmPm.text = amPmString
-            if(appointmentTimes[position].isSelected){
+            if (appointmentTimes[position].isSelected) {
                 cardViewTime.strokeColor = ContextCompat.getColor(cardViewTime.context, R.color.primaryColor)
             } else {
                 cardViewTime.strokeColor = ContextCompat.getColor(cardViewTime.context, R.color.secondaryColor)

@@ -18,13 +18,12 @@ constructor(
     private val bloodBankRepository: BloodBankRepository,
     private val userInfoRepository: UserInfoRepository,
     private val savedStateHandle: SavedStateHandle
-): ViewModel(){
+) : ViewModel() {
 
     //
     val bloodBanksList: LiveData<List<BloodBank>> = bloodBankRepository.bloodBanks
 
     //
-    val bloodBanksGetState: LiveData<Boolean> = bloodBankRepository.bloodBanksFound
     val activeDonationFoundState: LiveData<Boolean> = userInfoRepository.activeDonationFound
 
     //

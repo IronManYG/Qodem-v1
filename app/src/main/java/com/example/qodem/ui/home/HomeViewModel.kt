@@ -22,10 +22,10 @@ constructor(
     private val bloodBankRepository: BloodBankRepository,
     private val userInfoRepository: UserInfoRepository,
     private val savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
     init {
-        viewModelScope.launch{
+        viewModelScope.launch {
             bloodBankRepository.getBloodBanks()
         }
     }
@@ -33,9 +33,9 @@ constructor(
     //
     val bloodBanksList: LiveData<List<BloodBank>> = bloodBankRepository.bloodBanks
 
-    val activeDonation : LiveData<Donation> = userInfoRepository.activeDonation
+    val activeDonation: LiveData<Donation> = userInfoRepository.activeDonation
 
-    val donation : LiveData<List<Donation>> = userInfoRepository.donations
+    val donation: LiveData<List<Donation>> = userInfoRepository.donations
 
     val userInfo: LiveData<User> = userInfoRepository.userInfo
 
@@ -47,11 +47,11 @@ constructor(
     val errorResultMessage: LiveData<String?> = bloodBankRepository.errorResultMessage
     val updateErrorMessage: LiveData<String?> = userInfoRepository.updateErrorMessage
 
-    suspend fun updateDonationActiveState(donationID: String, isActive: Boolean){
-        userInfoRepository.updateDonationActiveState(donationID,isActive)
+    suspend fun updateDonationActiveState(donationID: String, isActive: Boolean) {
+        userInfoRepository.updateDonationActiveState(donationID, isActive)
     }
 
-    suspend fun clearBloodBanks(){
+    suspend fun clearBloodBanks() {
         bloodBankRepository.clearBloodBanks()
     }
 

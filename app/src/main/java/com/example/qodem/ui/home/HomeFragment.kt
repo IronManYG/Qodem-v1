@@ -16,6 +16,8 @@ import com.example.qodem.model.Donation
 import com.example.qodem.ui.CampaignBloodBankAdapter
 import com.example.qodem.ui.InfographicViewPagerAdapter
 import com.example.qodem.utils.CustomCountDownTimer
+import com.example.qodem.utils.showSnackbar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.util.*
@@ -36,9 +38,6 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
     //
     private lateinit var campaignBloodBankAdapter: CampaignBloodBankAdapter
     private lateinit var infographicViewPagerAdapter: InfographicViewPagerAdapter
-
-    //
-    private lateinit var _bloodBanks: List<BloodBank>
 
     //
     private lateinit var _activeDonation: Donation
@@ -79,7 +78,7 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
             binding.layoutProgressDonation.visibility = View.VISIBLE
             binding.layoutAppointmentDetails.visibility = View.GONE
             CoroutineScope(Dispatchers.IO).launch {
-                withContext(Dispatchers.Main) {
+                withContext(Dispatchers.IO) {
                     viewModel.updateDonationActiveState(_activeDonation.id, false)
                 }
             }
@@ -87,12 +86,18 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
 
         //
         binding.buttonVerifyAppointment.setOnClickListener {
-            if(dayToEnableVerify == 0 && hoursToEnableVerify == 0 && minuteToEnableVerify <= 30 && secondsToEnableVerify <= 59){
+            if (dayToEnableVerify == 0 && hoursToEnableVerify == 0 && minuteToEnableVerify <= 30 && secondsToEnableVerify <= 59) {
                 val amount = _activeDonation.id
                 val action = HomeFragmentDirections.actionHomeFragmentToAuthenticationAppointmentFragment(amount)
                 findNavController().navigate(action)
             } else {
-                Toast.makeText(requireActivity(), "It can only be done on Appointment time.", Toast.LENGTH_LONG).show()
+                binding.root.showSnackbar(
+                    binding.root,
+                    "It can only be done on Appointment time.",
+                    Snackbar.LENGTH_LONG,
+                    null,
+                    requireContext()
+                ) {}
             }
         }
 
@@ -158,8 +163,7 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
                                 _activeDonation = activeDonation
 
                                 //
-                                val donationDateCountDownTimer =
-                                    CustomCountDownTimer(activeDonation.donationDataTimeStamp)
+                                val donationDateCountDownTimer = CustomCountDownTimer(activeDonation.donationDataTimeStamp)
                                 donationDateCountDownTimer.start()
 
                                 //
@@ -203,10 +207,9 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
                                         "${calendar.get(Calendar.DAY_OF_MONTH)} " +
                                         "$monthString " +
                                         "${calendar.get(Calendar.YEAR)}"
-                                val donationTime =
-                                    "${String.format("%02d", calendar.get(Calendar.HOUR))}:" +
-                                            String.format("%02d", calendar.get(Calendar.MINUTE)) +
-                                            " $amPmString"
+                                val donationTime = "${String.format("%02d", calendar.get(Calendar.HOUR))}:" +
+                                        String.format("%02d", calendar.get(Calendar.MINUTE)) +
+                                        " $amPmString"
                                 // Publish & update Appointment info
                                 binding.textAppointmentPlace.text = activeDonationBloodBank?.name_en
                                 binding.textAppointmentCity.text = activeDonationBloodBank?.city
@@ -222,12 +225,16 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
                                         String.format("%02d", remainingHours.toInt())
                                     hoursToEnableVerify = remainingHours.toInt()
                                 }
-                                donationDateCountDownTimer.countDownMinutes.observe(viewLifecycleOwner) { remainingMinutes ->
+                                donationDateCountDownTimer.countDownMinutes.observe(
+                                    viewLifecycleOwner
+                                ) { remainingMinutes ->
                                     binding.textRemainingMinutesField.text =
                                         String.format("%02d", remainingMinutes.toInt())
                                     minuteToEnableVerify = remainingMinutes.toInt()
                                 }
-                                donationDateCountDownTimer.countDownSeconds.observe(viewLifecycleOwner) { remainingSeconds ->
+                                donationDateCountDownTimer.countDownSeconds.observe(
+                                    viewLifecycleOwner
+                                ) { remainingSeconds ->
                                     binding.textRemainingSecondsField.text =
                                         String.format("%02d", remainingSeconds.toInt())
                                     secondsToEnableVerify = remainingSeconds.toInt()

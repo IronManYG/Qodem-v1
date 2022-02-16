@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.qodem.R
 import com.example.qodem.databinding.ActivityAuthenticationBinding
@@ -52,12 +53,11 @@ class AuthenticationActivity : AppCompatActivity() {
                 AuthenticationViewModel.AuthenticationState.AUTHENTICATED -> {
                     CoroutineScope(Dispatchers.Main).launch {
                         withContext(Dispatchers.Main) {
-                            Log.e(
-                                TAG,
-                                "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} "
-                            )
+                            Log.e(TAG, "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} ")
                             val userPhoneNumber = viewModel.userPhoneNumber.value.toString()
-                            viewModel.getUserInfo(userPhoneNumber)
+                            withContext(Dispatchers.IO){
+                                viewModel.getUserInfo(userPhoneNumber)
+                            }
                             viewModel.userInfoFoundState.observe(
                                 this@AuthenticationActivity,
                                 Observer {
@@ -165,7 +165,9 @@ class AuthenticationActivity : AppCompatActivity() {
             findViewById(R.id.authenticationLayout),
             stringId,
             Snackbar.LENGTH_SHORT
-        )
+        ).setBackgroundTint(ContextCompat.getColor(this, R.color.secondaryLightColor))
+            .setTextColor(ContextCompat.getColor(this, R.color.secondaryDarkColor))
+            .setActionTextColor(ContextCompat.getColor(this, R.color.secondaryDarkColor))
             .show()
     }
 

@@ -33,47 +33,47 @@ class UserInfoFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = UserInfoFragmentBinding.inflate(layoutInflater)
 
-        viewModel.userInfo.observe(viewLifecycleOwner){ userInfo ->
-            binding.textFullNameField.text ="${userInfo.firstName} " + userInfo.lastName
+        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+            binding.textFullNameField.text = "${userInfo.firstName} " + userInfo.lastName
             binding.textDateOfBirthField.text = userInfo.birthDate
             binding.textBloodTypeField.text = userInfo.bloodType
             binding.textGenderField.text = userInfo.gender
             binding.textCityField.text = userInfo.city
             binding.textIdType.text = userInfo.IDType
-            binding.textIdNumber.text =userInfo.IDNumber
+            binding.textIdNumber.text = userInfo.IDNumber
         }
 
-        binding.cardFullName.setOnClickListener{
+        binding.cardFullName.setOnClickListener {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToEditNameFragment()
             findNavController().navigate(action)
         }
 
-        binding.cardDateOfBirth.setOnClickListener{
+        binding.cardDateOfBirth.setOnClickListener {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToEditDateOfBirthFragment()
             findNavController().navigate(action)
         }
 
-        binding.cardBloodType.setOnClickListener{
+        binding.cardBloodType.setOnClickListener {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToEditBloodTypeFragment()
             findNavController().navigate(action)
         }
 
-        binding.cardGender.setOnClickListener{
+        binding.cardGender.setOnClickListener {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToEditGenderFragment()
             findNavController().navigate(action)
         }
 
-        binding.cardCity.setOnClickListener{
+        binding.cardCity.setOnClickListener {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToEditCityFragment()
             findNavController().navigate(action)
         }
 
-        binding.cardId.setOnClickListener{
+        binding.cardId.setOnClickListener {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToEditIdFragment()
             findNavController().navigate(action)
         }
 
-        binding.buttonSignOut.setOnClickListener{
+        binding.buttonSignOut.setOnClickListener {
             AuthUI.getInstance()
                 .signOut(requireContext())
                 .addOnCompleteListener { // user is now signed out

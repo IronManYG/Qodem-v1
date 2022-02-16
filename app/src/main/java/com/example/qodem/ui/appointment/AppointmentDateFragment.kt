@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,13 +18,16 @@ import com.example.qodem.model.AppointmentTime
 import com.example.qodem.model.BloodBank
 import com.example.qodem.ui.AppointmentDayAdapter
 import com.example.qodem.ui.AppointmentTimeAdapter
+import com.example.qodem.utils.showSnackbar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickListener, AppointmentTimeAdapter.OnItemClickListener {
+class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickListener,
+    AppointmentTimeAdapter.OnItemClickListener {
 
     companion object {
         const val TAG = "AppointmentDateFrag"
@@ -64,8 +66,8 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         binding = FragmentAppointmentDateBinding.inflate(layoutInflater)
 
         //
-        for(bloodBank in viewModel.bloodBanksList.value!!){
-            if(bloodBank.id == args.bloodBankID){
+        for (bloodBank in viewModel.bloodBanksList.value!!) {
+            if (bloodBank.id == args.bloodBankID) {
                 selectedBloodBank = bloodBank
                 Log.d("here", "bloodBank id: ${bloodBank.id}")
             }
@@ -83,15 +85,16 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
                 binding.buttonBookAppointment.isEnabled = false
                 val donationNetworkEntity = DonationNetworkEntity(
                     bloodBankID = "${args.bloodBankID}",
-                    donationData= "",
+                    donationData = "",
                     donationTime = "",
                     active = true,
-                    authenticated= false,
-                    timeStamp= appointmentDay+appointmentTime)
+                    authenticated = false,
+                    timeStamp = appointmentDay + appointmentTime
+                )
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.Main) {
                         viewModel.saveDonation(donationNetworkEntity)
-                        viewModel.donationSaveState.observe(viewLifecycleOwner){
+                        viewModel.donationSaveState.observe(viewLifecycleOwner) {
                             when (it) {
                                 true -> {
                                     CoroutineScope(Dispatchers.IO).launch {
@@ -102,7 +105,13 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
                                     findNavController().navigate(AppointmentDateFragmentDirections.actionAppointmentDataFragmentToHomeFragment())
                                 }
                                 false -> {
-                                    Toast.makeText(requireActivity(), viewModel.saveErrorMessage.value, Toast.LENGTH_SHORT).show()
+                                    binding.root.showSnackbar(
+                                        binding.root,
+                                        viewModel.saveErrorMessage.value.toString(),
+                                        Snackbar.LENGTH_SHORT,
+                                        null,
+                                        requireContext()
+                                    ) {}
                                 }
                             }
                         }
@@ -110,12 +119,30 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
                         binding.buttonBookAppointment.isEnabled = true
                     }
                 }
-            } else if(!isAppointmentDaySelected && isAppointmentTimeSelected) {
-                Toast.makeText(requireActivity(), "Please select day", Toast.LENGTH_SHORT).show()
-            } else if(isAppointmentDaySelected && !isAppointmentTimeSelected) {
-                Toast.makeText(requireActivity(), "Please select time", Toast.LENGTH_SHORT).show()
+            } else if (!isAppointmentDaySelected && isAppointmentTimeSelected) {
+                binding.root.showSnackbar(
+                    binding.root,
+                    "Please select day",
+                    Snackbar.LENGTH_SHORT,
+                    null,
+                    requireContext()
+                ) {}
+            } else if (isAppointmentDaySelected && !isAppointmentTimeSelected) {
+                binding.root.showSnackbar(
+                    binding.root,
+                    "Please select time",
+                    Snackbar.LENGTH_SHORT,
+                    null,
+                    requireContext()
+                ) {}
             } else {
-                Toast.makeText(requireActivity(), "Please select day & time", Toast.LENGTH_SHORT).show()
+                binding.root.showSnackbar(
+                    binding.root,
+                    "Please select day & time",
+                    Snackbar.LENGTH_SHORT,
+                    null,
+                    requireContext()
+                ) {}
             }
         }
 
@@ -133,18 +160,18 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
     private fun setupDaysRecyclerView() = binding.recyclerViewDaySelector.apply {
         appointmentDayAdapter = AppointmentDayAdapter(this@AppointmentDateFragment)
         adapter = appointmentDayAdapter
-        layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
     //
     private fun setupTimesRecyclerView() = binding.recyclerViewTimeSelector.apply {
         appointmentTimeAdapter = AppointmentTimeAdapter(this@AppointmentDateFragment)
         adapter = appointmentTimeAdapter
-        layoutManager = GridLayoutManager(requireContext(),3)
+        layoutManager = GridLayoutManager(requireContext(), 3)
     }
 
     override fun onDayItemClick(position: Int) {
-        appointmentDayAdapter.appointmentDays.forEach{
+        appointmentDayAdapter.appointmentDays.forEach {
             it.isSelected = it == appointmentDayAdapter.appointmentDays[position]
         }
         isAppointmentDaySelected = true
@@ -156,16 +183,16 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
         appointmentDay = calendar.timeInMillis
-        Log.d("here Date","day in mill is: $appointmentDay ")
+        Log.d("here Date", "day in mill is: $appointmentDay ")
     }
 
     override fun onTimeItemClick(position: Int) {
-        appointmentTimeAdapter.appointmentTimes.forEach{
+        appointmentTimeAdapter.appointmentTimes.forEach {
             it.isSelected = it == appointmentTimeAdapter.appointmentTimes[position]
         }
         isAppointmentTimeSelected = true
         appointmentTime = appointmentTimeAdapter.appointmentTimes[position].timeInMilli
-        Log.d("here Date","time in mill is: $appointmentTime")
+        Log.d("here Date", "time in mill is: $appointmentTime")
     }
 
     private fun appointmentDaysList(): List<AppointmentDay> {
@@ -180,7 +207,8 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
             daysListAsLong.add(nextDay)
             nextDay += daysInMilli
         }
-        val daysList: MutableList<AppointmentDay> = daysListAsLong.map{AppointmentDay(it)}.toMutableList()
+        val daysList: MutableList<AppointmentDay> =
+            daysListAsLong.map { AppointmentDay(it) }.toMutableList()
         return daysList.toList()
     }
 
@@ -188,18 +216,19 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         val secondsInMilli: Long = 1000
         val minutesInMilli = secondsInMilli * 60
         val hoursInMilli = minutesInMilli * 60
-        val startTime =  selectedBloodBank.workingHours.startTime
+        val startTime = selectedBloodBank.workingHours.startTime
         val endTime = selectedBloodBank.workingHours.endTime
         val workingHours = endTime - startTime
         var startTimeInMilli = startTime * hoursInMilli
         val endTimeInMilli = endTime * hoursInMilli
         val workingHoursInMilli = endTimeInMilli - startTimeInMilli
         val timesListAsLong: MutableList<Long> = listOf(startTimeInMilli).toMutableList()
-        for(i in (workingHours*2) downTo 1) {
-            startTimeInMilli += hoursInMilli/2
+        for (i in (workingHours * 2) downTo 1) {
+            startTimeInMilli += hoursInMilli / 2
             timesListAsLong.add(startTimeInMilli)
         }
-        val timesList: MutableList<AppointmentTime> = timesListAsLong.map{AppointmentTime(it)}.toMutableList()
+        val timesList: MutableList<AppointmentTime> =
+            timesListAsLong.map { AppointmentTime(it) }.toMutableList()
         return timesList.toList()
     }
 }

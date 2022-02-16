@@ -15,7 +15,7 @@ class AuthenticationViewModel
 constructor(
     private val userInfoRepository: UserInfoRepository,
     private val savedStateHandle: SavedStateHandle
-):  ViewModel() {
+) : ViewModel() {
 
     //
     enum class AuthenticationState {
@@ -34,7 +34,6 @@ constructor(
 
     //
     private var _userPhoneNumber: MutableLiveData<String> = MutableLiveData<String>()
-
     val userPhoneNumber: LiveData<String>
         get() = _userPhoneNumber
 
@@ -52,13 +51,13 @@ constructor(
         }
     }
 
-    suspend fun getUserInfo(phoneNumber: String){
-        if (phoneNumber != ""){
+    suspend fun getUserInfo(phoneNumber: String) {
+        if (phoneNumber != "") {
             userInfoRepository.getUserInfo(phoneNumber)
         }
     }
 
-    suspend fun saveUserInfo(userNetworkEntity: UserNetworkEntity){
+    suspend fun saveUserInfo(userNetworkEntity: UserNetworkEntity) {
         userInfoRepository.saveUserInfo(userNetworkEntity)
     }
 

@@ -7,18 +7,18 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.example.qodem.R
 import com.example.qodem.data.userinfo.remote.UserNetworkEntity
 import com.example.qodem.databinding.ActivitySignUpBinding
 import com.example.qodem.ui.MainActivity
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.authentication.AuthenticationViewModel
+import com.example.qodem.utils.showSnackbar
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -171,8 +171,10 @@ class SignUpActivity : AppCompatActivity() {
                 // Sign up user
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.Main) {
-                        viewModel.saveUserInfo(userInfo)
-                        viewModel.userInfoSaveState.observe(this@SignUpActivity, Observer {
+                        withContext(Dispatchers.IO){
+                            viewModel.saveUserInfo(userInfo)
+                        }
+                        viewModel.userInfoSaveState.observe(this@SignUpActivity) {
                             when (it) {
                                 true -> {
                                     val intent = Intent(
@@ -184,15 +186,27 @@ class SignUpActivity : AppCompatActivity() {
                                     Log.e(TAG, "user Saved!")
                                 }
                                 false -> {
-                                    Toast.makeText(this@SignUpActivity, viewModel.saveErrorMessage.value, Toast.LENGTH_LONG).show()
+                                    binding.root.showSnackbar(
+                                        binding.root,
+                                        viewModel.saveErrorMessage.value.toString(),
+                                        Snackbar.LENGTH_LONG,
+                                        null,
+                                        this@SignUpActivity
+                                    ) {}
                                     Log.e(TAG, "user not Saved")
                                 }
                             }
-                        })
+                        }
                     }
                 }
             } else {
-                Toast.makeText(this, "Please enter all info", Toast.LENGTH_LONG).show()
+                binding.root.showSnackbar(
+                    binding.root,
+                    "Please enter all info",
+                    Snackbar.LENGTH_LONG,
+                    null,
+                    this@SignUpActivity
+                ) {}
             }
 
         }

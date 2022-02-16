@@ -17,14 +17,14 @@ class DonationsViewModel
 constructor(
     private val userInfoRepository: UserInfoRepository,
     private val savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
     //
     val donations: LiveData<List<Donation>> = userInfoRepository.donations
 
-    val authenticatedDonations : LiveData<List<Donation>> = userInfoRepository.authenticatedDonations
+    val authenticatedDonations: LiveData<List<Donation>> = userInfoRepository.authenticatedDonations
 
-    val activeDonation : LiveData<Donation> = userInfoRepository.activeDonation
+    val activeDonation: LiveData<Donation> = userInfoRepository.activeDonation
 
     //
     val donationsFoundState: LiveData<Boolean> = userInfoRepository.donationsFound
