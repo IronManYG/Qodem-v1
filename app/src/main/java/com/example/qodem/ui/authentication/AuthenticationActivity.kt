@@ -7,9 +7,9 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.qodem.ui.MainActivity
 import com.example.qodem.R
 import com.example.qodem.databinding.ActivityAuthenticationBinding
+import com.example.qodem.ui.MainActivity
 import com.example.qodem.ui.signup.SignUpActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -19,7 +19,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -48,42 +47,47 @@ class AuthenticationActivity : AppCompatActivity() {
         // Observe the authentication state so we can know if the user has logged in successfully.
         // If the user has logged in successfully, send them to the MainActivity.
         // If the user did not log in successfully, display an error message.
-        viewModel.authenticationState.observe(this, Observer { authenticationState ->
+        viewModel.authenticationState.observe(this) { authenticationState ->
             when (authenticationState) {
                 AuthenticationViewModel.AuthenticationState.AUTHENTICATED -> {
                     CoroutineScope(Dispatchers.Main).launch {
                         withContext(Dispatchers.Main) {
-                            Log.e(TAG, "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} ")
+                            Log.e(
+                                TAG,
+                                "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} "
+                            )
                             val userPhoneNumber = viewModel.userPhoneNumber.value.toString()
                             viewModel.getUserInfo(userPhoneNumber)
-                            viewModel.userInfoFoundState.observe(this@AuthenticationActivity, Observer {
-                                when (it) {
-                                    true -> {
-                                        val intent = Intent(
-                                            this@AuthenticationActivity,
-                                            MainActivity::class.java
-                                        )
-                                        startActivity(intent)
-                                        finish()
-                                    }
-                                    false -> {
-                                        val intent = Intent(
-                                            this@AuthenticationActivity,
-                                            SignUpActivity::class.java
-                                        )
-                                        intent.putExtra("USER_PHONE_NUMBER",userPhoneNumber)
-                                        startActivity(intent)
-                                        finish()
+                            viewModel.userInfoFoundState.observe(
+                                this@AuthenticationActivity,
+                                Observer {
+                                    when (it) {
+                                        true -> {
+                                            val intent = Intent(
+                                                this@AuthenticationActivity,
+                                                MainActivity::class.java
+                                            )
+                                            startActivity(intent)
+                                            finish()
+                                        }
+                                        false -> {
+                                            val intent = Intent(
+                                                this@AuthenticationActivity,
+                                                SignUpActivity::class.java
+                                            )
+                                            intent.putExtra("USER_PHONE_NUMBER", userPhoneNumber)
+                                            startActivity(intent)
+                                            finish()
 
-                                        Log.e(TAG, "user not founded")
-                                        binding.authButton.visibility = View.VISIBLE
+                                            Log.e(TAG, "user not founded")
+                                            binding.authButton.visibility = View.VISIBLE
+                                        }
                                     }
-                                }
-                                binding.progressBar3.visibility = View.GONE
-                            })
+                                    binding.progressBar3.visibility = View.GONE
+                                })
                             // getting user donations for fire store if there is user info
                             if (viewModel.userInfoFoundState.value == true) {
-                                Log.d(TAG,"Start geting all donations")
+                                Log.d(TAG, "Start geting all donations")
                                 withContext(Dispatchers.IO) {
                                     viewModel.getAllDonations()
                                 }
@@ -91,14 +95,17 @@ class AuthenticationActivity : AppCompatActivity() {
                         }
                     }
                 }
-                else ->{
+                else -> {
                     binding.progressBar3.visibility = View.GONE
                     binding.authButton.visibility = View.VISIBLE
                     binding.authenticationLayout.visibility = View.VISIBLE
-                    Log.e(TAG,"Authentication state that doesn't require any UI change $authenticationState")
+                    Log.e(
+                        TAG,
+                        "Authentication state that doesn't require any UI change $authenticationState"
+                    )
                 }
             }
-        })
+        }
     }
 
     // Caller

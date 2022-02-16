@@ -51,7 +51,7 @@ interface UserDao {
     /**
      * @return active or inactive donation in the database.
      *
-     * @param active the state of donation to be inserted.
+     * @param isActive the state of donation to be inserted.
      */
     @Query("SELECT *  FROM donations WHERE active = :isActive")
     fun getActiveDonation(isActive: Boolean): LiveData<DonationsCacheEntity>

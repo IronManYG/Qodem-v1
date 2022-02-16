@@ -6,7 +6,6 @@ import com.example.qodem.model.Donation
 import com.example.qodem.model.WorkingDays
 import com.example.qodem.model.WorkingHours
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class Converters {
 

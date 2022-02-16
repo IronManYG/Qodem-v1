@@ -21,8 +21,6 @@ import com.example.qodem.ui.AppointmentDayAdapter
 import com.example.qodem.ui.AppointmentTimeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 @ExperimentalCoroutinesApi
@@ -51,16 +49,12 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
     private var isAppointmentTimeSelected = false
 
     // selected appointment Day by user
-    var appointmentDay: Long = 0L
+    private var appointmentDay: Long = 0L
 
     // selected appointment Time by user
     private var appointmentTime: Long = 0L
 
     private val args: AppointmentDateFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

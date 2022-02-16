@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qodem.R
 import com.example.qodem.databinding.ItemTimeDateBinding
-import com.example.qodem.model.AppointmentDay
 import com.example.qodem.model.AppointmentTime
 import java.util.*
 

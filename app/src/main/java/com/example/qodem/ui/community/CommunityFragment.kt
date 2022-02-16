@@ -25,7 +25,7 @@ class CommunityFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CommunityViewModel::class.java)
+        viewModel = ViewModelProvider(this)[CommunityViewModel::class.java]
         // TODO: Use the ViewModel
     }
 

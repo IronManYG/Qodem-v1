@@ -2,31 +2,27 @@ package com.example.qodem.ui.bloodbanklocation
 
 import android.content.Intent
 import android.net.Uri
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.alpha
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentLocationBinding
 import com.example.qodem.model.BloodBank
-import com.example.qodem.ui.appointment.AppointmentLocationFragmentDirections
 import com.example.qodem.utils.BitmapHelper
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.Circle
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.ktx.addCircle
 import com.google.maps.android.ktx.addMarker
@@ -62,7 +58,7 @@ class LocationFragment : Fragment() {
          * This is where we can add markers or lines, add listeners or move the camera.
          * In this case, we just add a marker near Sydney, Australia.
          * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once theb
+         * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
 //        val sydney = LatLng(-34.0, 151.0)
@@ -73,11 +69,11 @@ class LocationFragment : Fragment() {
 
         // Ensure all places are visible in the map
         val bounds = LatLngBounds.builder()
-        viewModel.bloodBanksList.observe(viewLifecycleOwner, Observer { bloodBanks ->
+        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
             bloodBanks.forEach {
                 bounds.include(it.coordinates)
             }
-        })
+        }
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20))
 
@@ -135,7 +131,7 @@ class LocationFragment : Fragment() {
      * Adds markers to the map. These markers won't be clustered.
      */
     private fun addMarkers(googleMap: GoogleMap) {
-        viewModel.bloodBanksList.observe(viewLifecycleOwner, Observer { bloodBanks ->
+        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
             bloodBanks.forEach { bloodBank ->
                 val marker = googleMap.addMarker {
                     title(bloodBank.name_en)
@@ -146,7 +142,7 @@ class LocationFragment : Fragment() {
                 // MarkerInfoWindowAdapter
                 marker?.tag = bloodBank
             }
-        })
+        }
     }
 
     /**
@@ -233,15 +229,15 @@ class LocationFragment : Fragment() {
 
     private fun updateBloodBankView(bloodBank: BloodBank){
         binding.layoutNoSelectedBloodBank.visibility = View.GONE
-        binding.includeItmeBloodBank.root.visibility = View.VISIBLE
-        binding.includeItmeBloodBank.root.strokeWidth = 5
+        binding.includeItemBloodBank.root.visibility = View.VISIBLE
+        binding.includeItemBloodBank.root.strokeWidth = 5
         binding.cardView.strokeColor = ContextCompat.getColor(requireContext(), R.color.secondaryColor)
         binding.cardView.strokeWidth = 5
-        binding.includeItmeBloodBank.textBloodBank.text = bloodBank.name_en
-        binding.includeItmeBloodBank.imageBloodBankPlace.setOnClickListener{
+        binding.includeItemBloodBank.textBloodBank.text = bloodBank.name_en
+        binding.includeItemBloodBank.imageBloodBankPlace.setOnClickListener{
             onBloodBankPlaceImageClick(bloodBank)
         }
-        binding.includeItmeBloodBank.imagePhoneNumber.setOnClickListener{
+        binding.includeItemBloodBank.imagePhoneNumber.setOnClickListener{
             onPhoneNumberImageClick(bloodBank)
         }
     }

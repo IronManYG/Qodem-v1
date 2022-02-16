@@ -5,17 +5,17 @@
     <item
         android:id="@+id/blood_donation_drive"
         android:icon="@drawable/ic_menu_calendar"
-        android:title="Blood Donation Drive"
+        android:title="@string/blood_donation_campaigns"
         app:showAsAction="always"/>
     <item
         android:id="@+id/rewards"
         android:icon="@drawable/ic_menu_card_giftcard"
-        android:title="Rewards"
+        android:title="@string/rewards"
         app:showAsAction="always"/>
     <item
         android:id="@+id/notification"
         android:icon="@drawable/ic_menu_notifications"
-        android:title="Notification"
+        android:title="@string/notification"
         app:showAsAction="always"
         />
 </menu>

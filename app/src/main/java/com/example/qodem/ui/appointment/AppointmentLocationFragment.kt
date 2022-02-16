@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qodem.databinding.FragmentAppointmentLocationBinding
-import com.example.qodem.model.BloodBank
 import com.example.qodem.ui.BloodBankAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,10 +35,6 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
 
     //
     private var bloodBankID = -1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

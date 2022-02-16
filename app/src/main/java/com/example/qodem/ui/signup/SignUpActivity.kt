@@ -12,7 +12,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.qodem.R
-import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.data.userinfo.remote.UserNetworkEntity
 import com.example.qodem.databinding.ActivitySignUpBinding
 import com.example.qodem.ui.MainActivity

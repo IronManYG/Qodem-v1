@@ -1,10 +1,8 @@
 package com.example.qodem.utils
 
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.qodem.ui.home.HomeFragment
 import java.util.*
 
 class CustomCountDownTimer(endData: Long) {

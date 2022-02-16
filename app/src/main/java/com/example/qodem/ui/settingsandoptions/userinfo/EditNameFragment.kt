@@ -29,10 +29,6 @@ class EditNameFragment : Fragment() {
 
     private var valuesValidToSignUp by Delegates.notNull<Boolean>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

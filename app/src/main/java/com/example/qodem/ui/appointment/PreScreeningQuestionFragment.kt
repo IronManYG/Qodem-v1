@@ -32,10 +32,6 @@ class PreScreeningQuestionFragment : Fragment() {
 
     private val args: PreScreeningQuestionFragmentArgs by navArgs()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -78,19 +74,19 @@ class PreScreeningQuestionFragment : Fragment() {
 
     private fun checkBoxYesNoToggles() {
         // for question 1
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQusetion1Yes,binding.checkBoxPreScreeningQusetion1No)
+        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion1Yes,binding.checkBoxPreScreeningQuestion1No)
         // for question 2
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQusetion2Yes,binding.checkBoxPreScreeningQusetion2No)
+        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion2Yes,binding.checkBoxPreScreeningQuestion2No)
         // for question 3
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQusetion3Yes,binding.checkBoxPreScreeningQusetion3No)
+        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion3Yes,binding.checkBoxPreScreeningQuestion3No)
         // for question 4
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQusetion4Yes,binding.checkBoxPreScreeningQusetion4No)
+        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion4Yes,binding.checkBoxPreScreeningQuestion4No)
         // for question 5
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQusetion5Yes,binding.checkBoxPreScreeningQusetion5No)
+        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion5Yes,binding.checkBoxPreScreeningQuestion5No)
         // for question 6
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQusetion6Yes,binding.checkBoxPreScreeningQusetion6No)
+        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion6Yes,binding.checkBoxPreScreeningQuestion6No)
         // for question 7
-        checkBoxYesNoToggle(binding.checkBoxPreScreeningQusetion7Yes,binding.checkBoxPreScreeningQusetion7No)
+        checkBoxYesNoToggle(binding.checkBoxPreScreeningQuestion7Yes,binding.checkBoxPreScreeningQuestion7No)
     }
 
     private fun checkBoxYesNoToggle(yesCheckBox: CheckBox, noCheckBox: CheckBox){
@@ -113,12 +109,12 @@ class PreScreeningQuestionFragment : Fragment() {
     }
 
     private fun isAllAnswersValueValid(): Boolean {
-        return binding.checkBoxPreScreeningQusetion1No.isChecked &&
-                binding.checkBoxPreScreeningQusetion2No.isChecked &&
-                binding.checkBoxPreScreeningQusetion3No.isChecked &&
-                binding.checkBoxPreScreeningQusetion4No.isChecked &&
-                binding.checkBoxPreScreeningQusetion5No.isChecked &&
-                binding.checkBoxPreScreeningQusetion6No.isChecked &&
-                binding.checkBoxPreScreeningQusetion7No.isChecked
+        return binding.checkBoxPreScreeningQuestion1No.isChecked &&
+                binding.checkBoxPreScreeningQuestion2No.isChecked &&
+                binding.checkBoxPreScreeningQuestion3No.isChecked &&
+                binding.checkBoxPreScreeningQuestion4No.isChecked &&
+                binding.checkBoxPreScreeningQuestion5No.isChecked &&
+                binding.checkBoxPreScreeningQuestion6No.isChecked &&
+                binding.checkBoxPreScreeningQuestion7No.isChecked
     }
 }

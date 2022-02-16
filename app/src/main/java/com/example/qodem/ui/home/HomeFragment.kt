@@ -9,14 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentHomeBinding
 import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import com.example.qodem.ui.CampaignBloodBankAdapter
 import com.example.qodem.ui.InfographicViewPagerAdapter
-import com.example.qodem.ui.appointment.AppointmentLocationFragmentDirections
 import com.example.qodem.utils.CustomCountDownTimer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
