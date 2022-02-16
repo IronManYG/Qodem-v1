@@ -5,7 +5,7 @@ package com.example.qodem.utils
  * or a failure with message and statusCode
  */
 sealed class Result<out T> {
-    data class Success<out T : Any>(val data: T) :  Result<T>()
+    data class Success<out T : Any>(val data: T) : Result<T>()
     data class Error(val message: String?, val statusCode: Int? = null) : Result<Nothing>()
 //    object Loading : Result<Nothing>()
 }

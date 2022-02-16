@@ -1,6 +1,6 @@
 package com.example.qodem.utils
 
-interface EntityMapper <Entity, DomainModel>{
+interface EntityMapper<Entity, DomainModel> {
 
     fun mapFromEntity(entity: Entity): DomainModel
 

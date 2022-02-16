@@ -13,10 +13,11 @@ import retrofit2.HttpException
 @HiltWorker
 class RefreshDataWorker
 @AssistedInject
-constructor(@Assisted appContext: Context,
-            @Assisted params: WorkerParameters,
-            private val bloodBankRepository: BloodBankRepository,
-): CoroutineWorker(appContext, params) {
+constructor(
+    @Assisted appContext: Context,
+    @Assisted params: WorkerParameters,
+    private val bloodBankRepository: BloodBankRepository,
+) : CoroutineWorker(appContext, params) {
 
     companion object {
         const val WORK_NAME = "RefreshDataWorker"

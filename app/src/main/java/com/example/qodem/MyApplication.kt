@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltAndroidApp
-class MyApplication: Application(), Configuration.Provider{
+class MyApplication : Application(), Configuration.Provider {
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
@@ -54,7 +54,8 @@ class MyApplication: Application(), Configuration.Provider{
         WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
             RefreshDataWorker.WORK_NAME,
             ExistingPeriodicWorkPolicy.REPLACE,
-            repeatingRequest)
+            repeatingRequest
+        )
 
     }
 

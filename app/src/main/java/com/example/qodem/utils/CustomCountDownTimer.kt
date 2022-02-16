@@ -72,7 +72,6 @@ class CustomCountDownTimer(endData: Long) {
 
             }
         }
-
         timer.start()
     }
 }
