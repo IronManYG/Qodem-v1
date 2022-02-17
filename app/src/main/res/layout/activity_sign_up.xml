@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:padding="@dimen/big_layout_padding">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_first_name_label"
@@ -27,7 +27,7 @@
                 android:id="@+id/edit_text_first_name_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,7 +46,7 @@
                 android:id="@+id/edit_text_Last_name_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +78,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/small_layout_margin"
             android:hint="@string/blood_type"
             app:errorEnabled="true"
             app:layout_constraintEnd_toStartOf="@+id/menu_gender"
@@ -177,7 +177,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@android:string/cancel"
             android:textColor="@color/secondaryColor"
             app:layout_constraintEnd_toStartOf="@+id/button_sign_up"

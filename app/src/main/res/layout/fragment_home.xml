@@ -16,8 +16,8 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_margin="8dp"
+                android:layout_height="@dimen/donation_appointment_layout_height"
+                android:layout_margin="@dimen/small_layout_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -30,8 +30,8 @@
 
                     <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/progressBar_donation"
-                        android:layout_width="150dp"
-                        android:layout_height="90dp"
+                        android:layout_width="@dimen/loading_animation_layout_width"
+                        android:layout_height="@dimen/loading_animation_layout_height"
                         android:visibility="visible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
                         android:id="@+id/text_no_records_massage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="64dp"
+                        android:layout_marginTop="@dimen/huge_layout_margin"
                         android:text="@string/no_records_massage"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
                     android:id="@+id/layout_appointment_details"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
+                    android:padding="@dimen/small_layout_padding"
                     android:visibility="gone">
 
                     <TextView
@@ -84,7 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/appointment_info"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/mid_title_text_size"
                         app:layout_constraintBottom_toBottomOf="@+id/text_remaining_days_field"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
@@ -93,10 +93,10 @@
                         android:id="@+id/text_remaining_days_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="@dimen/small_layout_margin"
+                        android:layout_marginEnd="@dimen/small_layout_margin"
                         android:text="@string/remaining_days"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintEnd_toStartOf="@+id/text_remaining_hours_label"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,9 +104,9 @@
                         android:id="@+id/text_remaining_hours_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="@dimen/small_layout_margin"
                         android:text="@string/remaining_hours"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintEnd_toStartOf="@+id/text_remaining_minutes_label"
                         app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
 
@@ -114,9 +114,9 @@
                         android:id="@+id/text_remaining_minutes_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="@dimen/small_layout_margin"
                         android:text="@string/remaining_minutes"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintEnd_toStartOf="@+id/text_remaining_seconds_label"
                         app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
 
@@ -125,7 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/remaining_seconds"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/text_remaining_days_label" />
 
@@ -134,53 +134,52 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/primaryColor"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintEnd_toEndOf="@+id/text_remaining_days_label"
-                        app:layout_constraintHorizontal_bias="0.437"
                         app:layout_constraintStart_toStartOf="@+id/text_remaining_days_label"
                         app:layout_constraintTop_toBottomOf="@+id/text_remaining_days_label"
-                        tools:text="00" />
+                        tools:text="@string/time_default_placeholder" />
 
                     <TextView
                         android:id="@+id/text_remaining_hours_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/primaryColor"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintEnd_toEndOf="@+id/text_remaining_hours_label"
                         app:layout_constraintStart_toStartOf="@+id/text_remaining_hours_label"
                         app:layout_constraintTop_toBottomOf="@+id/text_remaining_hours_label"
-                        tools:text="00" />
+                        tools:text="@string/time_default_placeholder" />
 
                     <TextView
                         android:id="@+id/text_remaining_minutes_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/primaryColor"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintEnd_toEndOf="@+id/text_remaining_minutes_label"
                         app:layout_constraintStart_toStartOf="@+id/text_remaining_minutes_label"
                         app:layout_constraintTop_toBottomOf="@+id/text_remaining_minutes_label"
-                        tools:text="00" />
+                        tools:text="@string/time_default_placeholder" />
 
                     <TextView
                         android:id="@+id/text_remaining_seconds_field"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/primaryColor"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
                         app:layout_constraintStart_toStartOf="@+id/text_remaining_seconds_label"
                         app:layout_constraintTop_toBottomOf="@+id/text_remaining_seconds_label"
-                        tools:text="00" />
+                        tools:text="@string/time_default_placeholder" />
 
                     <View
                         android:id="@+id/divider3"
                         android:layout_width="0dp"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_height="@dimen/divider_height"
+                        android:layout_marginStart="@dimen/small_layout_margin"
+                        android:layout_marginTop="@dimen/small_layout_margin"
+                        android:layout_marginEnd="@dimen/small_layout_margin"
                         android:background="?android:attr/listDivider"
                         android:backgroundTint="@color/primaryDarkColor"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -191,7 +190,7 @@
                         android:id="@+id/image_blood_bank_appointment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/small_layout_margin"
                         android:contentDescription="@string/blood_bank_icon"
                         app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
                         app:layout_constraintTop_toBottomOf="@+id/divider3"
@@ -202,41 +201,40 @@
                         android:id="@+id/text_appointment_place"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="@dimen/small_layout_margin"
+                        android:layout_marginEnd="@dimen/small_layout_margin"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/image_blood_bank_appointment"
                         app:layout_constraintEnd_toStartOf="@+id/text_appointment_city"
                         app:layout_constraintStart_toEndOf="@+id/image_blood_bank_appointment"
                         app:layout_constraintTop_toTopOf="@+id/image_blood_bank_appointment"
-                        tools:text="al raqi unversity hospital" />
+                        tools:text="@string/blood_bank_placeholder" />
 
                     <TextView
                         android:id="@+id/text_appointment_city"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginEnd="@dimen/small_layout_margin"
                         app:layout_constraintEnd_toEndOf="@+id/text_remaining_seconds_label"
                         app:layout_constraintTop_toTopOf="@+id/text_appointment_place"
-                        tools:text="Khartoum" />
+                        tools:text="@string/city_placeholder" />
 
                     <TextView
                         android:id="@+id/text_appointment_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="@dimen/small_layout_margin"
+                        android:layout_marginEnd="@dimen/small_layout_margin"
                         app:layout_constraintEnd_toStartOf="@+id/divider4"
                         app:layout_constraintStart_toStartOf="@+id/text_appointment_info"
                         app:layout_constraintTop_toBottomOf="@+id/image_blood_bank_appointment"
-                        tools:text="Monday, 5 December 2022" />
+                        tools:text="@string/appointment_date_placeholder" />
 
                     <View
                         android:id="@+id/divider4"
-                        android:layout_width="2dp"
+                        android:layout_width="@dimen/divider_width"
                         android:layout_height="0dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="-8dp"
+                        android:layout_marginTop="@dimen/small_layout_margin"
                         android:background="?android:attr/listDivider"
                         android:backgroundTint="@color/primaryDarkColor"
                         app:layout_constraintBottom_toBottomOf="@+id/text_appointment_date"
@@ -248,16 +246,16 @@
                         android:id="@+id/text_appointment_time"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="@dimen/small_layout_margin"
                         app:layout_constraintStart_toEndOf="@+id/divider4"
                         app:layout_constraintTop_toTopOf="@+id/text_appointment_date"
-                        tools:text="03:00 PM" />
+                        tools:text="@string/appointment_time_placeholder" />
 
                     <ImageView
                         android:id="@+id/image_appointment_qr"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="@dimen/activity_vertical_margin"
                         android:contentDescription="@string/qr_code"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -272,7 +270,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/verify_appointment"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -281,9 +279,9 @@
                         style="@style/Widget.Qodem.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="@dimen/small_layout_margin"
                         android:text="@android:string/cancel"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/body_text_size"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/button_verify_appointment" />
 
@@ -291,8 +289,8 @@
                         android:id="@+id/image_appointment_directions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="@dimen/small_layout_margin"
+                        android:layout_marginEnd="@dimen/small_layout_margin"
                         android:contentDescription="@string/directions_icon"
                         app:layout_constraintBottom_toBottomOf="@+id/button_cancel_appointment"
                         app:layout_constraintEnd_toStartOf="@+id/image_appointment_qr"
@@ -307,10 +305,10 @@
                 android:id="@+id/text_donation_campaigns"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/small_layout_margin"
+                android:layout_marginTop="@dimen/small_layout_margin"
                 android:text="@string/donation_campaigns"
-                android:textSize="16sp"
+                android:textSize="@dimen/mid_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
@@ -327,10 +325,10 @@
             <Button
                 android:id="@+id/button_find_donors"
                 style="@style/Widget.Qodem.Button"
-                android:layout_width="85dp"
+                android:layout_width="@dimen/button_feature_width"
                 android:layout_height="wrap_content"
                 android:text="@string/home_find_donors"
-                android:textSize="10sp"
+                android:textSize="@dimen/button_feature_size"
                 app:icon="@drawable/ic_search"
                 app:iconGravity="top"
                 app:layout_constraintEnd_toStartOf="@+id/button_add_donor"
@@ -341,10 +339,10 @@
             <Button
                 android:id="@+id/button_add_donor"
                 style="@style/Widget.Qodem.Button"
-                android:layout_width="85dp"
+                android:layout_width="@dimen/button_feature_width"
                 android:layout_height="wrap_content"
                 android:text="@string/home_add_donor"
-                android:textSize="10sp"
+                android:textSize="@dimen/button_feature_size"
                 app:icon="@drawable/ic_add"
                 app:iconGravity="top"
                 app:layout_constraintEnd_toStartOf="@+id/button_snap_and_share"
@@ -355,10 +353,10 @@
             <Button
                 android:id="@+id/button_snap_and_share"
                 style="@style/Widget.Qodem.Button"
-                android:layout_width="85dp"
+                android:layout_width="@dimen/button_feature_width"
                 android:layout_height="wrap_content"
                 android:text="@string/home_snap_and_share"
-                android:textSize="10sp"
+                android:textSize="@dimen/button_feature_size"
                 app:icon="@drawable/ic_camera_alt"
                 app:iconGravity="top"
                 app:layout_constraintEnd_toStartOf="@+id/button_blood_journey"
@@ -369,10 +367,10 @@
             <Button
                 android:id="@+id/button_blood_journey"
                 style="@style/Widget.Qodem.Button"
-                android:layout_width="85dp"
+                android:layout_width="@dimen/button_feature_width"
                 android:layout_height="wrap_content"
                 android:text="@string/home_blood_journey"
-                android:textSize="10sp"
+                android:textSize="@dimen/button_feature_size"
                 app:icon="@drawable/ic_blood_drop"
                 app:iconGravity="top"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -397,7 +395,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/infographics"
-                android:textSize="16sp"
+                android:textSize="@dimen/mid_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/text_donation_campaigns"
                 app:layout_constraintTop_toBottomOf="@+id/button_find_donors" />
@@ -405,7 +403,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager_infographic"
                 android:layout_width="0dp"
-                android:layout_height="250dp"
+                android:layout_height="@dimen/viewPager_infographic_layout_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

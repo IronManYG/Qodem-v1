@@ -7,36 +7,10 @@
     android:background="@color/primaryColorBackground"
     tools:context=".ui.appointment.PreScreeningRequestFragment">
 
-    <Button
-        android:id="@+id/button_proceed_now"
-        style="@style/Widget.Qodem.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/proceed_now"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/text_pre_screening_request_explain"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/pre_screening_request_explain"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/image_pre_screening_request"
-        android:layout_width="230dp"
-        android:layout_height="212dp"
+        android:layout_width="@dimen/check_pre_screening_icon_width"
+        android:layout_height="@dimen/check_pre_screening_icon_height"
         android:contentDescription="@string/pre_screening_request_icon"
         android:src="@drawable/ic_check_box"
         app:layout_constraintBottom_toTopOf="@+id/text_pre_screening_request_explain"
@@ -44,4 +18,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/secondaryDarkColor" />
+
+    <TextView
+        android:id="@+id/text_pre_screening_request_explain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:text="@string/pre_screening_request_explain"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="@dimen/mid_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_proceed_now"
+        style="@style/Widget.Qodem.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text="@string/proceed_now"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

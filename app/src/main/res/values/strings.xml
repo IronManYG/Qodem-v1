@@ -105,4 +105,24 @@
     <string name="rewards">Rewards</string>
     <string name="notification">Notification</string>
     <string name="feature_under_development">Feature under development.</string>
+    <string name="time_default_placeholder">00</string>
+    <string name="blood_bank_placeholder">al raqi unversity hospital</string>
+    <string name="city_placeholder">Khartoum</string>
+    <string name="appointment_date_placeholder">Monday, 5 December 2022</string>
+    <string name="appointment_time_placeholder">03:00 PM</string>
+    <string name="duration_placeholder">15 min</string>
+    <string name="working_days_placeholder">Sunday to Thursday</string>
+    <string name="working_hours_placeholder">08:00 AM - 03:00 PM</string>
+    <string name="add_time_placeholder">5 days ago</string>
+    <string name="day_placeholder">Thursday</string>
+    <string name="day_in_month_placeholder">5</string>
+    <string name="month_placeholder">January</string>
+    <string name="item_time_placeholder">00:00</string>
+    <string name="am_pm_placeholder">AM</string>
+    <string name="user_name_placeholder">User name</string>
+    <string name="date_of_birth_placeholder">16/5/1960</string>
+    <string name="blood_type_placeholder">B+</string>
+    <string name="gender_placeholder">male</string>
+    <string name="id_type_placeholder">Passport</string>
+    <string name="id_number_placeholder">P 0123456789</string>
 </resources>

@@ -24,7 +24,6 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/map" />
 
@@ -33,7 +32,7 @@
         style="@style/Widget.Qodem.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:text="@string/button_book_an__appointment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,12 +42,12 @@
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/small_layout_margin"
+        android:layout_marginRight="@dimen/small_layout_margin"
+        android:layout_marginBottom="@dimen/small_layout_margin"
+        android:checkable="true"
         android:clickable="true"
         android:focusable="true"
-        android:checkable="true"
         app:layout_constraintBottom_toTopOf="@+id/button_book_an__appointment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -56,7 +55,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_no_selected_blood_bank"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/blood_bank_layout_height"
             android:visibility="visible">
 
             <TextView
@@ -73,7 +72,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_progress_selected_blood_bank"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/blood_bank_layout_height"
             android:visibility="gone">
 
             <ProgressBar

@@ -27,13 +27,13 @@
         app:frameAspectRatioHeight="1"
         app:frameAspectRatioWidth="1"
         app:frameColor="@android:color/white"
-        app:frameCornersRadius="0dp"
-        app:frameCornersSize="50dp"
-        app:frameSize="0.75"
-        app:frameThickness="2dp"
+        app:frameCornersRadius="@dimen/frame_corners_radius_size"
+        app:frameCornersSize="@dimen/frame_corners_size"
+        app:frameSize="@dimen/frame_size"
+        app:frameThickness="@dimen/frame_thickness_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:maskColor="#77000000" />
+        app:maskColor="@color/maskColor" />
 </androidx.constraintlayout.widget.ConstraintLayout>

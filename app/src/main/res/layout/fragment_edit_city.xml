@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColorBackground"
-    android:padding="24dp"
+    android:padding="@dimen/big_layout_padding"
     tools:context=".ui.settingsandoptions.userinfo.EditCityFragment">
 
     <com.google.android.material.textfield.TextInputLayout

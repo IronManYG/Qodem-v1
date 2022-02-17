@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColorBackground"
-    android:padding="16dp"
+    android:padding="@dimen/mid_layout_padding"
     tools:context=".ui.appointment.AppointmentDateFragment">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/select_day"
         android:textIsSelectable="false"
-        android:textSize="16sp"
+        android:textSize="@dimen/mid_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="@string/select_time"
         android:textIsSelectable="false"
-        android:textSize="16sp"
+        android:textSize="@dimen/mid_text_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView_day_selector" />

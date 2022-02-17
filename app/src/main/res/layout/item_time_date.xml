@@ -5,36 +5,36 @@
     android:id="@+id/cardView_time"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/small_layout_margin"
     android:checkable="true"
     android:clickable="true"
     android:focusable="true"
     app:strokeColor="@color/secondaryColor"
-    app:strokeWidth="2dp">
+    app:strokeWidth="@dimen/stroke_size">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:padding="8dp">
-
-        <TextView
-            android:id="@+id/text_am_pm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            tools:text="AM"
-            app:layout_constraintBottom_toBottomOf="@+id/text_time"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/text_time"
-            app:layout_constraintTop_toTopOf="@+id/text_time" />
+        android:layout_height="@dimen/item_time_date_height"
+        android:padding="@dimen/small_layout_padding">
 
         <TextView
             android:id="@+id/text_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="00:00"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/item_time_placeholder" />
+
+        <TextView
+            android:id="@+id/text_am_pm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_layout_margin"
+            app:layout_constraintBottom_toBottomOf="@+id/text_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_time"
+            app:layout_constraintTop_toTopOf="@+id/text_time"
+            tools:text="@string/am_pm_placeholder" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

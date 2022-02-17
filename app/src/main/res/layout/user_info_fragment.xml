@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primaryColorBackground"
-    android:padding="16dp"
+    android:padding="@dimen/mid_layout_padding"
     tools:context=".ui.settingsandoptions.userinfo.UserInfoFragment">
 
     <com.google.android.material.card.MaterialCardView
@@ -24,14 +24,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="@dimen/small_layout_padding">
 
             <TextView
                 android:id="@+id/text_full_name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/full_name"
-                android:textSize="24sp"
+                android:textSize="@dimen/big_body_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,11 +40,11 @@
                 android:id="@+id/text_full_name_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="user name"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/small_layout_margin"
+                android:textSize="@dimen/mid_title_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_full_name_label" />
+                app:layout_constraintTop_toBottomOf="@+id/text_full_name_label"
+                tools:text="user name" />
 
             <ImageView
                 android:id="@+id/image_edit_full_name"
@@ -65,7 +65,7 @@
         android:id="@+id/card_date_of_birth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/small_layout_margin"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -76,14 +76,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="@dimen/small_layout_padding">
 
             <TextView
                 android:id="@+id/text_date_of_birth_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date_of_birth"
-                android:textSize="24sp"
+                android:textSize="@dimen/big_body_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -92,11 +92,11 @@
                 android:id="@+id/text_date_of_birth_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="16/5/1960"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/small_layout_margin"
+                android:textSize="@dimen/mid_title_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_date_of_birth_label" />
+                app:layout_constraintTop_toBottomOf="@+id/text_date_of_birth_label"
+                tools:text="@string/date_of_birth_placeholder" />
 
             <ImageView
                 android:id="@+id/image_edit_date_of_birth"
@@ -117,7 +117,7 @@
         android:id="@+id/card_blood_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/small_layout_margin"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -128,14 +128,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="@dimen/small_layout_padding">
 
             <TextView
                 android:id="@+id/text_blood_type_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/blood_type"
-                android:textSize="24sp"
+                android:textSize="@dimen/big_body_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -144,11 +144,11 @@
                 android:id="@+id/text_blood_type_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="B+"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/small_layout_margin"
+                android:textSize="@dimen/mid_title_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_blood_type_label" />
+                app:layout_constraintTop_toBottomOf="@+id/text_blood_type_label"
+                tools:text="@string/blood_type_placeholder" />
 
             <ImageView
                 android:id="@+id/image_edit_blood_type"
@@ -167,7 +167,7 @@
         android:id="@+id/card_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/small_layout_margin"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -178,14 +178,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="@dimen/small_layout_padding">
 
             <TextView
                 android:id="@+id/text_gender_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gender"
-                android:textSize="24sp"
+                android:textSize="@dimen/big_body_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -194,11 +194,11 @@
                 android:id="@+id/text_gender_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="male"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/small_layout_margin"
+                android:textSize="@dimen/mid_title_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_gender_label" />
+                app:layout_constraintTop_toBottomOf="@+id/text_gender_label"
+                tools:text="@string/gender_placeholder" />
 
             <ImageView
                 android:id="@+id/image_edit_gender"
@@ -217,7 +217,7 @@
         android:id="@+id/card_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/small_layout_margin"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -228,14 +228,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="@dimen/small_layout_padding">
 
             <TextView
                 android:id="@+id/text_city_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/city"
-                android:textSize="24sp"
+                android:textSize="@dimen/big_body_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -244,11 +244,11 @@
                 android:id="@+id/text_city_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="Khartoum"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/small_layout_margin"
+                android:textSize="@dimen/mid_title_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_city_label" />
+                app:layout_constraintTop_toBottomOf="@+id/text_city_label"
+                tools:text="@string/city_placeholder" />
 
             <ImageView
                 android:id="@+id/image_edit_city"
@@ -267,7 +267,7 @@
         android:id="@+id/card_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/small_layout_margin"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -278,14 +278,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp">
+            android:padding="@dimen/small_layout_padding">
 
             <TextView
                 android:id="@+id/text_id_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/id"
-                android:textSize="24sp"
+                android:textSize="@dimen/big_body_text_size"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -294,21 +294,21 @@
                 android:id="@+id/text_id_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                tools:text="Passport"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/small_layout_margin"
+                android:textSize="@dimen/mid_title_text_size"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_id_label" />
+                app:layout_constraintTop_toBottomOf="@+id/text_id_label"
+                tools:text="@string/id_type_placeholder" />
 
             <TextView
                 android:id="@+id/text_id_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                tools:text="P0123456789"
-                android:textSize="18sp"
+                android:layout_marginStart="@dimen/small_layout_margin"
+                android:textSize="@dimen/mid_title_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_id_type" />
+                app:layout_constraintStart_toEndOf="@+id/text_id_type"
+                tools:text="@string/id_number_placeholder" />
 
             <ImageView
                 android:id="@+id/image_edit_id"

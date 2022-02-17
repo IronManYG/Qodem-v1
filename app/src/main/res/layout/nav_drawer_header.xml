@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="@dimen/nav_drawer_header_height"
     android:background="@color/primaryColor"
-    android:padding="16dp">
-
-    <TextView
-        android:id="@+id/text_user_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        tools:text="User Name"
-        android:textColor="@color/primaryTextColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_user"
-        app:layout_constraintTop_toTopOf="@+id/image_user" />
+    android:padding="@dimen/mid_layout_padding">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_user"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/user_image_width"
+        android:layout_height="@dimen/user_image_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/Circular"
         app:srcCompat="@drawable/ic_user" />
+
+    <TextView
+        android:id="@+id/text_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_layout_margin"
+        android:textColor="@color/primaryTextColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_user"
+        app:layout_constraintTop_toTopOf="@+id/image_user"
+        tools:text="@string/user_name_placeholder" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,4 +13,5 @@
 
     <color name="secondaryTextColor">#000000</color>
     <color name="primaryTextColor">#ffffff</color>
+    <color name="maskColor">#77000000</color>
 </resources>
