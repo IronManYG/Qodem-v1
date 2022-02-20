@@ -15,11 +15,11 @@ fun View.showSnackbar(
     action: (View) -> Unit
 ) {
     val snackbar = Snackbar.make(view, msg, length)
-    snackbar.apply {
-        setBackgroundTint(ContextCompat.getColor(context, R.color.secondaryLightColor))
-        setTextColor(ContextCompat.getColor(context, R.color.secondaryDarkColor))
-        setActionTextColor(ContextCompat.getColor(context, R.color.secondaryDarkColor))
-    }
+//    snackbar.apply {
+//        setBackgroundTint(ContextCompat.getColor(context, R.color.secondaryLightColor))
+//        setTextColor(ContextCompat.getColor(context, R.color.secondaryDarkColor))
+//        setActionTextColor(ContextCompat.getColor(context, R.color.secondaryDarkColor))
+//    }
     if (actionMessage != null) {
         snackbar.setAction(actionMessage) {
             action(this)
