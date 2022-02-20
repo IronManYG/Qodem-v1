@@ -55,9 +55,7 @@ class AuthenticationActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main) {
                             Log.e(TAG, "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} ")
                             val userPhoneNumber = viewModel.userPhoneNumber.value.toString()
-                            withContext(Dispatchers.IO){
-                                viewModel.getUserInfo(userPhoneNumber)
-                            }
+                            viewModel.getUserInfo(userPhoneNumber)
                             viewModel.userInfoFoundState.observe(
                                 this@AuthenticationActivity,
                                 Observer {

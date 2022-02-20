@@ -171,9 +171,7 @@ class SignUpActivity : AppCompatActivity() {
                 // Sign up user
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.Main) {
-                        withContext(Dispatchers.IO){
-                            viewModel.saveUserInfo(userInfo)
-                        }
+                        viewModel.saveUserInfo(userInfo)
                         viewModel.userInfoSaveState.observe(this@SignUpActivity) {
                             when (it) {
                                 true -> {
