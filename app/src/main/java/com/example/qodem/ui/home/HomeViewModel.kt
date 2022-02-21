@@ -24,12 +24,6 @@ constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    init {
-        viewModelScope.launch {
-            bloodBankRepository.getBloodBanks()
-        }
-    }
-
     //
     val bloodBanksList: LiveData<List<BloodBank>> = bloodBankRepository.bloodBanks
 
@@ -46,6 +40,10 @@ constructor(
     //
     val errorResultMessage: LiveData<String?> = bloodBankRepository.errorResultMessage
     val updateErrorMessage: LiveData<String?> = userInfoRepository.updateErrorMessage
+
+    suspend fun getBloodBanks() {
+        bloodBankRepository.getBloodBanks()
+    }
 
     suspend fun updateDonationActiveState(donationID: String, isActive: Boolean) {
         userInfoRepository.updateDonationActiveState(donationID, isActive)

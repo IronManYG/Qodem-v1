@@ -17,6 +17,7 @@ import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import com.example.qodem.ui.CampaignBloodBankAdapter
 import com.example.qodem.ui.InfographicViewPagerAdapter
+import com.example.qodem.utils.ConnectionLiveData
 import com.example.qodem.utils.CustomCountDownTimer
 import com.example.qodem.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
@@ -48,6 +49,7 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
     private lateinit var _activeDonation: Donation
 
     //
+    private lateinit var connectionLiveData : ConnectionLiveData
 
     //
     private var dayToEnableVerify by Delegates.notNull<Int>()
@@ -69,6 +71,29 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
                 inflater,
                 R.layout.fragment_home, container, false
             )
+        connectionLiveData = ConnectionLiveData(requireContext())
+
+        //
+        connectionLiveData.observe(viewLifecycleOwner){ isNetworkAvailable ->
+            when (isNetworkAvailable) {
+                true -> {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        withContext(Dispatchers.IO) {
+                            viewModel.getBloodBanks()
+                        }
+                    }
+                }
+                false -> {
+                    binding.root.showSnackbar(
+                        binding.root,
+                        "Network Not Available",
+                        Snackbar.LENGTH_LONG,
+                        null,
+                        requireContext()
+                    ) {}
+                }
+            }
+        }
 
         //
         setupRecyclerView()
