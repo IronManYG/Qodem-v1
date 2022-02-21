@@ -163,10 +163,7 @@ class AuthenticationActivity : AppCompatActivity() {
             findViewById(R.id.authenticationLayout),
             stringId,
             Snackbar.LENGTH_SHORT
-        ).setBackgroundTint(ContextCompat.getColor(this, R.color.secondaryLightColor))
-            .setTextColor(ContextCompat.getColor(this, R.color.secondaryDarkColor))
-            .setActionTextColor(ContextCompat.getColor(this, R.color.secondaryDarkColor))
-            .show()
+        ).show()
     }
 
 }
