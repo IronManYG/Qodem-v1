@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentEditBloodTypeBinding
+import com.example.qodem.utils.ConnectionLiveData
 import com.example.qodem.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -32,7 +33,12 @@ class EditBloodTypeFragment : Fragment() {
 
     private lateinit var binding: FragmentEditBloodTypeBinding
 
+    //
+    private lateinit var connectionLiveData : ConnectionLiveData
+
     private var valueValidToSignUp by Delegates.notNull<Boolean>()
+
+    private var networkAvailable by Delegates.notNull<Boolean>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +46,27 @@ class EditBloodTypeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentEditBloodTypeBinding.inflate(layoutInflater)
+
+        connectionLiveData = ConnectionLiveData(requireContext())
+
+        //
+        connectionLiveData.observe(viewLifecycleOwner){ isNetworkAvailable ->
+            when (isNetworkAvailable) {
+                true -> {
+                    networkAvailable = true
+                }
+                false -> {
+                    networkAvailable = true
+                    binding.root.showSnackbar(
+                        binding.root,
+                        "Network Not Available",
+                        Snackbar.LENGTH_LONG,
+                        null,
+                        requireContext()
+                    ) {}
+                }
+            }
+        }
 
         val bloodTypeItems = resources.getStringArray(R.array.blood_types)
 
@@ -66,6 +93,7 @@ class EditBloodTypeFragment : Fragment() {
 
                 // Update value if all value are valid
                 if (valueValidToSignUp) {
+                    binding.loading.visibility = View.VISIBLE
                     CoroutineScope(Dispatchers.Main).launch {
                         withContext(Dispatchers.IO) {
                             viewModel.updateUserBloodType(
@@ -86,6 +114,7 @@ class EditBloodTypeFragment : Fragment() {
                                     null,
                                     requireContext()
                                 ) {}
+                                binding.loading.visibility = View.GONE
                             }
                             false -> {
                                 binding.root.showSnackbar(
@@ -95,6 +124,7 @@ class EditBloodTypeFragment : Fragment() {
                                     null,
                                     requireContext()
                                 ) {}
+                                binding.loading.visibility = View.GONE
                             }
                         }
                     }
