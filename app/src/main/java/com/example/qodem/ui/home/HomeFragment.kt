@@ -230,6 +230,22 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
     private fun setupInfographicViewPager() = binding.viewPagerInfographic.apply {
         infographicViewPagerAdapter = InfographicViewPagerAdapter()
         adapter = infographicViewPagerAdapter
+        binding.indicator.setViewPager(this)
+        infographicViewPagerAdapter.registerAdapterDataObserver(binding.indicator.adapterDataObserver)
+        binding.imageDragRight.setOnClickListener {
+            this.apply {
+                beginFakeDrag()
+                fakeDragBy(-12f)
+                endFakeDrag()
+            }
+        }
+        binding.imageDragLeft.setOnClickListener {
+            this.apply {
+                beginFakeDrag()
+                fakeDragBy(12f)
+                endFakeDrag()
+            }
+        }
     }
 
     private fun updateAppointmentState(bloodBanks: List<BloodBank>) {

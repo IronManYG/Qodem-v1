@@ -145,8 +145,11 @@ dependencies {
     // View Pager 2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
 
-    //
+    // Lottie
     implementation "com.airbnb.android:lottie:4.2.2"
+
+    //CircleIndicator
+    implementation 'me.relex:circleindicator:2.1.6'
 }
 
 // Allow references to generated code

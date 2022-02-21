@@ -125,4 +125,6 @@
     <string name="gender_placeholder">male</string>
     <string name="id_type_placeholder">Passport</string>
     <string name="id_number_placeholder">P 0123456789</string>
+    <string name="drag_right">drag infographic right</string>
+    <string name="drag_left">drag infographic left</string>
 </resources>
