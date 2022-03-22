@@ -23,7 +23,7 @@
     <string name="verify_appointment">Verify</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login" translatable="false">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -52,7 +52,7 @@
         <item>National ID</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="pre_screening_request_explain">These questions will help you to determine your eligibility for blood donation, and will save you time and effort, It won\'t take you more than 30 secs!</string>
     <string name="pre_screening_question_1">Are you suffering form fever or flu or taking antibiotic within last 10 days?</string>
     <string name="question_answer_yes">Yes</string>
@@ -72,19 +72,19 @@
     <string name="online_pre_screening_feature2_description">Answer pre-screening questions straight from the app itself.</string>
     <string name="blood_banks">Blood Banks</string>
     <string name="blood_banks_list_feature2_description">List and locations of blood banks to easily decide which one is closer to you.</string>
-    <string name="blood_bank_icon">Blood bank icon</string>
+    <string name="blood_bank_icon" translatable="false">Blood bank icon</string>
     <string name="qr_code">Qr code</string>
-    <string name="directions_icon">Directions icon</string>
+    <string name="directions_icon" translatable="false">Directions icon</string>
     <string name="donation_campaigns">Donation campaigns</string>
     <string name="infographics">Infographics</string>
     <string name="proceed_now">Proceed Now</string>
-    <string name="pre_screening_request_icon">Pre screening request icon</string>
-    <string name="date_icon">date icon</string>
-    <string name="time_icon">time icon</string>
-    <string name="phone_icon">Phone icon</string>
-    <string name="infographic_image">infographic image</string>
+    <string name="pre_screening_request_icon" translatable="false">Pre screening request icon</string>
+    <string name="date_icon" translatable="false">date icon</string>
+    <string name="time_icon" translatable="false">time icon</string>
+    <string name="phone_icon" translatable="false">Phone icon</string>
+    <string name="infographic_image" translatable="false">infographic image</string>
     <string name="full_name">Full Name</string>
-    <string name="arrow_icon">arrow icon</string>
+    <string name="arrow_icon" translatable="false">arrow icon</string>
     <string name="date_of_birth">Date of Birth</string>
     <string name="blood_type">Blood Type</string>
     <string name="gender">Gender</string>
@@ -105,26 +105,26 @@
     <string name="rewards">Rewards</string>
     <string name="notification">Notification</string>
     <string name="feature_under_development">Feature under development.</string>
-    <string name="time_default_placeholder">00</string>
+    <string name="time_default_placeholder" translatable="false">00</string>
     <string name="blood_bank_placeholder">al raqi unversity hospital</string>
     <string name="city_placeholder">Khartoum</string>
     <string name="appointment_date_placeholder">Monday, 5 December 2022</string>
-    <string name="appointment_time_placeholder">03:00 PM</string>
+    <string name="appointment_time_placeholder" translatable="false">03:00 PM</string>
     <string name="duration_placeholder">15 min</string>
     <string name="working_days_placeholder">Sunday to Thursday</string>
-    <string name="working_hours_placeholder">08:00 AM - 03:00 PM</string>
+    <string name="working_hours_placeholder" translatable="false">08:00 AM - 03:00 PM</string>
     <string name="add_time_placeholder">5 days ago</string>
     <string name="day_placeholder">Thursday</string>
-    <string name="day_in_month_placeholder">5</string>
+    <string name="day_in_month_placeholder" translatable="false">5</string>
     <string name="month_placeholder">January</string>
-    <string name="item_time_placeholder">00:00</string>
-    <string name="am_pm_placeholder">AM</string>
-    <string name="user_name_placeholder">User name</string>
-    <string name="date_of_birth_placeholder">16/5/1960</string>
-    <string name="blood_type_placeholder">B+</string>
-    <string name="gender_placeholder">male</string>
-    <string name="id_type_placeholder">Passport</string>
-    <string name="id_number_placeholder">P 0123456789</string>
+    <string name="item_time_placeholder" translatable="false">00:00</string>
+    <string name="am_pm_placeholder" translatable="false">AM</string>
+    <string name="user_name_placeholder" translatable="false">User name</string>
+    <string name="date_of_birth_placeholder" translatable="false">16/5/1960</string>
+    <string name="blood_type_placeholder" translatable="false">B+</string>
+    <string name="gender_placeholder" translatable="false">male</string>
+    <string name="id_type_placeholder" translatable="false">Passport</string>
+    <string name="id_number_placeholder" translatable="false">P 0123456789</string>
     <string name="drag_right">drag infographic right</string>
     <string name="drag_left">drag infographic left</string>
 </resources>
