@@ -17,12 +17,14 @@ import com.example.qodem.databinding.ActivityMainBinding
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.home.HomeViewModel
 import com.firebase.ui.auth.AuthUI
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
+import com.zeugmasolutions.localehelper.Locales
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : LocaleAwareCompatActivity() {
 
     private val viewModel: HomeViewModel by viewModels()
 

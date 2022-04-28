@@ -18,12 +18,13 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class AuthenticationActivity : AppCompatActivity() {
+class AuthenticationActivity : LocaleAwareCompatActivity() {
 
     companion object {
         const val TAG = "AuthenticationActivity"
