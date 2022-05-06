@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.databinding.FragmentEditDateOfBirthBinding
 import com.example.qodem.ui.signup.SignUpActivity
@@ -63,62 +66,66 @@ class EditDateOfBirthFragment : Fragment() {
             binding.editTextDateOfBirthField.error = null
         }
 
-        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            binding.editTextDateOfBirthField.setText(userInfo.birthDate)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userInfo.collect { userInfo ->
+                    binding.editTextDateOfBirthField.setText(userInfo.birthDate)
 
-            binding.buttonSave.setOnClickListener {
-                // Check Error State of date field
-                changeErrorStateInEditTextView(
-                    binding.editTextDateOfBirthField,
-                    6,
-                    "Enter your birth date"
-                )
+                    binding.buttonSave.setOnClickListener {
+                        // Check Error State of date field
+                        changeErrorStateInEditTextView(
+                            binding.editTextDateOfBirthField,
+                            6,
+                            "Enter your birth date"
+                        )
 
-                // Check Value of date field
-                valueValidToSignUp = isAllEditTextValueValid()
+                        // Check Value of date field
+                        valueValidToSignUp = isAllEditTextValueValid()
 
-                // Update value if all value are valid
-                if (valueValidToSignUp) {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        withContext(Dispatchers.IO) {
-                            viewModel.updateUserDateOFBirth(
-                                userInfo.id,
-                                binding.editTextDateOfBirthField.text.toString(),
-                                userInfo.phoneNumber
-                            )
+                        // Update value if all value are valid
+                        if (valueValidToSignUp) {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                withContext(Dispatchers.IO) {
+                                    viewModel.updateUserDateOFBirth(
+                                        userInfo.id,
+                                        binding.editTextDateOfBirthField.text.toString(),
+                                        userInfo.phoneNumber
+                                    )
+                                }
+                            }
+                            viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
+                                when (it) {
+                                    true -> {
+                                        findNavController().popBackStack()
+                                        binding.root.showSnackbar(
+                                            binding.root,
+                                            "Successfully updated",
+                                            Snackbar.LENGTH_SHORT,
+                                            null,
+                                            requireContext()
+                                        ) {}
+                                    }
+                                    false -> {
+                                        binding.root.showSnackbar(
+                                            binding.root,
+                                            viewModel.errorResultMessage.value.toString(),
+                                            Snackbar.LENGTH_SHORT,
+                                            null,
+                                            requireContext()
+                                        ) {}
+                                    }
+                                }
+                            }
+                        } else {
+                            binding.root.showSnackbar(
+                                binding.root,
+                                "Please enter your birth date",
+                                Snackbar.LENGTH_LONG,
+                                null,
+                                requireContext()
+                            ) {}
                         }
                     }
-                    viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
-                        when (it) {
-                            true -> {
-                                findNavController().popBackStack()
-                                binding.root.showSnackbar(
-                                    binding.root,
-                                    "Successfully updated",
-                                    Snackbar.LENGTH_SHORT,
-                                    null,
-                                    requireContext()
-                                ) {}
-                            }
-                            false -> {
-                                binding.root.showSnackbar(
-                                    binding.root,
-                                    viewModel.errorResultMessage.value.toString(),
-                                    Snackbar.LENGTH_SHORT,
-                                    null,
-                                    requireContext()
-                                ) {}
-                            }
-                        }
-                    }
-                } else {
-                    binding.root.showSnackbar(
-                        binding.root,
-                        "Please enter your birth date",
-                        Snackbar.LENGTH_LONG,
-                        null,
-                        requireContext()
-                    ) {}
                 }
             }
         }

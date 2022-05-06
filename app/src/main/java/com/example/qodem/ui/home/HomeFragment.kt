@@ -262,87 +262,91 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
                 true -> {
 
                     //
-                    viewModel.donation.observe(viewLifecycleOwner) { donations ->
-                        for (activeDonation in donations) {
-                            if (activeDonation.active) {
-                                _activeDonation = activeDonation
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                            viewModel.donation.collect() { donations ->
+                                for (activeDonation in donations) {
+                                    if (activeDonation.active) {
+                                        _activeDonation = activeDonation
 
-                                //
-                                val donationDateCountDownTimer = CustomCountDownTimer(activeDonation.donationDataTimeStamp)
-                                donationDateCountDownTimer.start()
+                                        //
+                                        val donationDateCountDownTimer = CustomCountDownTimer(activeDonation.donationDataTimeStamp)
+                                        donationDateCountDownTimer.start()
 
-                                //
-                                var activeDonationBloodBank: BloodBank? = null
+                                        //
+                                        var activeDonationBloodBank: BloodBank? = null
 
-                                //
-                                for (bloodBank in bloodBanks) {
-                                    if (bloodBank.id.toString() == activeDonation.bloodBankID) {
-                                        activeDonationBloodBank = bloodBank
+                                        //
+                                        for (bloodBank in bloodBanks) {
+                                            if (bloodBank.id.toString() == activeDonation.bloodBankID) {
+                                                activeDonationBloodBank = bloodBank
+                                            }
+                                        }
+
+                                        //
+                                        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                                        Log.d("timeStamp 2", "${activeDonation.donationDataTimeStamp}")
+                                        calendar.time = Date(activeDonation.donationDataTimeStamp)
+                                        calendar.add(Calendar.MONTH, 1)
+
+                                        val dayOfWeekString =
+                                            calendar.getDisplayName(
+                                                Calendar.DAY_OF_WEEK,
+                                                Calendar.LONG,
+                                                Locale.ENGLISH
+                                            )
+
+                                        val monthString =
+                                            calendar.getDisplayName(
+                                                Calendar.MONTH,
+                                                Calendar.LONG,
+                                                Locale.ENGLISH
+                                            )
+
+                                        val amPmString =
+                                            calendar.getDisplayName(
+                                                Calendar.AM_PM,
+                                                Calendar.LONG,
+                                                Locale.ENGLISH
+                                            )
+
+                                        val donationDate = "$dayOfWeekString, " +
+                                                "${calendar.get(Calendar.DAY_OF_MONTH)} " +
+                                                "$monthString " +
+                                                "${calendar.get(Calendar.YEAR)}"
+                                        val donationTime = "${String.format("%02d", calendar.get(Calendar.HOUR))}:" +
+                                                String.format("%02d", calendar.get(Calendar.MINUTE)) +
+                                                " $amPmString"
+                                        // Publish & update Appointment info
+                                        binding.textAppointmentPlace.text = activeDonationBloodBank?.name_en
+                                        binding.textAppointmentCity.text = activeDonationBloodBank?.city
+                                        binding.textAppointmentDate.text = donationDate
+                                        binding.textAppointmentTime.text = donationTime
+                                        donationDateCountDownTimer.countDownDays.observe(viewLifecycleOwner) { remainingDays ->
+                                            binding.textRemainingDaysField.text =
+                                                String.format("%02d", remainingDays.toInt())
+                                            dayToEnableVerify = remainingDays.toInt()
+                                        }
+                                        donationDateCountDownTimer.countDownHours.observe(viewLifecycleOwner) { remainingHours ->
+                                            binding.textRemainingHoursField.text =
+                                                String.format("%02d", remainingHours.toInt())
+                                            hoursToEnableVerify = remainingHours.toInt()
+                                        }
+                                        donationDateCountDownTimer.countDownMinutes.observe(
+                                            viewLifecycleOwner
+                                        ) { remainingMinutes ->
+                                            binding.textRemainingMinutesField.text =
+                                                String.format("%02d", remainingMinutes.toInt())
+                                            minuteToEnableVerify = remainingMinutes.toInt()
+                                        }
+                                        donationDateCountDownTimer.countDownSeconds.observe(
+                                            viewLifecycleOwner
+                                        ) { remainingSeconds ->
+                                            binding.textRemainingSecondsField.text =
+                                                String.format("%02d", remainingSeconds.toInt())
+                                            secondsToEnableVerify = remainingSeconds.toInt()
+                                        }
                                     }
-                                }
-
-                                //
-                                val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-                                Log.d("timeStamp 2", "${activeDonation.donationDataTimeStamp}")
-                                calendar.time = Date(activeDonation.donationDataTimeStamp)
-                                calendar.add(Calendar.MONTH, 1)
-
-                                val dayOfWeekString =
-                                    calendar.getDisplayName(
-                                        Calendar.DAY_OF_WEEK,
-                                        Calendar.LONG,
-                                        Locale.ENGLISH
-                                    )
-
-                                val monthString =
-                                    calendar.getDisplayName(
-                                        Calendar.MONTH,
-                                        Calendar.LONG,
-                                        Locale.ENGLISH
-                                    )
-
-                                val amPmString =
-                                    calendar.getDisplayName(
-                                        Calendar.AM_PM,
-                                        Calendar.LONG,
-                                        Locale.ENGLISH
-                                    )
-
-                                val donationDate = "$dayOfWeekString, " +
-                                        "${calendar.get(Calendar.DAY_OF_MONTH)} " +
-                                        "$monthString " +
-                                        "${calendar.get(Calendar.YEAR)}"
-                                val donationTime = "${String.format("%02d", calendar.get(Calendar.HOUR))}:" +
-                                        String.format("%02d", calendar.get(Calendar.MINUTE)) +
-                                        " $amPmString"
-                                // Publish & update Appointment info
-                                binding.textAppointmentPlace.text = activeDonationBloodBank?.name_en
-                                binding.textAppointmentCity.text = activeDonationBloodBank?.city
-                                binding.textAppointmentDate.text = donationDate
-                                binding.textAppointmentTime.text = donationTime
-                                donationDateCountDownTimer.countDownDays.observe(viewLifecycleOwner) { remainingDays ->
-                                    binding.textRemainingDaysField.text =
-                                        String.format("%02d", remainingDays.toInt())
-                                    dayToEnableVerify = remainingDays.toInt()
-                                }
-                                donationDateCountDownTimer.countDownHours.observe(viewLifecycleOwner) { remainingHours ->
-                                    binding.textRemainingHoursField.text =
-                                        String.format("%02d", remainingHours.toInt())
-                                    hoursToEnableVerify = remainingHours.toInt()
-                                }
-                                donationDateCountDownTimer.countDownMinutes.observe(
-                                    viewLifecycleOwner
-                                ) { remainingMinutes ->
-                                    binding.textRemainingMinutesField.text =
-                                        String.format("%02d", remainingMinutes.toInt())
-                                    minuteToEnableVerify = remainingMinutes.toInt()
-                                }
-                                donationDateCountDownTimer.countDownSeconds.observe(
-                                    viewLifecycleOwner
-                                ) { remainingSeconds ->
-                                    binding.textRemainingSecondsField.text =
-                                        String.format("%02d", remainingSeconds.toInt())
-                                    secondsToEnableVerify = remainingSeconds.toInt()
                                 }
                             }
                         }

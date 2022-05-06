@@ -10,6 +10,9 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentEditIdBinding
@@ -65,7 +68,9 @@ class EditIdFragment : Fragment() {
             false
         }
 
-        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewModel.userInfo.collect() { userInfo ->
 
             binding.buttonSave.setOnClickListener {
                 // Check Error State of id type field
@@ -128,6 +133,8 @@ class EditIdFragment : Fragment() {
                         requireContext()
                     ) {}
                 }
+            }
+        }
             }
         }
 

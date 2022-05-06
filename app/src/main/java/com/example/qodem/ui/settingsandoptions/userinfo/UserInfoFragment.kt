@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.databinding.UserInfoFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -30,14 +34,18 @@ class UserInfoFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = UserInfoFragmentBinding.inflate(layoutInflater)
 
-        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            binding.textFullNameField.text = "${userInfo.firstName} " + userInfo.lastName
-            binding.textDateOfBirthField.text = userInfo.birthDate
-            binding.textBloodTypeField.text = userInfo.bloodType
-            binding.textGenderField.text = userInfo.gender
-            binding.textCityField.text = userInfo.city
-            binding.textIdType.text = userInfo.IDType
-            binding.textIdNumber.text = userInfo.IDNumber
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userInfo.collect() { userInfo ->
+                    binding.textFullNameField.text = "${userInfo.firstName} " + userInfo.lastName
+                    binding.textDateOfBirthField.text = userInfo.birthDate
+                    binding.textBloodTypeField.text = userInfo.bloodType
+                    binding.textGenderField.text = userInfo.gender
+                    binding.textCityField.text = userInfo.city
+                    binding.textIdType.text = userInfo.IDType
+                    binding.textIdNumber.text = userInfo.IDNumber
+                }
+            }
         }
 
         binding.cardFullName.setOnClickListener {

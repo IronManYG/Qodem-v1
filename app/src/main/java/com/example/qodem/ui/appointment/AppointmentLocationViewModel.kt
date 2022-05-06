@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -45,7 +46,7 @@ constructor(
         userInfoRepository.saveDonation(donationNetworkEntity)
     }
 
-    suspend fun getAllDonations() {
+    fun getAllDonations() = viewModelScope.launch {
         userInfoRepository.getAllDonations()
     }
 

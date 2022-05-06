@@ -12,6 +12,8 @@ import com.example.qodem.model.Donation
 import com.example.qodem.model.User
 import com.example.qodem.utils.Result
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class UserInfoRepository
@@ -29,20 +31,20 @@ constructor(
     }
 
     //
-    val userInfo: LiveData<User> = Transformations.map(userDao.getUserInfo()) {
+    val userInfo: Flow<User> = userDao.getUserInfo().map {
         userCacheMapper.mapFromEntity(it)
     }
 
-    val donations: LiveData<List<Donation>> = Transformations.map(userDao.getAllDonations()) {
+    val donations: Flow<List<Donation>> = userDao.getAllDonations().map {
         donationsCacheMapper.mapFromEntityList(it)
     }
 
-    val authenticatedDonations: LiveData<List<Donation>> =
-        Transformations.map(userDao.getAuthenticatedDonations(true)) {
+    val authenticatedDonations: Flow<List<Donation>> =
+        userDao.getAuthenticatedDonations(true).map {
             donationsCacheMapper.mapFromEntityList(it)
         }
 
-    val activeDonation: LiveData<Donation> = Transformations.map(userDao.getActiveDonation(true)) {
+    val activeDonation: Flow<Donation> = userDao.getActiveDonation(true).map {
         donationsCacheMapper.mapFromEntity(it)
     }
 

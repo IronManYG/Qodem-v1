@@ -117,11 +117,14 @@ class MainActivity : LocaleAwareCompatActivity() {
         val headerView = navView.getHeaderView(0)
         val userName: TextView = headerView.findViewById(R.id.text_user_name)
         val userImage: ImageView = headerView.findViewById(R.id.image_user)
-        viewModel.userInfo.observe(this) {
-            userName.text = "${it.firstName} ${it.lastName}"
-            //userImage.setImageResource(R.drawable.infographic1)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userInfo.collect {
+                    userName.text = "${it.firstName} ${it.lastName}"
+                    //userImage.setImageResource(R.drawable.infographic1)
+                }
+            }
         }
-
         headerView.setOnClickListener {
             navController.navigate(R.id.settingsFragment)
             binding.drawerLayout.close()

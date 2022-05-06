@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Data Access Object for the user info & donations tables.
@@ -16,7 +17,7 @@ interface UserDao {
      * @return user info.
      */
     @Query("SELECT * FROM user")
-    fun getUserInfo(): LiveData<UserCacheEntity>
+    fun getUserInfo(): Flow<UserCacheEntity>
 
     /**
      * Insert a user info in the database. If the user info already exists, replace it.
@@ -24,13 +25,13 @@ interface UserDao {
      * @param userEntity the user info to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveUserInfo(userEntity: UserCacheEntity)
+    suspend fun saveUserInfo(userEntity: UserCacheEntity)
 
     /**
      * @return all donations.
      */
     @Query("SELECT * FROM donations")
-    fun getAllDonations(): LiveData<List<DonationsCacheEntity>>
+    fun getAllDonations(): Flow<List<DonationsCacheEntity>>
 
     /**
      * @return all authenticated or not authenticated donation in the database.
@@ -38,7 +39,7 @@ interface UserDao {
      * @param isAuthenticated the state of donation to be return.
      */
     @Query("SELECT * FROM donations WHERE authenticated = :isAuthenticated")
-    fun getAuthenticatedDonations(isAuthenticated: Boolean): LiveData<List<DonationsCacheEntity>>
+    fun getAuthenticatedDonations(isAuthenticated: Boolean): Flow<List<DonationsCacheEntity>>
 
     /**
      * Insert donations in the database. If the donations already exists, replace it.
@@ -46,7 +47,7 @@ interface UserDao {
      * @param donationsEntity are donations to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveDonations(donationsEntity: List<DonationsCacheEntity>)
+    suspend fun saveDonations(donationsEntity: List<DonationsCacheEntity>)
 
     /**
      * @return active or inactive donation in the database.
@@ -54,7 +55,7 @@ interface UserDao {
      * @param isActive the state of donation to be inserted.
      */
     @Query("SELECT *  FROM donations WHERE active = :isActive")
-    fun getActiveDonation(isActive: Boolean): LiveData<DonationsCacheEntity>
+    fun getActiveDonation(isActive: Boolean): Flow<DonationsCacheEntity>
 
     /**
      * Clear user info form date base.
@@ -62,7 +63,7 @@ interface UserDao {
      * used only when sign out.
      */
     @Query("DELETE FROM user")
-    fun deleteUserInfo()
+    suspend fun deleteUserInfo()
 
     /**
      * Clear all donations form date base.
@@ -70,5 +71,5 @@ interface UserDao {
      * used only when sign out.
      */
     @Query("DELETE FROM donations")
-    fun deleteAllDonations()
+    suspend fun deleteAllDonations()
 }

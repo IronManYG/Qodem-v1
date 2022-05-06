@@ -10,6 +10,9 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentEditGenderBinding
@@ -50,8 +53,9 @@ class EditGenderFragment : Fragment() {
             // Clear the error.
             binding.menuGender.editText?.error = null
         }
-
-        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewModel.userInfo.collect { userInfo ->
 
             binding.buttonSave.setOnClickListener {
                 // Check Error State of date field
@@ -107,6 +111,8 @@ class EditGenderFragment : Fragment() {
                         requireContext()
                     ) {}
                 }
+            }
+        }
             }
         }
 

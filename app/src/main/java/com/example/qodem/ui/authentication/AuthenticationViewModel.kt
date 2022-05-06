@@ -6,6 +6,7 @@ import com.example.qodem.data.userinfo.remote.UserNetworkEntity
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -61,7 +62,7 @@ constructor(
         userInfoRepository.saveUserInfo(userNetworkEntity)
     }
 
-    suspend fun getAllDonations() {
+    fun getAllDonations() = viewModelScope.launch {
         userInfoRepository.getAllDonations()
     }
 

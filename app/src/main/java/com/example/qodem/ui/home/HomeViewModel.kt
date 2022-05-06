@@ -40,11 +40,52 @@ constructor(
             emptyList()
         )
 
-    val activeDonation: LiveData<Donation> = userInfoRepository.activeDonation
+    private val activeDonationFlow = userInfoRepository.activeDonation
+    val activeDonation: StateFlow<Donation> = activeDonationFlow
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            Donation(
+                "",
+                "",
+                "",
+                "",
+                false,
+                false,
+                -1
+            )
+        )
 
-    val donation: LiveData<List<Donation>> = userInfoRepository.donations
+    private val donationFlow = userInfoRepository.donations
+    val donation: StateFlow<List<Donation>> = donationFlow
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
 
-    val userInfo: LiveData<User> = userInfoRepository.userInfo
+    private val userInfoFlow = userInfoRepository.userInfo
+    val userInfo: StateFlow<User> = userInfoFlow
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            User(
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                -1,
+                "",
+                "",
+                -1,
+                emptyList()
+            )
+        )
 
     //
     val activeDonationFoundState: LiveData<Boolean> = userInfoRepository.activeDonationFound

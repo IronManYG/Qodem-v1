@@ -3,9 +3,11 @@ package com.example.qodem.ui.appointment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -27,7 +29,7 @@ constructor(
         userInfoRepository.updateDonationAuthenticatedState(donationID, isActive)
     }
 
-    suspend fun getAllDonations() {
+    fun getAllDonations() = viewModelScope.launch {
         userInfoRepository.getAllDonations()
     }
 

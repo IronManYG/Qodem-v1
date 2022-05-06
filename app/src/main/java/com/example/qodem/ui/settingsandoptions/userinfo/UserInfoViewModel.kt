@@ -29,7 +29,28 @@ constructor(
 ) : ViewModel() {
 
     //
-    val userInfo: LiveData<User> = userInfoRepository.userInfo
+    private val userInfoFlow = userInfoRepository.userInfo
+    val userInfo: StateFlow<User> = userInfoFlow
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            User(
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                -1,
+                "",
+                "",
+                -1,
+                emptyList()
+            )
+        )
 
     //
     val userInfoUpdated: LiveData<Boolean> = userInfoRepository.userInfoUpdated

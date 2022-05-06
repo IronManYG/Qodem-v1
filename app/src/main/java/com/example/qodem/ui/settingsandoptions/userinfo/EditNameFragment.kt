@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.databinding.FragmentEditNameBinding
 import com.example.qodem.utils.showSnackbar
@@ -51,72 +54,76 @@ class EditNameFragment : Fragment() {
             false
         }
 
-        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
-            binding.apply {
-                editTextFirstNameField.setText(userInfo.firstName)
-                editTextLastNameField.setText(userInfo.lastName)
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userInfo.collect { userInfo ->
+                    binding.apply {
+                        editTextFirstNameField.setText(userInfo.firstName)
+                        editTextLastNameField.setText(userInfo.lastName)
+                    }
 
-            binding.buttonSave.setOnClickListener {
-                // Check Error State of first name field
-                changeErrorStateInEditTextView(
-                    binding.editTextFirstNameField,
-                    3,
-                    "Minimum Character are 3"
-                )
-                // Check Error State of last name field
-                changeErrorStateInEditTextView(
-                    binding.editTextLastNameField,
-                    3,
-                    "Minimum Character are 3"
-                )
+                    binding.buttonSave.setOnClickListener {
+                        // Check Error State of first name field
+                        changeErrorStateInEditTextView(
+                            binding.editTextFirstNameField,
+                            3,
+                            "Minimum Character are 3"
+                        )
+                        // Check Error State of last name field
+                        changeErrorStateInEditTextView(
+                            binding.editTextLastNameField,
+                            3,
+                            "Minimum Character are 3"
+                        )
 
-                // Check Value of name fields
-                valuesValidToSignUp = isAllEditTextValueValid()
+                        // Check Value of name fields
+                        valuesValidToSignUp = isAllEditTextValueValid()
 
-                // Update value if all value are valid
-                if (valuesValidToSignUp) {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        withContext(Dispatchers.IO) {
-                            viewModel.updateUserName(
-                                userInfo.id,
-                                binding.editTextFirstNameField.text.toString(),
-                                binding.editTextLastNameField.text.toString(),
-                                userInfo.phoneNumber
-                            )
+                        // Update value if all value are valid
+                        if (valuesValidToSignUp) {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                withContext(Dispatchers.IO) {
+                                    viewModel.updateUserName(
+                                        userInfo.id,
+                                        binding.editTextFirstNameField.text.toString(),
+                                        binding.editTextLastNameField.text.toString(),
+                                        userInfo.phoneNumber
+                                    )
+                                }
+                            }
+                            viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
+                                when (it) {
+                                    true -> {
+                                        findNavController().popBackStack()
+                                        binding.root.showSnackbar(
+                                            binding.root,
+                                            "Successfully updated",
+                                            Snackbar.LENGTH_SHORT,
+                                            null,
+                                            requireContext()
+                                        ) {}
+                                    }
+                                    false -> {
+                                        binding.root.showSnackbar(
+                                            binding.root,
+                                            viewModel.errorResultMessage.value.toString(),
+                                            Snackbar.LENGTH_SHORT,
+                                            null,
+                                            requireContext()
+                                        ) {}
+                                    }
+                                }
+                            }
+                        } else {
+                            binding.root.showSnackbar(
+                                binding.root,
+                                "Please enter your name",
+                                Snackbar.LENGTH_LONG,
+                                null,
+                                requireContext()
+                            ) {}
                         }
                     }
-                    viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
-                        when (it) {
-                            true -> {
-                                findNavController().popBackStack()
-                                binding.root.showSnackbar(
-                                    binding.root,
-                                    "Successfully updated",
-                                    Snackbar.LENGTH_SHORT,
-                                    null,
-                                    requireContext()
-                                ) {}
-                            }
-                            false -> {
-                                binding.root.showSnackbar(
-                                    binding.root,
-                                    viewModel.errorResultMessage.value.toString(),
-                                    Snackbar.LENGTH_SHORT,
-                                    null,
-                                    requireContext()
-                                ) {}
-                            }
-                        }
-                    }
-                } else {
-                    binding.root.showSnackbar(
-                        binding.root,
-                        "Please enter your name",
-                        Snackbar.LENGTH_LONG,
-                        null,
-                        requireContext()
-                    ) {}
                 }
             }
         }

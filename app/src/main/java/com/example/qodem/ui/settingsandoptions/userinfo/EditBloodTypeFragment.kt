@@ -10,6 +10,9 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentEditBloodTypeBinding
@@ -78,64 +81,68 @@ class EditBloodTypeFragment : Fragment() {
             binding.menuBloodType.editText?.error = null
         }
 
-        viewModel.userInfo.observe(viewLifecycleOwner) { userInfo ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userInfo.collect() { userInfo ->
 
-            binding.buttonSave.setOnClickListener {
-                // Check Error State of blood type field
-                changeErrorStateInEditTextView(
-                    binding.menuBloodType.editText!!,
-                    1,
-                    "Enter your Blood Type"
-                )
+                    binding.buttonSave.setOnClickListener {
+                        // Check Error State of blood type field
+                        changeErrorStateInEditTextView(
+                            binding.menuBloodType.editText!!,
+                            1,
+                            "Enter your Blood Type"
+                        )
 
-                // Check Value of blood Type field
-                valueValidToSignUp = isAllEditTextValueValid()
+                        // Check Value of blood Type field
+                        valueValidToSignUp = isAllEditTextValueValid()
 
-                // Update value if all value are valid
-                if (valueValidToSignUp) {
-                    binding.loading.visibility = View.VISIBLE
-                    CoroutineScope(Dispatchers.Main).launch {
-                        withContext(Dispatchers.IO) {
-                            viewModel.updateUserBloodType(
-                                userInfo.id,
-                                binding.menuBloodTypeField.text.toString(),
-                                userInfo.phoneNumber
-                            )
+                        // Update value if all value are valid
+                        if (valueValidToSignUp) {
+                            binding.loading.visibility = View.VISIBLE
+                            CoroutineScope(Dispatchers.Main).launch {
+                                withContext(Dispatchers.IO) {
+                                    viewModel.updateUserBloodType(
+                                        userInfo.id,
+                                        binding.menuBloodTypeField.text.toString(),
+                                        userInfo.phoneNumber
+                                    )
+                                }
+                            }
+                            viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
+                                when (it) {
+                                    true -> {
+                                        findNavController().popBackStack()
+                                        binding.root.showSnackbar(
+                                            binding.root,
+                                            "Successfully updated",
+                                            Snackbar.LENGTH_SHORT,
+                                            null,
+                                            requireContext()
+                                        ) {}
+                                        binding.loading.visibility = View.GONE
+                                    }
+                                    false -> {
+                                        binding.root.showSnackbar(
+                                            binding.root,
+                                            viewModel.errorResultMessage.value.toString(),
+                                            Snackbar.LENGTH_SHORT,
+                                            null,
+                                            requireContext()
+                                        ) {}
+                                        binding.loading.visibility = View.GONE
+                                    }
+                                }
+                            }
+                        } else {
+                            binding.root.showSnackbar(
+                                binding.root,
+                                "Please enter your Blood Type",
+                                Snackbar.LENGTH_LONG,
+                                null,
+                                requireContext()
+                            ) {}
                         }
                     }
-                    viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
-                        when (it) {
-                            true -> {
-                                findNavController().popBackStack()
-                                binding.root.showSnackbar(
-                                    binding.root,
-                                    "Successfully updated",
-                                    Snackbar.LENGTH_SHORT,
-                                    null,
-                                    requireContext()
-                                ) {}
-                                binding.loading.visibility = View.GONE
-                            }
-                            false -> {
-                                binding.root.showSnackbar(
-                                    binding.root,
-                                    viewModel.errorResultMessage.value.toString(),
-                                    Snackbar.LENGTH_SHORT,
-                                    null,
-                                    requireContext()
-                                ) {}
-                                binding.loading.visibility = View.GONE
-                            }
-                        }
-                    }
-                } else {
-                    binding.root.showSnackbar(
-                        binding.root,
-                        "Please enter your Blood Type",
-                        Snackbar.LENGTH_LONG,
-                        null,
-                        requireContext()
-                    ) {}
                 }
             }
         }
