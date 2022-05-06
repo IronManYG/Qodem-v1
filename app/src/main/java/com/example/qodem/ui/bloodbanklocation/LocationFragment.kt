@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentLocationBinding
@@ -31,6 +33,7 @@ import com.google.maps.android.ktx.awaitMap
 import com.google.maps.android.ktx.awaitMapLoad
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -70,13 +73,17 @@ class LocationFragment : Fragment() {
 
         // Ensure all places are visible in the map
         val bounds = LatLngBounds.builder()
-        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
-            bloodBanks.forEach {
-                bounds.include(it.coordinates)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.bloodBanksList.collect { bloodBanks ->
+                    bloodBanks.forEach {
+                        bounds.include(it.coordinates)
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20))
+                    }
+                }
             }
         }
-
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 20))
 
         googleMap.setOnMapClickListener {
             circle?.remove()
@@ -105,7 +112,10 @@ class LocationFragment : Fragment() {
                         }
                         false -> {
                             val amount = bloodBankID
-                            val action = LocationFragmentDirections.actionLocationFragmentToPreScreeningRequestFragment(amount)
+                            val action =
+                                LocationFragmentDirections.actionLocationFragmentToPreScreeningRequestFragment(
+                                    amount
+                                )
                             findNavController().navigate(action)
                         }
                     }
@@ -144,16 +154,21 @@ class LocationFragment : Fragment() {
      * Adds markers to the map. These markers won't be clustered.
      */
     private fun addMarkers(googleMap: GoogleMap) {
-        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
-            bloodBanks.forEach { bloodBank ->
-                val marker = googleMap.addMarker {
-                    title(bloodBank.name_en)
-                    position(bloodBank.coordinates)
-                    icon(bloodDropIcon)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.bloodBanksList.collect { bloodBanks ->
+                    bloodBanks.forEach { bloodBank ->
+                        val marker = googleMap.addMarker {
+                            title(bloodBank.name_en)
+                            position(bloodBank.coordinates)
+                            icon(bloodDropIcon)
+                        }
+                        // Set place as the tag on the marker object so it can be referenced within
+                        // MarkerInfoWindowAdapter
+                        marker?.tag = bloodBank
+                    }
                 }
-                // Set place as the tag on the marker object so it can be referenced within
-                // MarkerInfoWindowAdapter
-                marker?.tag = bloodBank
             }
         }
     }
@@ -184,8 +199,12 @@ class LocationFragment : Fragment() {
         }
 
         // Add the places to the ClusterManager.
-        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
-            clusterManager.addItems(bloodBanks)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.bloodBanksList.collect { bloodBanks ->
+                    clusterManager.addItems(bloodBanks)
+                }
+            }
         }
         clusterManager.cluster()
 
@@ -245,7 +264,8 @@ class LocationFragment : Fragment() {
         binding.layoutNoSelectedBloodBank.visibility = View.GONE
         binding.includeItemBloodBank.root.visibility = View.VISIBLE
         binding.includeItemBloodBank.root.strokeWidth = 5
-        binding.cardView.strokeColor = ContextCompat.getColor(requireContext(), R.color.secondaryColor)
+        binding.cardView.strokeColor =
+            ContextCompat.getColor(requireContext(), R.color.secondaryColor)
         binding.cardView.strokeWidth = 5
         binding.includeItemBloodBank.textBloodBank.text = bloodBank.name_en
         binding.includeItemBloodBank.imageBloodBankPlace.setOnClickListener {

@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qodem.R
@@ -77,11 +80,7 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
         connectionLiveData.observe(viewLifecycleOwner){ isNetworkAvailable ->
             when (isNetworkAvailable) {
                 true -> {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        withContext(Dispatchers.IO) {
-                            viewModel.getBloodBanks()
-                        }
-                    }
+                    viewModel.getBloodBanks()
                 }
                 false -> {
                     binding.root.showSnackbar(
@@ -191,26 +190,30 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
-            bloodBankList = bloodBanks
-            val campaignBloodBanks: MutableList<BloodBank> = mutableListOf()
-            // Show only campaign blood banks
-            for (bloodBank in bloodBanks) {
-                if (bloodBank.bloodDonationCampaign) {
-                    campaignBloodBanks.add(bloodBank)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.bloodBanksList.collect { bloodBanks ->
+                    bloodBankList = bloodBanks
+                    val campaignBloodBanks: MutableList<BloodBank> = mutableListOf()
+                    // Show only campaign blood banks
+                    for (bloodBank in bloodBanks) {
+                        if (bloodBank.bloodDonationCampaign) {
+                            campaignBloodBanks.add(bloodBank)
+                        }
+                    }
+
+                    campaignBloodBankAdapter.bloodBanks = campaignBloodBanks
+                    infographicViewPagerAdapter.infographics = listOf(
+                        "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic1.jpg",
+                        "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic2.jpg",
+                        "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic3.jpg",
+                        "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic4.jpg"
+                    )
+                    //
+                    updateAppointmentState(bloodBanks)
                 }
             }
-
-            campaignBloodBankAdapter.bloodBanks = campaignBloodBanks
-            infographicViewPagerAdapter.infographics = listOf(
-                "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic1.jpg",
-                "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic2.jpg",
-                "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic3.jpg",
-                "https://raw.githubusercontent.com/IronManYG/Qodem/master/app/src/main/res/drawable/infographic4.jpg"
-            )
-
-            //
-            updateAppointmentState(bloodBanks)
         }
     }
 

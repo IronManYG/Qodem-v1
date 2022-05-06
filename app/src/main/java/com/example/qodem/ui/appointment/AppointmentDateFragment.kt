@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -66,14 +69,19 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         binding = FragmentAppointmentDateBinding.inflate(layoutInflater)
 
         //
-        for (bloodBank in viewModel.bloodBanksList.value!!) {
-            if (bloodBank.id == args.bloodBankID) {
-                selectedBloodBank = bloodBank
-                Log.d("here", "bloodBank id: ${bloodBank.id}")
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.bloodBanksList.collect { bloodBanks ->
+                    for (bloodBank in bloodBanks) {
+                        if (bloodBank.id == args.bloodBankID) {
+                            selectedBloodBank = bloodBank
+                            appointmentTimeAdapter.appointmentTimes = appointmentTimesList()
+                            Log.d("here", "bloodBank id: ${bloodBank.id}")
+                        }
+                    }
+                }
             }
         }
-
-        appointmentTimesList()
 
         //
         setupDaysRecyclerView()
@@ -153,7 +161,6 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
         super.onViewCreated(view, savedInstanceState)
         //
         appointmentDayAdapter.appointmentDays = appointmentDaysList()
-        appointmentTimeAdapter.appointmentTimes = appointmentTimesList()
     }
 
     //

@@ -10,6 +10,8 @@ import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
 import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
 import com.example.qodem.model.BloodBank
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class BloodBankRepository
@@ -23,8 +25,7 @@ constructor(
         const val TAG = "BloodBankRepository"
     }
 
-    //
-    val bloodBanks: LiveData<List<BloodBank>> = Transformations.map(bloodBankDao.getBloodBanks()) {
+    val bloodBanks: Flow<List<BloodBank>> = bloodBankDao.getBloodBanks().map {
         bloodBankCacheMapper.mapFromEntityList(it)
     }
 

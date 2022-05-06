@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qodem.databinding.FragmentAppointmentLocationBinding
@@ -16,6 +19,7 @@ import com.example.qodem.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -68,9 +72,12 @@ class AppointmentLocationFragment : Fragment(), BloodBankAdapter.OnItemClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.bloodBanksList.observe(viewLifecycleOwner) { bloodBanks ->
-            //
-            bloodBankAdapter.bloodBanks = bloodBanks
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.bloodBanksList.collect { bloodBanks ->
+                    bloodBankAdapter.bloodBanks = bloodBanks
+                }
+            }
         }
     }
 
