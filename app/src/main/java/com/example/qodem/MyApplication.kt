@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
 import com.example.qodem.worker.RefreshDataWorker
+import com.zeugmasolutions.localehelper.LocaleAwareApplication
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltAndroidApp
-class MyApplication : Application(), Configuration.Provider {
+class MyApplication : LocaleAwareApplication(), Configuration.Provider {
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory

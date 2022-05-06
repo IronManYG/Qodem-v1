@@ -87,4 +87,17 @@
     <string name="drag_right">اسحب لليمين</string>
     <string name="drag_left">اسحب لليسار</string>
     <string name="proceed_now">الاستمرار</string>
+    <string name="edit_user_info">تعديل البيانات الشخصية</string>
+    <string name="language">اللغة</string>
+    <string name="language_placeholder">انجليزي</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
+    <string-array name="genders">
+        <item>ذكر</item>
+        <item>انثي</item>
+    </string-array>
+    <string-array name="id_types">
+        <item>جواز سفر</item>
+        <item>الهوية الوطنية</item>
+    </string-array>
 </resources>

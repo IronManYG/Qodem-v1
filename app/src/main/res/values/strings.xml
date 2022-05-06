@@ -59,9 +59,9 @@
     <string name="question_answer_no">No</string>
     <string name="pre_screening_question_2">Have you taken aspirin within last 48 hours?</string>
     <string name="pre_screening_question_3">Have you donated blood within last 60 days?</string>
-    <string name="pre_screening_question_4">have you had a surgery within lsast 12 months?</string>
-    <string name="pre_screening_question_5">Within last 12 months, have you exposed to an accidental needle-sitck, or beauty needles, or perform (hijama) or a tattoo, or piercing?</string>
-    <string name="pre_screening_question_6">have you been traveling outside country during prvious 28 days?</string>
+    <string name="pre_screening_question_4">have you had a surgery within last 12 months?</string>
+    <string name="pre_screening_question_5">Within last 12 months, have you exposed to an accidental needle-stick, or beauty needles, or perform (hijama) or a tattoo, or piercing?</string>
+    <string name="pre_screening_question_6">have you been traveling outside country during previous 28 days?</string>
     <string name="pre_screening_question_7">Have you been infected with the Corona virus during the last month, or suspected of infection, or contact with an infected person?</string>
     <string name="please_select_blood_bank">Please select blood Bank</string>
     <string name="app_description1">Donate now and save lives!</string>
@@ -127,4 +127,9 @@
     <string name="id_number_placeholder" translatable="false">P 0123456789</string>
     <string name="drag_right">drag infographic right</string>
     <string name="drag_left">drag infographic left</string>
+    <string name="edit_user_info">Edit user info</string>
+    <string name="language">Language</string>
+    <string name="language_placeholder">English</string>
+    <string name="english">English</string>
+    <string name="arabic">العربية</string>
 </resources>

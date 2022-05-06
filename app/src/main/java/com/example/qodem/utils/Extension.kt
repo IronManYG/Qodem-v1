@@ -28,3 +28,6 @@ fun View.showSnackbar(
         snackbar.show()
     }
 }
+
+val <T> T.exhaustive: T
+    get() = this

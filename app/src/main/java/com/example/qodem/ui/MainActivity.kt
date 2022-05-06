@@ -8,21 +8,30 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.qodem.R
+import com.example.qodem.data.Language
 import com.example.qodem.databinding.ActivityMainBinding
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.home.HomeViewModel
+import com.example.qodem.utils.exhaustive
 import com.firebase.ui.auth.AuthUI
+import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
+import com.zeugmasolutions.localehelper.Locales
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : LocaleAwareCompatActivity() {
 
     private val viewModel: HomeViewModel by viewModels()
 
@@ -48,6 +57,27 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigationView.visibility = View.GONE
                     supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.language.collectLatest { language ->
+                    when (language) {
+                        Language.Arabic -> {
+                            if (Locale.getDefault() != Locales.Arabic) {
+                                updateLocale(Locales.Arabic)
+                            } else {
+                            }
+                        }
+                        Language.English -> {
+                            if (Locale.getDefault() != Locales.English) {
+                                updateLocale(Locales.English)
+                            } else {
+                            }
+                        }
+                    }.exhaustive
                 }
             }
         }
@@ -93,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         headerView.setOnClickListener {
-            navController.navigate(R.id.userInfoFragment)
+            navController.navigate(R.id.settingsFragment)
             binding.drawerLayout.close()
         }
     }

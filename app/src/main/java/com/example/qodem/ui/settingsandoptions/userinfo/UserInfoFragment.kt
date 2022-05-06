@@ -1,6 +1,5 @@
 package com.example.qodem.ui.settingsandoptions.userinfo
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.databinding.UserInfoFragmentBinding
-import com.example.qodem.ui.authentication.AuthenticationActivity
-import com.firebase.ui.auth.AuthUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -71,14 +68,6 @@ class UserInfoFragment : Fragment() {
         binding.cardId.setOnClickListener {
             val action = UserInfoFragmentDirections.actionUserInfoFragmentToEditIdFragment()
             findNavController().navigate(action)
-        }
-
-        binding.buttonSignOut.setOnClickListener {
-            AuthUI.getInstance()
-                .signOut(requireContext())
-                .addOnCompleteListener { // user is now signed out
-                    startActivity(Intent(requireContext(), AuthenticationActivity::class.java))
-                }
         }
 
         return binding.root
