@@ -2,10 +2,16 @@ package com.example.qodem.ui.authentication
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.qodem.data.Language
+import com.example.qodem.data.PreferencesManager
 import com.example.qodem.data.userinfo.remote.UserNetworkEntity
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,6 +21,7 @@ class AuthenticationViewModel
 @Inject
 constructor(
     private val userInfoRepository: UserInfoRepository,
+    private val preferencesManager: PreferencesManager,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -52,6 +59,18 @@ constructor(
         }
     }
 
+    private val preferencesFlow = preferencesManager.preferencesFlow
+
+    private val languageFlow = preferencesFlow.map {
+        it.language
+    }
+    val language: StateFlow<Language> = languageFlow
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            Language.Arabic
+        )
+
     suspend fun getUserInfo(phoneNumber: String) {
         if (phoneNumber != "") {
             userInfoRepository.getUserInfo(phoneNumber)
@@ -64,6 +83,10 @@ constructor(
 
     fun getAllDonations() = viewModelScope.launch {
         userInfoRepository.getAllDonations()
+    }
+
+    fun onLanguageSelected(Language: Language) = viewModelScope.launch {
+        preferencesManager.updateLanguage(Language)
     }
 
 }

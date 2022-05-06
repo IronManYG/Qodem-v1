@@ -7,11 +7,16 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.qodem.R
+import com.example.qodem.data.Language
 import com.example.qodem.databinding.ActivityAuthenticationBinding
 import com.example.qodem.ui.MainActivity
 import com.example.qodem.ui.signup.SignUpActivity
+import com.example.qodem.utils.exhaustive
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -19,8 +24,11 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
+import com.zeugmasolutions.localehelper.Locales
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collectLatest
+import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -41,8 +49,38 @@ class AuthenticationActivity : LocaleAwareCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        // : Implement the create account and sign in using FirebaseUI, use sign in using Phone.
-        binding.authButton.setOnClickListener { startSignIn() }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.language.collectLatest { language ->
+                    when (language) {
+                        Language.Arabic -> {
+                            if (Locale.getDefault() != Locales.Arabic) {
+                                updateLocale(Locales.Arabic)
+                            } else {
+                            }
+                        }
+                        Language.English -> {
+                            if (Locale.getDefault() != Locales.English) {
+                                updateLocale(Locales.English)
+                            } else {
+                            }
+                        }
+                    }.exhaustive
+                }
+            }
+        }
+
+        binding.apply {
+            // : Implement the create account and sign in using FirebaseUI, use sign in using Phone.
+            authButton.setOnClickListener { startSignIn() }
+
+            textViewArLanguage.setOnClickListener {
+                viewModel.onLanguageSelected(Language.Arabic)
+            }
+            textViewEnLanguage.setOnClickListener {
+                viewModel.onLanguageSelected(Language.English)
+            }
+        }
 
         // : If the user was authenticated, send him to MainActivity
 
@@ -79,7 +117,11 @@ class AuthenticationActivity : LocaleAwareCompatActivity() {
                                             finish()
 
                                             Log.e(TAG, "user not founded")
-                                            binding.authButton.visibility = View.VISIBLE
+                                            binding.apply {
+                                                authButton.visibility = View.VISIBLE
+                                                textViewArLanguage.visibility = View.VISIBLE
+                                                textViewEnLanguage.visibility = View.VISIBLE
+                                            }
                                         }
                                     }
                                     binding.progressBar3.visibility = View.GONE
@@ -95,9 +137,13 @@ class AuthenticationActivity : LocaleAwareCompatActivity() {
                     }
                 }
                 else -> {
-                    binding.progressBar3.visibility = View.GONE
-                    binding.authButton.visibility = View.VISIBLE
-                    binding.authenticationLayout.visibility = View.VISIBLE
+                    binding.apply {
+                        progressBar3.visibility = View.GONE
+                        authButton.visibility = View.VISIBLE
+                        authenticationLayout.visibility = View.VISIBLE
+                        textViewArLanguage.visibility = View.VISIBLE
+                        textViewEnLanguage.visibility = View.VISIBLE
+                    }
                     Log.e(
                         TAG,
                         "Authentication state that doesn't require any UI change $authenticationState"
