@@ -11,6 +11,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -19,7 +22,10 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideBloodBankDb(@ApplicationContext context: Context): BloodBankDatabase {
+    fun provideBloodBankDb(
+        @ApplicationContext context: Context,
+        callback: BloodBankDatabase.Callback
+    ): BloodBankDatabase {
         return Room
             .databaseBuilder(
                 context,
@@ -27,6 +33,7 @@ object RoomModule {
                 BloodBankDatabase.DATABASE_NAME,
             )
             .fallbackToDestructiveMigration()
+            .addCallback(callback)
             .build()
     }
 
@@ -54,4 +61,13 @@ object RoomModule {
     fun provideUserDAO(userDatabase: UserDatabase): UserDao {
         return userDatabase.userDao()
     }
+
+    @ApplicationScope
+    @Singleton
+    @Provides
+    fun provideApplicationScope() = CoroutineScope(SupervisorJob())
 }
+
+@Retention(AnnotationRetention.RUNTIME)
+@Qualifier
+annotation class ApplicationScope
