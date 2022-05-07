@@ -9,6 +9,9 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.qodem.R
 import com.example.qodem.data.userinfo.remote.UserNetworkEntity
 import com.example.qodem.databinding.ActivitySignUpBinding
@@ -172,26 +175,30 @@ class SignUpActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.Main) {
                         viewModel.saveUserInfo(userInfo)
-                        viewModel.userInfoSaveState.observe(this@SignUpActivity) {
-                            when (it) {
-                                true -> {
-                                    val intent = Intent(
-                                        this@SignUpActivity,
-                                        MainActivity::class.java
-                                    )
-                                    startActivity(intent)
-                                    finish()
-                                    Log.e(TAG, "user Saved!")
-                                }
-                                false -> {
-                                    binding.root.showSnackbar(
-                                        binding.root,
-                                        viewModel.saveErrorMessage.value.toString(),
-                                        Snackbar.LENGTH_LONG,
-                                        null,
-                                        this@SignUpActivity
-                                    ) {}
-                                    Log.e(TAG, "user not Saved")
+                        lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.userInfoSaveState.collect {
+                                    when (it) {
+                                        true -> {
+                                            val intent = Intent(
+                                                this@SignUpActivity,
+                                                MainActivity::class.java
+                                            )
+                                            startActivity(intent)
+                                            finish()
+                                            Log.e(TAG, "user Saved!")
+                                        }
+                                        false -> {
+                                            binding.root.showSnackbar(
+                                                binding.root,
+                                                viewModel.saveErrorMessage.value.toString(),
+                                                Snackbar.LENGTH_LONG,
+                                                null,
+                                                this@SignUpActivity
+                                            ) {}
+                                            Log.e(TAG, "user not Saved")
+                                        }
+                                    }
                                 }
                             }
                         }

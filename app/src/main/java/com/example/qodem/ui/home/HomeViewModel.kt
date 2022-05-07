@@ -88,12 +88,12 @@ constructor(
         )
 
     //
-    val activeDonationFoundState: LiveData<Boolean> = userInfoRepository.activeDonationFound
-    val donationUpdatedState: LiveData<Boolean> = userInfoRepository.donationUpdated
+    val activeDonationFoundState = userInfoRepository.activeDonationFound
+    val donationUpdatedState = userInfoRepository.donationUpdated
 
     //
-    val errorResultMessage: LiveData<String?> = bloodBankRepository.errorResultMessage
-    val updateErrorMessage: LiveData<String?> = userInfoRepository.updateErrorMessage
+    val errorResultMessage = bloodBankRepository.errorResultMessage
+    val updateErrorMessage = userInfoRepository.updateErrorMessage
 
     private val preferencesFlow = preferencesManager.preferencesFlow
 

@@ -58,14 +58,14 @@ constructor(
         )
 
     //
-    val donationsFoundState: LiveData<Boolean> = userInfoRepository.donationsFound
+    val donationsFoundState = userInfoRepository.donationsFound
 
-    val donationSaveState: LiveData<Boolean> = userInfoRepository.donationSaved
+    val donationSaveState = userInfoRepository.donationSaved
 
     //
-    val errorResultMessage: LiveData<String?> = userInfoRepository.errorResultMessage
+    val errorResultMessage = userInfoRepository.errorResultMessage
 
-    val saveErrorMessage: LiveData<String?> = userInfoRepository.saveErrorMessage
+    val saveErrorMessage = userInfoRepository.saveErrorMessage
 
     fun getAllDonations() = viewModelScope.launch {
         userInfoRepository.getAllDonations()

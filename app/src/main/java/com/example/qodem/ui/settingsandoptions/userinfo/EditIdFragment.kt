@@ -101,26 +101,30 @@ class EditIdFragment : Fragment() {
                             )
                         }
                     }
-                    viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
-                        when (it) {
-                            true -> {
-                                findNavController().popBackStack()
-                                binding.root.showSnackbar(
-                                    binding.root,
-                                    "Successfully updated",
-                                    Snackbar.LENGTH_SHORT,
-                                    null,
-                                    requireContext()
-                                ) {}
-                            }
-                            false -> {
-                                binding.root.showSnackbar(
-                                    binding.root,
-                                    viewModel.errorResultMessage.value.toString(),
-                                    Snackbar.LENGTH_SHORT,
-                                    null,
-                                    requireContext()
-                                ) {}
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                            viewModel.userInfoUpdated.collect() {
+                                when (it) {
+                                    true -> {
+                                        findNavController().popBackStack()
+                                        binding.root.showSnackbar(
+                                            binding.root,
+                                            "Successfully updated",
+                                            Snackbar.LENGTH_SHORT,
+                                            null,
+                                            requireContext()
+                                        ) {}
+                                    }
+                                    false -> {
+                                        binding.root.showSnackbar(
+                                            binding.root,
+                                            viewModel.errorResultMessage.value.toString(),
+                                            Snackbar.LENGTH_SHORT,
+                                            null,
+                                            requireContext()
+                                        ) {}
+                                    }
+                                }
                             }
                         }
                     }

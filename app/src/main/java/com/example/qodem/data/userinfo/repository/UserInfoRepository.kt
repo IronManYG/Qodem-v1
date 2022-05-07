@@ -1,9 +1,6 @@
 package com.example.qodem.data.userinfo.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.example.qodem.data.userinfo.local.DonationsCacheMapper
 import com.example.qodem.data.userinfo.local.UserCacheMapper
 import com.example.qodem.data.userinfo.local.UserDao
@@ -13,6 +10,8 @@ import com.example.qodem.model.User
 import com.example.qodem.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -49,56 +48,56 @@ constructor(
     }
 
     //
-    private var _userInfoFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var _userInfoFound: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val userInfoFound: LiveData<Boolean>
+    val userInfoFound: StateFlow<Boolean>
         get() = _userInfoFound
 
-    private var _userInfoSaved: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var _userInfoSaved: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val userInfoSaved: LiveData<Boolean>
+    val userInfoSaved: StateFlow<Boolean>
         get() = _userInfoSaved
 
-    private var _userInfoUpdated: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var _userInfoUpdated: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val userInfoUpdated: LiveData<Boolean>
+    val userInfoUpdated: StateFlow<Boolean>
         get() = _userInfoUpdated
 
     //
-    private var _donationsFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var _donationsFound: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val donationsFound: LiveData<Boolean>
+    val donationsFound: StateFlow<Boolean>
         get() = _donationsFound
 
-    private var _activeDonationFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var _activeDonationFound: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val activeDonationFound: LiveData<Boolean>
+    val activeDonationFound: StateFlow<Boolean>
         get() = _activeDonationFound
 
-    private var _donationSaved: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var _donationSaved: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val donationSaved: LiveData<Boolean>
+    val donationSaved: StateFlow<Boolean>
         get() = _donationSaved
 
-    private var _donationUpdated: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private var _donationUpdated: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val donationUpdated: LiveData<Boolean>
+    val donationUpdated: StateFlow<Boolean>
         get() = _donationUpdated
 
     //
-    private var _errorResultMessage: MutableLiveData<String?> = MutableLiveData<String?>()
+    private var _errorResultMessage: MutableStateFlow<String?> = MutableStateFlow("")
 
-    val errorResultMessage: LiveData<String?>
+    val errorResultMessage: StateFlow<String?>
         get() = _errorResultMessage
 
-    private var _saveErrorMessage: MutableLiveData<String?> = MutableLiveData<String?>()
+    private var _saveErrorMessage: MutableStateFlow<String?> = MutableStateFlow("")
 
-    val saveErrorMessage: LiveData<String?>
+    val saveErrorMessage: StateFlow<String?>
         get() = _saveErrorMessage
 
-    private var _updateErrorMessage: MutableLiveData<String?> = MutableLiveData<String?>()
+    private var _updateErrorMessage: MutableStateFlow<String?> = MutableStateFlow("")
 
-    val updateErrorMessage: LiveData<String?>
+    val updateErrorMessage: StateFlow<String?>
         get() = _updateErrorMessage
 
     suspend fun getUserInfo(phoneNumber: String) {
@@ -112,17 +111,17 @@ constructor(
                     userDao.deleteUserInfo()
 
                     userDao.saveUserInfo(userCacheMapper.mapToEntity(userInfo))
-                    _userInfoFound.postValue(true)
+                    _userInfoFound.value = true
                     Log.d(TAG, "User found!")
                 }
                 is Result.Error -> {
                     val message = networkUser.message
                     if (message == "User not found!") {
-                        _errorResultMessage.postValue(message)
+                        _errorResultMessage.value = message
                         Log.e(TAG, "User not found")
-                        _userInfoFound.postValue(false)
+                        _userInfoFound.value = false
                     } else {
-                        _userInfoFound.postValue(false)
+                        _userInfoFound.value = false
                         Log.e(TAG, message!!)
                     }
                 }
@@ -135,14 +134,14 @@ constructor(
             val saveResult = userFirestore.saveUserInfo(userNetworkEntity)
             when (saveResult) {
                 is Result.Success -> {
-                    _userInfoSaved.postValue(true)
+                    _userInfoSaved.value = true
                     Log.d(TAG, "User Successful Saved!")
                 }
                 is Result.Error -> {
                     val message = saveResult.message
-                    _saveErrorMessage.postValue(message)
+                    _saveErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _userInfoSaved.postValue(false)
+                    _userInfoSaved.value = false
                 }
             }
         }
@@ -156,10 +155,10 @@ constructor(
                     Log.d(TAG, "Donation 1 id ${networkDonations.data[0].id}")
                     val donations = donationsNetworkMapper.mapFromEntityList(networkDonations.data)
                     //
-                    _activeDonationFound.postValue(false)
+                    _activeDonationFound.value = false
                     for (donation in donations) {
                         if (donation.active) {
-                            _activeDonationFound.postValue(true)
+                            _activeDonationFound.value = true
                         }
                     }
 
@@ -168,19 +167,19 @@ constructor(
 
                     //
                     userDao.saveDonations(donationsCacheMapper.mapToEntityList(donations))
-                    _donationsFound.postValue(true)
+                    _donationsFound.value = true
                     Log.d(TAG, "Donations found!")
                 }
                 is Result.Error -> {
                     val message = networkDonations.message
                     if (message == "There is no donations") {
-                        _errorResultMessage.postValue(message)
+                        _errorResultMessage.value = message
                         Log.e(TAG, "There is no donations")
-                        _donationsFound.postValue(false)
-                        _activeDonationFound.postValue(false)
+                        _donationsFound.value = false
+                        _activeDonationFound.value = false
                     } else {
-                        _donationsFound.postValue(false)
-                        _activeDonationFound.postValue(false)
+                        _donationsFound.value = false
+                        _activeDonationFound.value = false
                         Log.e(TAG, message!!)
                     }
                 }
@@ -193,14 +192,14 @@ constructor(
             val saveResult = userFirestore.saveDonation(donationNetworkEntity)
             when (saveResult) {
                 is Result.Success -> {
-                    _donationSaved.postValue(true)
+                    _donationSaved.value = true
                     Log.d(TAG, "Donation Successful Saved!")
                 }
                 is Result.Error -> {
                     val message = saveResult.message
-                    _saveErrorMessage.postValue(message)
+                    _saveErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _donationSaved.postValue(false)
+                    _donationSaved.value = false
                 }
             }
         }
@@ -212,14 +211,14 @@ constructor(
             when (updateStatusResult) {
                 is Result.Success -> {
                     getAllDonations()
-                    _donationUpdated.postValue(true)
+                    _donationUpdated.value = true
                     Log.d(TAG, "Donation active state Successful Update!")
                 }
                 is Result.Error -> {
                     val message = updateStatusResult.message
-                    _updateErrorMessage.postValue(message)
+                    _updateErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _donationUpdated.postValue(false)
+                    _donationUpdated.value = false
                 }
             }
         }
@@ -227,18 +226,19 @@ constructor(
 
     suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) {
         withContext(Dispatchers.IO) {
-            val updateStatusResult = userFirestore.updateDonationAuthenticatedState(donationID, isActive)
+            val updateStatusResult =
+                userFirestore.updateDonationAuthenticatedState(donationID, isActive)
             when (updateStatusResult) {
                 is Result.Success -> {
                     getAllDonations()
-                    _donationUpdated.postValue(true)
+                    _donationUpdated.value = true
                     Log.d(TAG, "Donation authenticated state Successful Update!")
                 }
                 is Result.Error -> {
                     val message = updateStatusResult.message
-                    _updateErrorMessage.postValue(message)
+                    _updateErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _donationUpdated.postValue(false)
+                    _donationUpdated.value = false
                 }
             }
         }
@@ -255,14 +255,14 @@ constructor(
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
-                    _userInfoUpdated.postValue(true)
+                    _userInfoUpdated.value = true
                     Log.d(TAG, "User name Successful Update!")
                 }
                 is Result.Error -> {
                     val message = updateStatusResult.message
-                    _updateErrorMessage.postValue(message)
+                    _updateErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _userInfoUpdated.postValue(false)
+                    _userInfoUpdated.value = false
                 }
             }
         }
@@ -274,14 +274,14 @@ constructor(
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
-                    _userInfoUpdated.postValue(true)
+                    _userInfoUpdated.value = true
                     Log.d(TAG, "User birth Date Successful Update!")
                 }
                 is Result.Error -> {
                     val message = updateStatusResult.message
-                    _updateErrorMessage.postValue(message)
+                    _updateErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _userInfoUpdated.postValue(false)
+                    _userInfoUpdated.value = false
                 }
             }
         }
@@ -293,14 +293,14 @@ constructor(
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
-                    _userInfoUpdated.postValue(true)
+                    _userInfoUpdated.value = true
                     Log.d(TAG, "User blood type Successful Update!")
                 }
                 is Result.Error -> {
                     val message = updateStatusResult.message
-                    _updateErrorMessage.postValue(message)
+                    _updateErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _userInfoUpdated.postValue(false)
+                    _userInfoUpdated.value = false
                 }
             }
         }
@@ -312,14 +312,14 @@ constructor(
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
-                    _userInfoUpdated.postValue(true)
+                    _userInfoUpdated.value = true
                     Log.d(TAG, "User gender Successful Update!")
                 }
                 is Result.Error -> {
                     val message = updateStatusResult.message
-                    _updateErrorMessage.postValue(message)
+                    _updateErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _userInfoUpdated.postValue(false)
+                    _userInfoUpdated.value = false
                 }
             }
         }
@@ -331,14 +331,14 @@ constructor(
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
-                    _userInfoUpdated.postValue(true)
+                    _userInfoUpdated.value = true
                     Log.d(TAG, "User city Successful Update!")
                 }
                 is Result.Error -> {
                     val message = updateStatusResult.message
-                    _updateErrorMessage.postValue(message)
+                    _updateErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _userInfoUpdated.postValue(false)
+                    _userInfoUpdated.value = false
                 }
             }
         }
@@ -355,14 +355,14 @@ constructor(
             when (updateStatusResult) {
                 is Result.Success -> {
                     getUserInfo(phoneNumber)
-                    _userInfoUpdated.postValue(true)
+                    _userInfoUpdated.value = true
                     Log.d(TAG, "User id type id number Successful Update!")
                 }
                 is Result.Error -> {
                     val message = updateStatusResult.message
-                    _updateErrorMessage.postValue(message)
+                    _updateErrorMessage.value = message
                     Log.d(TAG, message!!)
-                    _userInfoUpdated.postValue(false)
+                    _userInfoUpdated.value = false
                 }
             }
         }
@@ -378,7 +378,7 @@ constructor(
 
     // pay attention: find another way to delete cache data
     fun resetDonationUpdatedState() {
-        _donationUpdated.postValue(false)
+        _donationUpdated.value = false
     }
 
 }

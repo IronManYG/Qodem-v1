@@ -1,9 +1,6 @@
 package com.example.qodem.data.bloodbanks.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.example.qodem.data.bloodbanks.local.BloodBankCacheMapper
 import com.example.qodem.data.bloodbanks.local.BloodBankDao
 import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
@@ -11,6 +8,8 @@ import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
 import com.example.qodem.model.BloodBank
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -29,31 +28,31 @@ constructor(
         bloodBankCacheMapper.mapFromEntityList(it)
     }
 
-    //
-    private var _bloodBanksFound: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val bloodBanksFound: LiveData<Boolean>
+    private var _bloodBanksFound: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val bloodBanksFound: StateFlow<Boolean>
         get() = _bloodBanksFound
 
     //
-    private var _errorResultMessage: MutableLiveData<String?> = MutableLiveData<String?>()
-    val errorResultMessage: LiveData<String?>
+    private var _errorResultMessage: MutableStateFlow<String?> = MutableStateFlow("")
+    val errorResultMessage: StateFlow<String?>
         get() = _errorResultMessage
 
     suspend fun getBloodBanks() {
         withContext(Dispatchers.IO) {
             val networkBloodBanksResponse = bloodBanksRetrofit.getBloodBanks()
             if (networkBloodBanksResponse.isSuccessful && networkBloodBanksResponse.body() != null) {
-                val bloodBanks = bloodBankNetworkMapper.mapFromEntityList(networkBloodBanksResponse.body()!!)
+                val bloodBanks =
+                    bloodBankNetworkMapper.mapFromEntityList(networkBloodBanksResponse.body()!!)
                 for (bloodBank in bloodBanks) {
                     bloodBankDao.saveBloodBank(bloodBankCacheMapper.mapToEntity(bloodBank))
                 }
-                _bloodBanksFound.postValue(true)
+                _bloodBanksFound.value = true
                 Log.d(TAG, "Blood Banks found!")
             } else {
                 val message = networkBloodBanksResponse.message()
-                _errorResultMessage.postValue(message)
+                _errorResultMessage.value = message
                 Log.e(TAG, message)
-                _bloodBanksFound.postValue(false)
+                _bloodBanksFound.value = false
                 Log.e(TAG, "Response not successful")
             }
         }

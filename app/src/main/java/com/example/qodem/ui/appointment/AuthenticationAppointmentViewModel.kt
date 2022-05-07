@@ -20,10 +20,10 @@ constructor(
 ) : ViewModel() {
 
     //
-    val donationUpdatedState: LiveData<Boolean> = userInfoRepository.donationUpdated
+    val donationUpdatedState = userInfoRepository.donationUpdated
 
     //
-    val updateErrorMessage: LiveData<String?> = userInfoRepository.updateErrorMessage
+    val updateErrorMessage = userInfoRepository.updateErrorMessage
 
     suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) {
         userInfoRepository.updateDonationAuthenticatedState(donationID, isActive)

@@ -37,10 +37,10 @@ constructor(
         )
 
     //
-    val donationSaveState: LiveData<Boolean> = userInfoRepository.donationSaved
+    val donationSaveState = userInfoRepository.donationSaved
 
     //
-    val saveErrorMessage: LiveData<String?> = userInfoRepository.saveErrorMessage
+    val saveErrorMessage = userInfoRepository.saveErrorMessage
 
     suspend fun saveDonation(donationNetworkEntity: DonationNetworkEntity) {
         userInfoRepository.saveDonation(donationNetworkEntity)

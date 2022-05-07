@@ -31,14 +31,14 @@ constructor(
     }
 
     //
-    val userInfoFoundState: LiveData<Boolean> = userInfoRepository.userInfoFound
+    val userInfoFoundState = userInfoRepository.userInfoFound
 
-    val userInfoSaveState: LiveData<Boolean> = userInfoRepository.userInfoSaved
+    val userInfoSaveState = userInfoRepository.userInfoSaved
 
     //
-    val errorResultMessage: LiveData<String?> = userInfoRepository.errorResultMessage
+    val errorResultMessage = userInfoRepository.errorResultMessage
 
-    val saveErrorMessage: LiveData<String?> = userInfoRepository.saveErrorMessage
+    val saveErrorMessage = userInfoRepository.saveErrorMessage
 
     //
     private var _userPhoneNumber: MutableLiveData<String> = MutableLiveData<String>()

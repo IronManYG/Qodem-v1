@@ -53,11 +53,11 @@ constructor(
         )
 
     //
-    val userInfoUpdated: LiveData<Boolean> = userInfoRepository.userInfoUpdated
+    val userInfoUpdated = userInfoRepository.userInfoUpdated
 
     //
-    val errorResultMessage: LiveData<String?> = bloodBankRepository.errorResultMessage
-    val updateErrorMessage: LiveData<String?> = userInfoRepository.updateErrorMessage
+    val errorResultMessage = bloodBankRepository.errorResultMessage
+    val updateErrorMessage = userInfoRepository.updateErrorMessage
 
     private val preferencesFlow = preferencesManager.preferencesFlow
 

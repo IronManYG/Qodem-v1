@@ -34,8 +34,8 @@ constructor(
         )
 
     //
-    val activeDonationFoundState: LiveData<Boolean> = userInfoRepository.activeDonationFound
+    val activeDonationFoundState = userInfoRepository.activeDonationFound
 
     //
-    val errorResultMessage: LiveData<String?> = bloodBankRepository.errorResultMessage
+    val errorResultMessage = bloodBankRepository.errorResultMessage
 }

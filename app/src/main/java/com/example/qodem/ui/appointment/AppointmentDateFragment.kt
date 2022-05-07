@@ -102,24 +102,30 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.Main) {
                         viewModel.saveDonation(donationNetworkEntity)
-                        viewModel.donationSaveState.observe(viewLifecycleOwner) {
-                            when (it) {
-                                true -> {
-                                    CoroutineScope(Dispatchers.IO).launch {
-                                        withContext(Dispatchers.IO) {
-                                            viewModel.getAllDonations()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.donationSaveState.collect {
+                                    when (it) {
+                                        true -> {
+                                            CoroutineScope(Dispatchers.IO).launch {
+                                                withContext(Dispatchers.IO) {
+                                                    viewModel.getAllDonations()
+                                                }
+                                            }
+                                            findNavController().navigate(
+                                                AppointmentDateFragmentDirections.actionAppointmentDataFragmentToHomeFragment()
+                                            )
+                                        }
+                                        false -> {
+                                            binding.root.showSnackbar(
+                                                binding.root,
+                                                viewModel.saveErrorMessage.value.toString(),
+                                                Snackbar.LENGTH_SHORT,
+                                                null,
+                                                requireContext()
+                                            ) {}
                                         }
                                     }
-                                    findNavController().navigate(AppointmentDateFragmentDirections.actionAppointmentDataFragmentToHomeFragment())
-                                }
-                                false -> {
-                                    binding.root.showSnackbar(
-                                        binding.root,
-                                        viewModel.saveErrorMessage.value.toString(),
-                                        Snackbar.LENGTH_SHORT,
-                                        null,
-                                        requireContext()
-                                    ) {}
                                 }
                             }
                         }

@@ -52,7 +52,7 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
     private lateinit var _activeDonation: Donation
 
     //
-    private lateinit var connectionLiveData : ConnectionLiveData
+    private lateinit var connectionLiveData: ConnectionLiveData
 
     //
     private var dayToEnableVerify by Delegates.notNull<Int>()
@@ -77,7 +77,7 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
         connectionLiveData = ConnectionLiveData(requireContext())
 
         //
-        connectionLiveData.observe(viewLifecycleOwner){ isNetworkAvailable ->
+        connectionLiveData.observe(viewLifecycleOwner) { isNetworkAvailable ->
             when (isNetworkAvailable) {
                 true -> {
                     viewModel.getBloodBanks()
@@ -119,7 +119,10 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
         binding.buttonVerifyAppointment.setOnClickListener {
             if (dayToEnableVerify == 0 && hoursToEnableVerify == 0 && minuteToEnableVerify <= 30 && secondsToEnableVerify <= 59) {
                 val amount = _activeDonation.id
-                val action = HomeFragmentDirections.actionHomeFragmentToAuthenticationAppointmentFragment(amount)
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToAuthenticationAppointmentFragment(
+                        amount
+                    )
                 findNavController().navigate(action)
             } else {
                 binding.root.showSnackbar(
@@ -252,114 +255,153 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
     }
 
     private fun updateAppointmentState(bloodBanks: List<BloodBank>) {
-
-        viewModel.activeDonationFoundState.observe(viewLifecycleOwner) {
-            //
-            binding.layoutProgressDonation.visibility = View.VISIBLE
-            binding.layoutAppointmentDetails.visibility = View.GONE
-            binding.layoutNoAppointment.visibility = View.GONE
-            when (it) {
-                true -> {
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.activeDonationFoundState.collect {
                     //
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            viewModel.donation.collect() { donations ->
-                                for (activeDonation in donations) {
-                                    if (activeDonation.active) {
-                                        _activeDonation = activeDonation
+                    binding.layoutProgressDonation.visibility = View.VISIBLE
+                    binding.layoutAppointmentDetails.visibility = View.GONE
+                    binding.layoutNoAppointment.visibility = View.GONE
+                    when (it) {
+                        true -> {
 
-                                        //
-                                        val donationDateCountDownTimer = CustomCountDownTimer(activeDonation.donationDataTimeStamp)
-                                        donationDateCountDownTimer.start()
+                            //
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                    viewModel.donation.collect() { donations ->
+                                        for (activeDonation in donations) {
+                                            if (activeDonation.active) {
+                                                _activeDonation = activeDonation
 
-                                        //
-                                        var activeDonationBloodBank: BloodBank? = null
+                                                //
+                                                val donationDateCountDownTimer =
+                                                    CustomCountDownTimer(activeDonation.donationDataTimeStamp)
+                                                donationDateCountDownTimer.start()
 
-                                        //
-                                        for (bloodBank in bloodBanks) {
-                                            if (bloodBank.id.toString() == activeDonation.bloodBankID) {
-                                                activeDonationBloodBank = bloodBank
+                                                //
+                                                var activeDonationBloodBank: BloodBank? = null
+
+                                                //
+                                                for (bloodBank in bloodBanks) {
+                                                    if (bloodBank.id.toString() == activeDonation.bloodBankID) {
+                                                        activeDonationBloodBank = bloodBank
+                                                    }
+                                                }
+
+                                                //
+                                                val calendar =
+                                                    Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                                                Log.d(
+                                                    "timeStamp 2",
+                                                    "${activeDonation.donationDataTimeStamp}"
+                                                )
+                                                calendar.time =
+                                                    Date(activeDonation.donationDataTimeStamp)
+                                                calendar.add(Calendar.MONTH, 1)
+
+                                                val dayOfWeekString =
+                                                    calendar.getDisplayName(
+                                                        Calendar.DAY_OF_WEEK,
+                                                        Calendar.LONG,
+                                                        Locale.ENGLISH
+                                                    )
+
+                                                val monthString =
+                                                    calendar.getDisplayName(
+                                                        Calendar.MONTH,
+                                                        Calendar.LONG,
+                                                        Locale.ENGLISH
+                                                    )
+
+                                                val amPmString =
+                                                    calendar.getDisplayName(
+                                                        Calendar.AM_PM,
+                                                        Calendar.LONG,
+                                                        Locale.ENGLISH
+                                                    )
+
+                                                val donationDate = "$dayOfWeekString, " +
+                                                        "${calendar.get(Calendar.DAY_OF_MONTH)} " +
+                                                        "$monthString " +
+                                                        "${calendar.get(Calendar.YEAR)}"
+                                                val donationTime = "${
+                                                    String.format(
+                                                        "%02d",
+                                                        calendar.get(Calendar.HOUR)
+                                                    )
+                                                }:" +
+                                                        String.format(
+                                                            "%02d",
+                                                            calendar.get(Calendar.MINUTE)
+                                                        ) +
+                                                        " $amPmString"
+                                                // Publish & update Appointment info
+                                                binding.textAppointmentPlace.text =
+                                                    activeDonationBloodBank?.name_en
+                                                binding.textAppointmentCity.text =
+                                                    activeDonationBloodBank?.city
+                                                binding.textAppointmentDate.text = donationDate
+                                                binding.textAppointmentTime.text = donationTime
+                                                launch {
+                                                    donationDateCountDownTimer.countDownDays.collect { remainingDays ->
+                                                        binding.textRemainingDaysField.text =
+                                                            String.format(
+                                                                "%02d",
+                                                                remainingDays.toInt()
+                                                            )
+                                                        dayToEnableVerify =
+                                                            remainingDays.toInt()
+                                                    }
+                                                }
+                                                launch {
+                                                    donationDateCountDownTimer.countDownHours.collect() { remainingHours ->
+                                                        binding.textRemainingHoursField.text =
+                                                            String.format(
+                                                                "%02d",
+                                                                remainingHours.toInt()
+                                                            )
+                                                        hoursToEnableVerify =
+                                                            remainingHours.toInt()
+                                                    }
+                                                }
+                                                launch {
+                                                    donationDateCountDownTimer.countDownMinutes.collect() { remainingMinutes ->
+                                                        binding.textRemainingMinutesField.text =
+                                                            String.format(
+                                                                "%02d",
+                                                                remainingMinutes.toInt()
+                                                            )
+                                                        minuteToEnableVerify =
+                                                            remainingMinutes.toInt()
+                                                    }
+                                                }
+                                                launch {
+                                                    donationDateCountDownTimer.countDownSeconds.collect() { remainingSeconds ->
+                                                        binding.textRemainingSecondsField.text =
+                                                            String.format(
+                                                                "%02d",
+                                                                remainingSeconds.toInt()
+                                                            )
+                                                        secondsToEnableVerify =
+                                                            remainingSeconds.toInt()
+                                                    }
+                                                }
                                             }
-                                        }
-
-                                        //
-                                        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-                                        Log.d("timeStamp 2", "${activeDonation.donationDataTimeStamp}")
-                                        calendar.time = Date(activeDonation.donationDataTimeStamp)
-                                        calendar.add(Calendar.MONTH, 1)
-
-                                        val dayOfWeekString =
-                                            calendar.getDisplayName(
-                                                Calendar.DAY_OF_WEEK,
-                                                Calendar.LONG,
-                                                Locale.ENGLISH
-                                            )
-
-                                        val monthString =
-                                            calendar.getDisplayName(
-                                                Calendar.MONTH,
-                                                Calendar.LONG,
-                                                Locale.ENGLISH
-                                            )
-
-                                        val amPmString =
-                                            calendar.getDisplayName(
-                                                Calendar.AM_PM,
-                                                Calendar.LONG,
-                                                Locale.ENGLISH
-                                            )
-
-                                        val donationDate = "$dayOfWeekString, " +
-                                                "${calendar.get(Calendar.DAY_OF_MONTH)} " +
-                                                "$monthString " +
-                                                "${calendar.get(Calendar.YEAR)}"
-                                        val donationTime = "${String.format("%02d", calendar.get(Calendar.HOUR))}:" +
-                                                String.format("%02d", calendar.get(Calendar.MINUTE)) +
-                                                " $amPmString"
-                                        // Publish & update Appointment info
-                                        binding.textAppointmentPlace.text = activeDonationBloodBank?.name_en
-                                        binding.textAppointmentCity.text = activeDonationBloodBank?.city
-                                        binding.textAppointmentDate.text = donationDate
-                                        binding.textAppointmentTime.text = donationTime
-                                        donationDateCountDownTimer.countDownDays.observe(viewLifecycleOwner) { remainingDays ->
-                                            binding.textRemainingDaysField.text =
-                                                String.format("%02d", remainingDays.toInt())
-                                            dayToEnableVerify = remainingDays.toInt()
-                                        }
-                                        donationDateCountDownTimer.countDownHours.observe(viewLifecycleOwner) { remainingHours ->
-                                            binding.textRemainingHoursField.text =
-                                                String.format("%02d", remainingHours.toInt())
-                                            hoursToEnableVerify = remainingHours.toInt()
-                                        }
-                                        donationDateCountDownTimer.countDownMinutes.observe(
-                                            viewLifecycleOwner
-                                        ) { remainingMinutes ->
-                                            binding.textRemainingMinutesField.text =
-                                                String.format("%02d", remainingMinutes.toInt())
-                                            minuteToEnableVerify = remainingMinutes.toInt()
-                                        }
-                                        donationDateCountDownTimer.countDownSeconds.observe(
-                                            viewLifecycleOwner
-                                        ) { remainingSeconds ->
-                                            binding.textRemainingSecondsField.text =
-                                                String.format("%02d", remainingSeconds.toInt())
-                                            secondsToEnableVerify = remainingSeconds.toInt()
                                         }
                                     }
                                 }
                             }
+                            //
+                            binding.layoutProgressDonation.visibility = View.GONE
+                            binding.layoutAppointmentDetails.visibility = View.VISIBLE
+
+                        }
+                        false -> {
+                            //
+                            binding.layoutProgressDonation.visibility = View.GONE
+                            binding.layoutNoAppointment.visibility = View.VISIBLE
                         }
                     }
-                    //
-                    binding.layoutProgressDonation.visibility = View.GONE
-                    binding.layoutAppointmentDetails.visibility = View.VISIBLE
-
-                }
-                false -> {
-                    //
-                    binding.layoutProgressDonation.visibility = View.GONE
-                    binding.layoutNoAppointment.visibility = View.VISIBLE
                 }
             }
         }
@@ -368,9 +410,9 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
     private fun onAppointmentPlaceImageClick(position: Int) {
         val gmmIntentUri = Uri.parse(
             "geo:0,0?q=" +
-                    "${bloodBankList[position-1].coordinates.latitude}," +
-                    "${bloodBankList[position-1].coordinates.longitude}" +
-                    "(${bloodBankList[position-1].name_en})"
+                    "${bloodBankList[position - 1].coordinates.latitude}," +
+                    "${bloodBankList[position - 1].coordinates.longitude}" +
+                    "(${bloodBankList[position - 1].name_en})"
         )
         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
         mapIntent.setPackage("com.google.android.apps.maps")
@@ -388,7 +430,8 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
 
     override fun onPhoneNumberImageClick(position: Int) {
         val dialIntent = Intent(Intent.ACTION_DIAL)
-        dialIntent.data = Uri.parse("tel:" + campaignBloodBankAdapter.bloodBanks[position].phoneNumber)
+        dialIntent.data =
+            Uri.parse("tel:" + campaignBloodBankAdapter.bloodBanks[position].phoneNumber)
         startActivity(dialIntent)
     }
 

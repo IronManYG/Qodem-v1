@@ -95,39 +95,44 @@ class AuthenticationActivity : LocaleAwareCompatActivity() {
                             Log.e(TAG, "userPhoneNumber ${viewModel.userPhoneNumber.value.toString()} ")
                             val userPhoneNumber = viewModel.userPhoneNumber.value.toString()
                             viewModel.getUserInfo(userPhoneNumber)
-                            viewModel.userInfoFoundState.observe(
-                                this@AuthenticationActivity,
-                                Observer {
-                                    when (it) {
-                                        true -> {
-                                            val intent = Intent(
-                                                this@AuthenticationActivity,
-                                                MainActivity::class.java
-                                            )
-                                            startActivity(intent)
-                                            finish()
-                                        }
-                                        false -> {
-                                            val intent = Intent(
-                                                this@AuthenticationActivity,
-                                                SignUpActivity::class.java
-                                            )
-                                            intent.putExtra("USER_PHONE_NUMBER", userPhoneNumber)
-                                            startActivity(intent)
-                                            finish()
+                            lifecycleScope.launch {
+                                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                    viewModel.userInfoFoundState.collect() {
+                                        when (it) {
+                                            true -> {
+                                                val intent = Intent(
+                                                    this@AuthenticationActivity,
+                                                    MainActivity::class.java
+                                                )
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                            false -> {
+                                                val intent = Intent(
+                                                    this@AuthenticationActivity,
+                                                    SignUpActivity::class.java
+                                                )
+                                                intent.putExtra(
+                                                    "USER_PHONE_NUMBER",
+                                                    userPhoneNumber
+                                                )
+                                                startActivity(intent)
+                                                finish()
 
-                                            Log.e(TAG, "user not founded")
-                                            binding.apply {
-                                                authButton.visibility = View.VISIBLE
-                                                textViewArLanguage.visibility = View.VISIBLE
-                                                textViewEnLanguage.visibility = View.VISIBLE
+                                                Log.e(TAG, "user not founded")
+                                                binding.apply {
+                                                    authButton.visibility = View.VISIBLE
+                                                    textViewArLanguage.visibility = View.VISIBLE
+                                                    textViewEnLanguage.visibility = View.VISIBLE
+                                                }
                                             }
                                         }
+                                        binding.progressBar3.visibility = View.GONE
                                     }
-                                    binding.progressBar3.visibility = View.GONE
-                                })
+                                }
+                            }
                             // getting user donations for fire store if there is user info
-                            if (viewModel.userInfoFoundState.value == true) {
+                            if (viewModel.userInfoFoundState.value) {
                                 Log.d(TAG, "Start geting all donations")
                                 withContext(Dispatchers.IO) {
                                     viewModel.getAllDonations()

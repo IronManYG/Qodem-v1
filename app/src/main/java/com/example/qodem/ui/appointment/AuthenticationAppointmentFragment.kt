@@ -13,6 +13,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.budiyev.android.codescanner.*
@@ -48,25 +51,29 @@ class AuthenticationAppointmentFragment : Fragment() {
         binding = FragmentAuthenticationAppointmentBinding.inflate(layoutInflater, container, false)
         layout = binding.mainLayout
 
-        viewModel.donationUpdatedState.observe(viewLifecycleOwner) { UpdatedState ->
-            when (UpdatedState) {
-                true -> {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        withContext(Dispatchers.IO) {
-                            viewModel.getAllDonations()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.donationUpdatedState.collect { UpdatedState ->
+                    when (UpdatedState) {
+                        true -> {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                withContext(Dispatchers.IO) {
+                                    viewModel.getAllDonations()
+                                }
+                            }
+                            findNavController().navigate(AuthenticationAppointmentFragmentDirections.actionToHomeFragment())
+                            viewModel.resetDonationUpdatedState()
+                        }
+                        false -> {
+                            binding.root.showSnackbar(
+                                binding.root,
+                                viewModel.updateErrorMessage.value.toString(),
+                                Snackbar.LENGTH_SHORT,
+                                null,
+                                requireContext()
+                            ) {}
                         }
                     }
-                    findNavController().navigate(AuthenticationAppointmentFragmentDirections.actionToHomeFragment())
-                    viewModel.resetDonationUpdatedState()
-                }
-                false -> {
-                    binding.root.showSnackbar(
-                        binding.root,
-                        viewModel.updateErrorMessage.value.toString(),
-                        Snackbar.LENGTH_SHORT,
-                        null,
-                        requireContext()
-                    ) {}
                 }
             }
         }

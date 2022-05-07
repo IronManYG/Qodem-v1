@@ -108,28 +108,32 @@ class EditBloodTypeFragment : Fragment() {
                                     )
                                 }
                             }
-                            viewModel.userInfoUpdated.observe(viewLifecycleOwner) {
-                                when (it) {
-                                    true -> {
-                                        findNavController().popBackStack()
-                                        binding.root.showSnackbar(
-                                            binding.root,
-                                            "Successfully updated",
-                                            Snackbar.LENGTH_SHORT,
-                                            null,
-                                            requireContext()
-                                        ) {}
-                                        binding.loading.visibility = View.GONE
-                                    }
-                                    false -> {
-                                        binding.root.showSnackbar(
-                                            binding.root,
-                                            viewModel.errorResultMessage.value.toString(),
-                                            Snackbar.LENGTH_SHORT,
-                                            null,
-                                            requireContext()
-                                        ) {}
-                                        binding.loading.visibility = View.GONE
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                    viewModel.userInfoUpdated.collect() {
+                                        when (it) {
+                                            true -> {
+                                                findNavController().popBackStack()
+                                                binding.root.showSnackbar(
+                                                    binding.root,
+                                                    "Successfully updated",
+                                                    Snackbar.LENGTH_SHORT,
+                                                    null,
+                                                    requireContext()
+                                                ) {}
+                                                binding.loading.visibility = View.GONE
+                                            }
+                                            false -> {
+                                                binding.root.showSnackbar(
+                                                    binding.root,
+                                                    viewModel.errorResultMessage.value.toString(),
+                                                    Snackbar.LENGTH_SHORT,
+                                                    null,
+                                                    requireContext()
+                                                ) {}
+                                                binding.loading.visibility = View.GONE
+                                            }
+                                        }
                                     }
                                 }
                             }

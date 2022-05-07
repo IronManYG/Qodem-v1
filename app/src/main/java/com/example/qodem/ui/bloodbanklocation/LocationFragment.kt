@@ -99,24 +99,28 @@ class LocationFragment : Fragment() {
 
         binding.buttonBookAnAppointment.setOnClickListener {
             if (isBloodBankSelected) {
-                viewModel.activeDonationFoundState.observe(viewLifecycleOwner) {
-                    when (it) {
-                        true -> {
-                            binding.root.showSnackbar(
-                                binding.root,
-                                "You have a pre-booked appointment.",
-                                Snackbar.LENGTH_LONG,
-                                null,
-                                requireContext()
-                            ) {}
-                        }
-                        false -> {
-                            val amount = bloodBankID
-                            val action =
-                                LocationFragmentDirections.actionLocationFragmentToPreScreeningRequestFragment(
-                                    amount
-                                )
-                            findNavController().navigate(action)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        viewModel.activeDonationFoundState.collect {
+                            when (it) {
+                                true -> {
+                                    binding.root.showSnackbar(
+                                        binding.root,
+                                        "You have a pre-booked appointment.",
+                                        Snackbar.LENGTH_LONG,
+                                        null,
+                                        requireContext()
+                                    ) {}
+                                }
+                                false -> {
+                                    val amount = bloodBankID
+                                    val action =
+                                        LocationFragmentDirections.actionLocationFragmentToPreScreeningRequestFragment(
+                                            amount
+                                        )
+                                    findNavController().navigate(action)
+                                }
+                            }
                         }
                     }
                 }
