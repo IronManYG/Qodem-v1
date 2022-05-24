@@ -6,6 +6,10 @@ import com.example.qodem.data.Language
 import com.example.qodem.data.PreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +22,16 @@ constructor(
 ) : ViewModel() {
 
     private val preferencesFlow = preferencesManager.preferencesFlow
+
+    private val languageFlow = preferencesFlow.map {
+        it.language
+    }
+    val language: StateFlow<Language> = languageFlow
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            Language.Arabic
+        )
 
     fun onLanguageSelected(Language: Language) = viewModelScope.launch {
         preferencesManager.updateLanguage(Language)

@@ -15,6 +15,7 @@ import com.example.qodem.R
 import com.example.qodem.data.Language
 import com.example.qodem.databinding.ActivityAuthenticationBinding
 import com.example.qodem.ui.MainActivity
+import com.example.qodem.ui.settingsandoptions.language.LanguageViewModel
 import com.example.qodem.ui.signup.SignUpActivity
 import com.example.qodem.utils.exhaustive
 import com.firebase.ui.auth.AuthUI
@@ -43,6 +44,8 @@ class AuthenticationActivity : LocaleAwareCompatActivity() {
     // Get a reference to the ViewModel scoped to this Activity.
     private val viewModel: AuthenticationViewModel by viewModels()
 
+    private val languageViewModel: LanguageViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthenticationBinding.inflate(layoutInflater)
@@ -51,7 +54,7 @@ class AuthenticationActivity : LocaleAwareCompatActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.language.collectLatest { language ->
+                languageViewModel.language.collect { language ->
                     when (language) {
                         Language.Arabic -> {
                             if (Locale.getDefault() != Locales.Arabic) {

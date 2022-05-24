@@ -19,6 +19,7 @@ import com.example.qodem.data.Language
 import com.example.qodem.databinding.ActivityMainBinding
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.home.HomeViewModel
+import com.example.qodem.ui.settingsandoptions.language.LanguageViewModel
 import com.example.qodem.utils.exhaustive
 import com.firebase.ui.auth.AuthUI
 import com.zeugmasolutions.localehelper.LocaleAwareCompatActivity
@@ -34,6 +35,8 @@ import java.util.*
 class MainActivity : LocaleAwareCompatActivity() {
 
     private val viewModel: HomeViewModel by viewModels()
+
+    private val languageViewModel: LanguageViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 
@@ -63,7 +66,7 @@ class MainActivity : LocaleAwareCompatActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.language.collectLatest { language ->
+                languageViewModel.language.collect { language ->
                     when (language) {
                         Language.Arabic -> {
                             if (Locale.getDefault() != Locales.Arabic) {

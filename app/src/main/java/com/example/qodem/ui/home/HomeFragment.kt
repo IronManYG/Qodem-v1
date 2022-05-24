@@ -31,7 +31,7 @@ import kotlin.properties.Delegates
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
+class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.OnItemClickListener {
 
     companion object {
         const val TAG = "HomeFragment"
@@ -69,123 +69,108 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(
-                inflater,
-                R.layout.fragment_home, container, false
-            )
-        connectionLiveData = ConnectionLiveData(requireContext())
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_home,
+            container,
+            false
+        )
 
-        //
-        connectionLiveData.observe(viewLifecycleOwner) { isNetworkAvailable ->
-            when (isNetworkAvailable) {
-                true -> {
-                    viewModel.getBloodBanks()
+        setupConnectionChecker()
+        setupRecyclerView()
+        setupInfographicViewPager()
+
+        binding.apply {
+            //
+            buttonBookAnAppointment.setOnClickListener {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToPreScreeningRequestFragment(-1)
+                findNavController().navigate(action)
+            }
+
+            //
+            buttonCancelAppointment.setOnClickListener {
+                layoutProgressDonation.visibility = View.VISIBLE
+                layoutAppointmentDetails.visibility = View.GONE
+                CoroutineScope(Dispatchers.IO).launch {
+                    withContext(Dispatchers.IO) {
+                        viewModel.updateDonationActiveState(_activeDonation.id, false)
+                    }
                 }
-                false -> {
-                    binding.root.showSnackbar(
-                        binding.root,
-                        "Network Not Available",
+            }
+
+            //
+            buttonVerifyAppointment.setOnClickListener {
+                if (dayToEnableVerify == 0 && hoursToEnableVerify == 0 && minuteToEnableVerify <= 30 && secondsToEnableVerify <= 59) {
+                    val amount = _activeDonation.id
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToAuthenticationAppointmentFragment(
+                            amount
+                        )
+                    findNavController().navigate(action)
+                } else {
+                    root.showSnackbar(
+                        root,
+                        "It can only be done on Appointment time.",
                         Snackbar.LENGTH_LONG,
                         null,
                         requireContext()
                     ) {}
                 }
             }
-        }
 
-        //
-        setupRecyclerView()
-        setupInfographicViewPager()
-
-        //
-        binding.buttonBookAnAppointment.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToPreScreeningRequestFragment(-1)
-            findNavController().navigate(action)
-        }
-
-        //
-        binding.buttonCancelAppointment.setOnClickListener {
-            binding.layoutProgressDonation.visibility = View.VISIBLE
-            binding.layoutAppointmentDetails.visibility = View.GONE
-            CoroutineScope(Dispatchers.IO).launch {
-                withContext(Dispatchers.IO) {
-                    viewModel.updateDonationActiveState(_activeDonation.id, false)
-                }
+            //
+            imageAppointmentDirections.setOnClickListener {
+                onAppointmentPlaceImageClick(_activeDonation.bloodBankID.toInt())
             }
-        }
 
-        //
-        binding.buttonVerifyAppointment.setOnClickListener {
-            if (dayToEnableVerify == 0 && hoursToEnableVerify == 0 && minuteToEnableVerify <= 30 && secondsToEnableVerify <= 59) {
-                val amount = _activeDonation.id
-                val action =
-                    HomeFragmentDirections.actionHomeFragmentToAuthenticationAppointmentFragment(
-                        amount
-                    )
-                findNavController().navigate(action)
-            } else {
-                binding.root.showSnackbar(
-                    binding.root,
-                    "It can only be done on Appointment time.",
+            imageAppointmentQr.setOnClickListener {
+                root.showSnackbar(
+                    root,
+                    "Feature under development.",
                     Snackbar.LENGTH_LONG,
                     null,
                     requireContext()
                 ) {}
             }
-        }
 
-        //
-        binding.imageAppointmentDirections.setOnClickListener {
-            onAppointmentPlaceImageClick(_activeDonation.bloodBankID.toInt())
-        }
-
-        binding.imageAppointmentQr.setOnClickListener {
-            binding.root.showSnackbar(
-                binding.root,
-                "Feature under development.",
-                Snackbar.LENGTH_LONG,
-                null,
-                requireContext()
-            ) {}
-        }
-
-        //
-        binding.buttonFindDonors.setOnClickListener {
-            binding.root.showSnackbar(
-                binding.root,
-                "Feature under development.",
-                Snackbar.LENGTH_LONG,
-                null,
-                requireContext()
-            ) {}
-        }
-        binding.buttonAddDonor.setOnClickListener {
-            binding.root.showSnackbar(
-                binding.root,
-                "Feature under development.",
-                Snackbar.LENGTH_LONG,
-                null,
-                requireContext()
-            ) {}
-        }
-        binding.buttonSnapAndShare.setOnClickListener {
-            binding.root.showSnackbar(
-                binding.root,
-                "Feature under development.",
-                Snackbar.LENGTH_LONG,
-                null,
-                requireContext()
-            ) {}
-        }
-        binding.buttonBloodJourney.setOnClickListener {
-            binding.root.showSnackbar(
-                binding.root,
-                "Feature under development.",
-                Snackbar.LENGTH_LONG,
-                null,
-                requireContext()
-            ) {}
+            //
+            buttonFindDonors.setOnClickListener {
+                root.showSnackbar(
+                    root,
+                    "Feature under development.",
+                    Snackbar.LENGTH_LONG,
+                    null,
+                    requireContext()
+                ) {}
+            }
+            buttonAddDonor.setOnClickListener {
+                root.showSnackbar(
+                    root,
+                    "Feature under development.",
+                    Snackbar.LENGTH_LONG,
+                    null,
+                    requireContext()
+                ) {}
+            }
+            buttonSnapAndShare.setOnClickListener {
+                root.showSnackbar(
+                    root,
+                    "Feature under development.",
+                    Snackbar.LENGTH_LONG,
+                    null,
+                    requireContext()
+                ) {}
+            }
+            buttonBloodJourney.setOnClickListener {
+                root.showSnackbar(
+                    root,
+                    "Feature under development.",
+                    Snackbar.LENGTH_LONG,
+                    null,
+                    requireContext()
+                ) {}
+            }
         }
 
         return binding.root
@@ -225,14 +210,12 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
         super.onCreateOptionsMenu(menu, menuInflater)
     }
 
-    //
     private fun setupRecyclerView() = binding.recyclerViewDonationCampaigns.apply {
         campaignBloodBankAdapter = CampaignBloodBankAdapter(this@HomeFragment)
         adapter = campaignBloodBankAdapter
         layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
-    //
     private fun setupInfographicViewPager() = binding.viewPagerInfographic.apply {
         infographicViewPagerAdapter = InfographicViewPagerAdapter()
         adapter = infographicViewPagerAdapter
@@ -250,6 +233,27 @@ class HomeFragment : Fragment(), CampaignBloodBankAdapter.OnItemClickListener {
                 beginFakeDrag()
                 fakeDragBy(12f)
                 endFakeDrag()
+            }
+        }
+    }
+
+    private fun setupConnectionChecker() {
+        connectionLiveData = ConnectionLiveData(requireContext())
+
+        connectionLiveData.observe(viewLifecycleOwner) { isNetworkAvailable ->
+            when (isNetworkAvailable) {
+                true -> {
+                    viewModel.getBloodBanks()
+                }
+                false -> {
+                    binding.root.showSnackbar(
+                        binding.root,
+                        "Network Not Available",
+                        Snackbar.LENGTH_LONG,
+                        null,
+                        requireContext()
+                    ) {}
+                }
             }
         }
     }
