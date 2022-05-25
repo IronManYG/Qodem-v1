@@ -4,7 +4,7 @@ import android.util.Log
 import com.example.qodem.data.bloodbanks.local.BloodBankCacheMapper
 import com.example.qodem.data.bloodbanks.local.BloodBankDao
 import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
-import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
+import com.example.qodem.data.bloodbanks.remote.BloodBanksDataSource
 import com.example.qodem.model.BloodBank
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 class BloodBankRepository
 constructor(
     private val bloodBankDao: BloodBankDao,
-    private val bloodBanksRetrofit: BloodBanksRetrofit,
+    private val bloodBanksRetrofit: BloodBanksDataSource,
     private val bloodBankCacheMapper: BloodBankCacheMapper,
     private val bloodBankNetworkMapper: BloodBankNetworkMapper
 ) {

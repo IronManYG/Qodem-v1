@@ -1,5 +1,6 @@
 package com.example.qodem.di.module
 
+import com.example.qodem.data.bloodbanks.remote.BloodBanksDataSource
 import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -9,7 +10,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -43,7 +43,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideBloodBankService(retrofit: Retrofit.Builder): BloodBanksRetrofit {
+    fun provideBloodBankService(retrofit: Retrofit.Builder): BloodBanksDataSource {
         return retrofit
             .build()
             .create(BloodBanksRetrofit::class.java)

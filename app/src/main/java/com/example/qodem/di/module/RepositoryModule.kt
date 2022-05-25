@@ -3,7 +3,7 @@ package com.example.qodem.di.module
 import com.example.qodem.data.bloodbanks.local.BloodBankCacheMapper
 import com.example.qodem.data.bloodbanks.local.BloodBankDao
 import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
-import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
+import com.example.qodem.data.bloodbanks.remote.BloodBanksDataSource
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
 import com.example.qodem.data.userinfo.local.DonationsCacheMapper
 import com.example.qodem.data.userinfo.local.UserCacheMapper
@@ -26,7 +26,7 @@ object RepositoryModule {
     @Provides
     fun provideBloodBankRepository(
         bloodBanksDao: BloodBankDao,
-        retrofit: BloodBanksRetrofit,
+        retrofit: BloodBanksDataSource,
         bloodBankCacheMapper: BloodBankCacheMapper,
         bloodBankNetworkMapper: BloodBankNetworkMapper
     ): BloodBankRepository {

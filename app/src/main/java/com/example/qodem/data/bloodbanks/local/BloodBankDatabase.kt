@@ -7,8 +7,7 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.qodem.data.Converters
 import com.example.qodem.data.bloodbanks.remote.BloodBankNetworkMapper
-import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
-import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
+import com.example.qodem.data.bloodbanks.remote.BloodBanksDataSource
 import com.example.qodem.di.module.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -30,7 +29,7 @@ abstract class BloodBankDatabase : RoomDatabase() {
     @Inject
     constructor(
         private val database: Provider<BloodBankDatabase>,
-        private val bloodBanksRetrofit: BloodBanksRetrofit,
+        private val bloodBanksRetrofit: BloodBanksDataSource,
         private val bloodBankCacheMapper: BloodBankCacheMapper,
         private val bloodBankNetworkMapper: BloodBankNetworkMapper,
         @ApplicationScope private val applicationScope: CoroutineScope
