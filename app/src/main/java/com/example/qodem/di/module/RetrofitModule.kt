@@ -3,12 +3,14 @@ package com.example.qodem.di.module
 import com.example.qodem.data.bloodbanks.remote.BloodBanksRetrofit
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -25,10 +27,18 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson): Retrofit.Builder {
+    fun provideMoshiBuilder(): Moshi {
+        return Moshi
+            .Builder()
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(moshi: Moshi): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl("https://api.jsonbin.io")
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
     }
 
     @Singleton
