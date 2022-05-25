@@ -243,7 +243,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
         connectionLiveData.observe(viewLifecycleOwner) { isNetworkAvailable ->
             when (isNetworkAvailable) {
                 true -> {
-                    viewModel.getBloodBanks()
+                    //Stop call it here because its not necessary and call it once in blood bank data base when it crated
+                    //viewModel.getBloodBanks()
                 }
                 false -> {
                     binding.root.showSnackbar(
