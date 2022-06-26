@@ -39,6 +39,7 @@ constructor(
             }
         )
 
+
     fun onLanguageSelected(Language: Language) = viewModelScope.launch {
         preferencesManager.updateLanguage(Language)
     }
