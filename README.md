@@ -49,6 +49,6 @@ To use project in private & make the map work you need to do these steps:
 
 3- In the Firebase assistant window click on cloud firestore and choose to Get started with Cloud Firestore (KOLILIN).
 
-4- Do the required steps as explained Get started with Cloud Firestore (KOLILIN).
+4- Do the required steps as explained Get started with Cloud Firestore (KOTLIN).
 
 5- After completing the previous step and generating your API key add it to AndroidStudioProjects/Qodem/local.properties like this MAPS_API_KEY=YOUR-Key
