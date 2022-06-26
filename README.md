@@ -36,6 +36,8 @@ Verification code = 112233
 
 I added the second number to test the mechanism for removing the previous user's data after signing out and replacing it with the other user's data after signing in.
 
+You can download apk form [here](https://drive.google.com/drive/folders/1C67tENwwUsLGGCgwtXqmCG7myGeiXAjd?usp=sharing)
+
 Setup Project
 ------------
 
