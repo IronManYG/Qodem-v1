@@ -26,7 +26,7 @@ To verify blood donation scan this QR code
 
 Use the app as a tester
 ------------
-you can use these numbers to test the application
+you can use these numbers to test the application, or you can use your own phone number.
 
 first test number = +966587654321
 Verification code = 654321
