@@ -100,4 +100,7 @@
         <item>جواز سفر</item>
         <item>الهوية الوطنية</item>
     </string-array>
+    <string name="please_select_day">من فضلك حدد اليوم</string>
+    <string name="please_select_time">من فضلك حدد الوقت</string>
+    <string name="please_select_day_and_time">من فضلك حدد اليوم و الوقت</string>
 </resources>

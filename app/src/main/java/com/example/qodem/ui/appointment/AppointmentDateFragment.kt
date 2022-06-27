@@ -2,9 +2,7 @@ package com.example.qodem.ui.appointment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.qodem.R
 import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.databinding.FragmentAppointmentDateBinding
 import com.example.qodem.model.AppointmentDay
@@ -29,14 +28,15 @@ import java.util.*
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickListener,
+class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
+    AppointmentDayAdapter.OnItemClickListener,
     AppointmentTimeAdapter.OnItemClickListener {
 
     companion object {
         const val TAG = "AppointmentDateFrag"
     }
 
-    private val viewModel: AppointmentLocationViewModel by viewModels()
+    private val viewModel: AppointmentDateViewModel by viewModels()
 
     private lateinit var binding: FragmentAppointmentDateBinding
 
@@ -61,14 +61,14 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
 
     private val args: AppointmentDateFragmentArgs by navArgs()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // Inflate the layout for this fragment
-        binding = FragmentAppointmentDateBinding.inflate(layoutInflater)
+        binding = FragmentAppointmentDateBinding.bind(view)
 
-        //
+        setupDaysRecyclerView()
+        setupTimesRecyclerView()
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.bloodBanksList.collect { bloodBanks ->
@@ -82,10 +82,6 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
                 }
             }
         }
-
-        //
-        setupDaysRecyclerView()
-        setupTimesRecyclerView()
 
         binding.buttonBookAppointment.setOnClickListener {
             if (isAppointmentDaySelected && isAppointmentTimeSelected) {
@@ -136,7 +132,7 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
             } else if (!isAppointmentDaySelected && isAppointmentTimeSelected) {
                 binding.root.showSnackbar(
                     binding.root,
-                    "Please select day",
+                    getString(R.string.please_select_day),
                     Snackbar.LENGTH_SHORT,
                     null,
                     requireContext()
@@ -144,7 +140,7 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
             } else if (isAppointmentDaySelected && !isAppointmentTimeSelected) {
                 binding.root.showSnackbar(
                     binding.root,
-                    "Please select time",
+                    getString(R.string.please_select_time),
                     Snackbar.LENGTH_SHORT,
                     null,
                     requireContext()
@@ -152,7 +148,7 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
             } else {
                 binding.root.showSnackbar(
                     binding.root,
-                    "Please select day & time",
+                    getString(R.string.please_select_day_and_time),
                     Snackbar.LENGTH_SHORT,
                     null,
                     requireContext()
@@ -160,11 +156,6 @@ class AppointmentDateFragment : Fragment(), AppointmentDayAdapter.OnItemClickLis
             }
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         //
         appointmentDayAdapter.appointmentDays = appointmentDaysList()
     }

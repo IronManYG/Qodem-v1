@@ -1,8 +1,11 @@
 package com.example.qodem.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class WorkingDays(
 
     @SerializedName("Saturday")
@@ -32,4 +35,4 @@ data class WorkingDays(
     @SerializedName("Friday")
     @Expose
     val Friday: Boolean,
-)
+) : Parcelable

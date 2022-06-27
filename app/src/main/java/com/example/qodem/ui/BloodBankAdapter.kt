@@ -4,48 +4,79 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qodem.R
 import com.example.qodem.databinding.ItemBloodBankBinding
 import com.example.qodem.model.BloodBank
 
-class BloodBankAdapter(private val listener: OnItemClickListener) :
-    RecyclerView.Adapter<BloodBankAdapter.BloodBankViewHolder>() {
+class BloodBankAdapter(private val listener: OnBloodBankItemClickListener) :
+    ListAdapter<BloodBank, BloodBankAdapter.BloodBankViewHolder>(DiffCallBack()) {
 
-    inner class BloodBankViewHolder(val binding: ItemBloodBankBinding) :
-        RecyclerView.ViewHolder(binding.root),
-        View.OnClickListener {
+    inner class BloodBankViewHolder(private val binding: ItemBloodBankBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
-            itemView.setOnClickListener(this)
-            binding.imagePhoneNumber.setOnClickListener(this)
-            binding.imageBloodBankPlace.setOnClickListener(this)
+            binding.apply {
+                root.setOnClickListener {
+                    val position = bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val bloodBank = getItem(position)
+                        listener.onItemClick(bloodBank)
+                    }
+                }
+                imagePhoneNumber.setOnClickListener {
+                    val position = bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val bloodBank = getItem(position)
+                        listener.onPhoneNumberImageClick(bloodBank)
+                    }
+                }
+                imageBloodBankPlace.setOnClickListener {
+                    val position = bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val bloodBank = getItem(position)
+                        listener.onBloodBankPlaceImageClick(bloodBank)
+                    }
+                }
+            }
         }
 
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                if (v != null) {
-                    when (v.id) {
-                        itemView.id -> {
-                            listener.onItemClick(position)
-                            notifyDataSetChanged()
-                        }
-                        binding.imagePhoneNumber.id -> {
-                            listener.onPhoneNumberImageClick(position)
-                        }
-                        binding.imageBloodBankPlace.id -> {
-                            listener.onBloodBankPlaceImageClick(position)
-                        }
-                    }
+        fun bind(bloodBank: BloodBank) {
+            binding.apply {
+                textBloodBank.text = bloodBank.name_en
+                imagePhoneNumber.visibility = View.VISIBLE
+                textAddTime.visibility = View.GONE
+                if (bloodBank.isSelected) {
+                    cardView.strokeColor =
+                        ContextCompat.getColor(cardView.context, R.color.secondaryColor)
+                    cardView.strokeWidth = 5
+                } else {
+                    cardView.setBackgroundColor(
+                        ContextCompat.getColor(
+                            cardView.context,
+                            R.color.white
+                        )
+                    )
+                    cardView.strokeColor = ContextCompat.getColor(cardView.context, R.color.white)
                 }
             }
         }
     }
 
-    private val diffCallback = object : DiffUtil.ItemCallback<BloodBank>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BloodBankViewHolder {
+        val binding =
+            ItemBloodBankBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return BloodBankViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: BloodBankViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        holder.bind(currentItem)
+    }
+
+    class DiffCallBack : DiffUtil.ItemCallback<BloodBank>() {
         override fun areItemsTheSame(oldItem: BloodBank, newItem: BloodBank): Boolean {
             return oldItem.id == newItem.id
         }
@@ -55,47 +86,9 @@ class BloodBankAdapter(private val listener: OnItemClickListener) :
         }
     }
 
-    private val differ = AsyncListDiffer(this, diffCallback)
-    var bloodBanks: List<BloodBank>
-        get() = differ.currentList
-        set(value) {
-            differ.submitList(value)
-        }
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BloodBankViewHolder {
-        return BloodBankViewHolder(
-            ItemBloodBankBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false,
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: BloodBankViewHolder, position: Int) {
-        holder.binding.apply {
-            val bloodBank = bloodBanks[position]
-            textBloodBank.text = bloodBank.name_en
-            imagePhoneNumber.visibility = View.VISIBLE
-            textAddTime.visibility = View.GONE
-            if (bloodBanks[position].isSelected) {
-                cardView.strokeColor = ContextCompat.getColor(cardView.context, R.color.secondaryColor)
-                cardView.strokeWidth = 5
-            } else {
-                cardView.setBackgroundColor(ContextCompat.getColor(cardView.context, R.color.white))
-                cardView.strokeColor = ContextCompat.getColor(cardView.context, R.color.white)
-            }
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return bloodBanks.count()
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
-        fun onPhoneNumberImageClick(position: Int)
-        fun onBloodBankPlaceImageClick(position: Int)
+    interface OnBloodBankItemClickListener {
+        fun onItemClick(bloodBank: BloodBank)
+        fun onPhoneNumberImageClick(bloodBank: BloodBank)
+        fun onBloodBankPlaceImageClick(bloodBank: BloodBank)
     }
 }

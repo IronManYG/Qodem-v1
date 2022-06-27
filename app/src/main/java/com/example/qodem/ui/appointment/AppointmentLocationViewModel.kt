@@ -1,18 +1,16 @@
 package com.example.qodem.ui.appointment
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
-import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
-import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import com.example.qodem.model.BloodBank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,11 +21,14 @@ class AppointmentLocationViewModel
 @Inject
 constructor(
     private val bloodBankRepository: BloodBankRepository,
-    private val userInfoRepository: UserInfoRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    //
+    var selectedBloodBank: BloodBank? = null
+
+    private val appointmentLocationsEventsChannel = Channel<AppointmentLocationEvent>()
+    val appointmentLocationsEvents = appointmentLocationsEventsChannel.receiveAsFlow()
+
     private val bloodBanksFlow = bloodBankRepository.bloodBanks
     val bloodBanksList: StateFlow<List<BloodBank>> = bloodBanksFlow
         .stateIn(
@@ -36,18 +37,37 @@ constructor(
             emptyList()
         )
 
-    //
-    val donationSaveState = userInfoRepository.donationSaved
-
-    //
-    val saveErrorMessage = userInfoRepository.saveErrorMessage
-
-    suspend fun saveDonation(donationNetworkEntity: DonationNetworkEntity) {
-        userInfoRepository.saveDonation(donationNetworkEntity)
+    fun onBloodBankSelected(bloodBank: BloodBank) = viewModelScope.launch {
+        appointmentLocationsEventsChannel.send(
+            AppointmentLocationEvent.BloodBankIsSelected(
+                bloodBank
+            )
+        )
     }
 
-    fun getAllDonations() = viewModelScope.launch {
-        userInfoRepository.getAllDonations()
+    fun onBloodBankLocationSelected(bloodBank: BloodBank) = viewModelScope.launch {
+        appointmentLocationsEventsChannel.send(AppointmentLocationEvent.NavigateToMapsApp(bloodBank))
+    }
+
+    fun onBloodBankPhoneNumSelected(bloodBank: BloodBank) = viewModelScope.launch {
+        appointmentLocationsEventsChannel.send(AppointmentLocationEvent.NavigateToDialApp(bloodBank))
+    }
+
+    fun onBloodBankSelectedChanged(bloodBank: BloodBank) = viewModelScope.launch {
+        bloodBanksList.value.forEach {
+            if (it == bloodBank) {
+                it.isSelected = !it.isSelected
+                selectedBloodBank = if (it.isSelected) it else null
+            } else {
+                it.isSelected = false
+            }
+        }
+    }
+
+    sealed class AppointmentLocationEvent {
+        data class BloodBankIsSelected(val bloodBank: BloodBank) : AppointmentLocationEvent()
+        data class NavigateToMapsApp(val bloodBank: BloodBank) : AppointmentLocationEvent()
+        data class NavigateToDialApp(val bloodBank: BloodBank) : AppointmentLocationEvent()
     }
 
 }

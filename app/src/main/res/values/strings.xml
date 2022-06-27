@@ -132,4 +132,7 @@
     <string name="language_placeholder">English</string>
     <string name="english">English</string>
     <string name="arabic">العربية</string>
+    <string name="please_select_day">Please select day</string>
+    <string name="please_select_time">Please select time</string>
+    <string name="please_select_day_and_time"><![CDATA[Please select day & time]]></string>
 </resources>

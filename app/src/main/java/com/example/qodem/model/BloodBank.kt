@@ -1,8 +1,11 @@
 package com.example.qodem.model
 
+import android.os.Parcelable
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class BloodBank(
     var id: Int,
     var name_en: String,
@@ -17,7 +20,7 @@ data class BloodBank(
     var donorLimit: Int,
     var bloodDonationCampaign: Boolean,
     var campaignPeriod: Int?
-) : ClusterItem {
+) : ClusterItem, Parcelable {
 
     // used in recyclerView to if item selected or not
     var isSelected = false
