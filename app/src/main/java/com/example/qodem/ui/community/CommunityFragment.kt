@@ -23,6 +23,7 @@ class CommunityFragment : Fragment() {
         return inflater.inflate(R.layout.community_fragment, container, false)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[CommunityViewModel::class.java]
