@@ -55,13 +55,9 @@ constructor(
 
     fun onBloodBankSelectedChanged(bloodBank: BloodBank) = viewModelScope.launch {
         bloodBanksList.value.forEach {
-            if (it == bloodBank) {
-                it.isSelected = !it.isSelected
-                selectedBloodBank = if (it.isSelected) it else null
-            } else {
-                it.isSelected = false
-            }
+            it.isSelected = it == bloodBank
         }
+        selectedBloodBank = if (bloodBank.isSelected) bloodBank else null
     }
 
     sealed class AppointmentLocationEvent {

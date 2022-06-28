@@ -51,12 +51,12 @@ class AppointmentLocationFragment : Fragment(R.layout.fragment_appointment_locat
                         bloodBankAdapter.submitList(bloodBanks)
                     }
                 }
+                @Suppress("IMPLICIT_CAST_TO_ANY")
                 launch {
                     viewModel.appointmentLocationsEvents.collect { event ->
                         when(event) {
                             is AppointmentLocationViewModel.AppointmentLocationEvent.BloodBankIsSelected -> {
                                 viewModel.onBloodBankSelectedChanged(event.bloodBank)
-                                notifyDataSetChanged()
                             }
                             is AppointmentLocationViewModel.AppointmentLocationEvent.NavigateToDialApp -> {
                                 dialIntent(event.bloodBank.phoneNumber, requireContext())
@@ -96,8 +96,6 @@ class AppointmentLocationFragment : Fragment(R.layout.fragment_appointment_locat
         adapter = bloodBankAdapter
         layoutManager = LinearLayoutManager(requireContext())
     }
-
-    private fun notifyDataSetChanged() = bloodBankAdapter.notifyDataSetChanged()
 
     override fun onItemClick(bloodBank: BloodBank) {
         viewModel.onBloodBankSelected(bloodBank)

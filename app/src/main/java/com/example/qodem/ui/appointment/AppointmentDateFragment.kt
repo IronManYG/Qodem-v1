@@ -18,8 +18,8 @@ import com.example.qodem.databinding.FragmentAppointmentDateBinding
 import com.example.qodem.model.AppointmentDay
 import com.example.qodem.model.AppointmentTime
 import com.example.qodem.model.BloodBank
-import com.example.qodem.ui.AppointmentDayAdapter
-import com.example.qodem.ui.AppointmentTimeAdapter
+import com.example.qodem.utils.appointmentDaysList
+import com.example.qodem.utils.appointmentTimesList
 import com.example.qodem.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,12 +53,6 @@ class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
     private var isAppointmentDaySelected = false
     private var isAppointmentTimeSelected = false
 
-    // selected appointment Day by user
-    private var appointmentDay: Long = 0L
-
-    // selected appointment Time by user
-    private var appointmentTime: Long = 0L
-
     private val args: AppointmentDateFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,12 +65,27 @@ class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.bloodBanksList.collect { bloodBanks ->
-                    for (bloodBank in bloodBanks) {
-                        if (bloodBank.id == args.bloodBankID) {
-                            selectedBloodBank = bloodBank
-                            appointmentTimeAdapter.appointmentTimes = appointmentTimesList()
-                            Log.d("here", "bloodBank id: ${bloodBank.id}")
+                launch {
+                    viewModel.bloodBanksList.collect { bloodBanks ->
+                        for (bloodBank in bloodBanks) {
+                            if (bloodBank.id == args.bloodBankID) {
+                                selectedBloodBank = bloodBank
+                                appointmentTimeAdapter.submitList(appointmentTimesList(selectedBloodBank))
+                                viewModel.appointmentTimesList = appointmentTimeAdapter.currentList
+                                Log.d("here", "bloodBank id: ${bloodBank.id}")
+                            }
+                        }
+                    }
+                }
+                launch {
+                    viewModel.appointmentDateEvents.collect { event ->
+                        when (event) {
+                            is AppointmentDateViewModel.AppointmentDateEvent.AppointmentDayIsSelected -> {
+                                viewModel.onAppointmentDaySelectionChanged(event.appointmentDay)
+                            }
+                            is AppointmentDateViewModel.AppointmentDateEvent.AppointmentTimeIsSelected -> {
+                                viewModel.onAppointmentTimeSelectionChanged(event.appointmentTime)
+                            }
                         }
                     }
                 }
@@ -93,7 +102,7 @@ class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
                     donationTime = "",
                     active = true,
                     authenticated = false,
-                    timeStamp = appointmentDay + appointmentTime
+                    timeStamp = viewModel.selectedDayInMillis + viewModel.selectedTimeInMillis
                 )
                 CoroutineScope(Dispatchers.Main).launch {
                     withContext(Dispatchers.Main) {
@@ -157,7 +166,9 @@ class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
         }
 
         //
-        appointmentDayAdapter.appointmentDays = appointmentDaysList()
+        appointmentDayAdapter.submitList(appointmentDaysList())
+
+        viewModel.appointmentDaysList = appointmentDayAdapter.currentList
     }
 
     //
@@ -174,65 +185,14 @@ class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
         layoutManager = GridLayoutManager(requireContext(), 3)
     }
 
-    override fun onDayItemClick(position: Int) {
-        appointmentDayAdapter.appointmentDays.forEach {
-            it.isSelected = it == appointmentDayAdapter.appointmentDays[position]
-        }
+
+    override fun onDayItemClick(appointmentDay: AppointmentDay) {
+        viewModel.onAppointmentDaySelected(appointmentDay)
         isAppointmentDaySelected = true
-
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-        calendar.time = Date(appointmentDayAdapter.appointmentDays[position].dayInMilli)
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        appointmentDay = calendar.timeInMillis
-        Log.d("here Date", "day in mill is: $appointmentDay ")
     }
 
-    override fun onTimeItemClick(position: Int) {
-        appointmentTimeAdapter.appointmentTimes.forEach {
-            it.isSelected = it == appointmentTimeAdapter.appointmentTimes[position]
-        }
+    override fun onTimeItemClick(appointmentTime: AppointmentTime) {
+        viewModel.onAppointmentTimeSelected(appointmentTime)
         isAppointmentTimeSelected = true
-        appointmentTime = appointmentTimeAdapter.appointmentTimes[position].timeInMilli
-        Log.d("here Date", "time in mill is: $appointmentTime")
-    }
-
-    private fun appointmentDaysList(): List<AppointmentDay> {
-        val secondsInMilli: Long = 1000
-        val minutesInMilli = secondsInMilli * 60
-        val hoursInMilli = minutesInMilli * 60
-        val daysInMilli = hoursInMilli * 24
-        val currentTime = Calendar.getInstance().timeInMillis
-        val daysListAsLong: MutableList<Long> = listOf(currentTime).toMutableList()
-        var nextDay = currentTime + daysInMilli
-        for (i in 13 downTo 1) {
-            daysListAsLong.add(nextDay)
-            nextDay += daysInMilli
-        }
-        val daysList: MutableList<AppointmentDay> =
-            daysListAsLong.map { AppointmentDay(it) }.toMutableList()
-        return daysList.toList()
-    }
-
-    private fun appointmentTimesList(): List<AppointmentTime> {
-        val secondsInMilli: Long = 1000
-        val minutesInMilli = secondsInMilli * 60
-        val hoursInMilli = minutesInMilli * 60
-        val startTime = selectedBloodBank.workingHours.startTime
-        val endTime = selectedBloodBank.workingHours.endTime
-        val workingHours = endTime - startTime
-        var startTimeInMilli = startTime * hoursInMilli
-        val endTimeInMilli = endTime * hoursInMilli
-        val workingHoursInMilli = endTimeInMilli - startTimeInMilli
-        val timesListAsLong: MutableList<Long> = listOf(startTimeInMilli).toMutableList()
-        for (i in (workingHours * 2) downTo 1) {
-            startTimeInMilli += hoursInMilli / 2
-            timesListAsLong.add(startTimeInMilli)
-        }
-        val timesList: MutableList<AppointmentTime> =
-            timesListAsLong.map { AppointmentTime(it) }.toMutableList()
-        return timesList.toList()
     }
 }

@@ -24,6 +24,7 @@ class BloodBankAdapter(private val listener: OnBloodBankItemClickListener) :
                     if (position != RecyclerView.NO_POSITION) {
                         val bloodBank = getItem(position)
                         listener.onItemClick(bloodBank)
+                        notifyDataSetChanged()
                     }
                 }
                 imagePhoneNumber.setOnClickListener {
