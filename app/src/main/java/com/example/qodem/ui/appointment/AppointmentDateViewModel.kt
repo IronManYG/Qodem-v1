@@ -3,6 +3,7 @@ package com.example.qodem.ui.appointment
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
 import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
@@ -10,6 +11,7 @@ import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import com.example.qodem.model.AppointmentDay
 import com.example.qodem.model.AppointmentTime
 import com.example.qodem.model.BloodBank
+import com.example.qodem.utils.ConnectionLiveData
 import com.example.qodem.utils.appointmentDaysList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,18 +29,26 @@ import javax.inject.Inject
 class AppointmentDateViewModel
 @Inject
 constructor(
-    private val bloodBankRepository: BloodBankRepository,
     private val userInfoRepository: UserInfoRepository,
+    private val connectionLiveData: ConnectionLiveData,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    companion object {
+        const val TAG = "AppointmentDateViewModel"
+    }
+
+    val connectionState = connectionLiveData.asFlow()
+
+    val selectedBloodBank = savedStateHandle.get<BloodBank>("selectedBloodBank")
 
     var appointmentDaysList = mutableListOf<AppointmentDay>()
 
     var appointmentTimesList = mutableListOf<AppointmentTime>()
 
-    var selectedDayInMillis: Long = -1L
+    var selectedDayInMillis: Long? = null
 
-    var selectedTimeInMillis: Long = -1L
+    var selectedTimeInMillis: Long? = null
 
     val donationSaveState = userInfoRepository.donationSaved
 
@@ -46,14 +56,6 @@ constructor(
 
     private val appointmentDateEventsChannel = Channel<AppointmentDateEvent>()
     val appointmentDateEvents = appointmentDateEventsChannel.receiveAsFlow()
-
-    private val bloodBanksFlow = bloodBankRepository.bloodBanks
-    val bloodBanksList: StateFlow<List<BloodBank>> = bloodBanksFlow
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            emptyList()
-        )
 
     fun onAppointmentDaySelected(appointmentDay: AppointmentDay) = viewModelScope.launch {
         appointmentDateEventsChannel.send(AppointmentDateEvent.AppointmentDayIsSelected(appointmentDay))
@@ -74,7 +76,7 @@ constructor(
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
         selectedDayInMillis = calendar.timeInMillis
-        Log.d("here Date", "day in mill is: $selectedDayInMillis ")
+        Log.d(TAG, "day in mill is: $selectedDayInMillis ")
     }
 
     fun onAppointmentTimeSelectionChanged(appointmentTime: AppointmentTime) = viewModelScope.launch {
@@ -84,7 +86,15 @@ constructor(
         selectedTimeInMillis = appointmentTime.timeInMilli
     }
 
-    suspend fun saveDonation(donationNetworkEntity: DonationNetworkEntity) {
+    fun saveDonation() = viewModelScope.launch {
+        val donationNetworkEntity = DonationNetworkEntity(
+            bloodBankID = "${selectedBloodBank!!.id}",
+            donationData = "",
+            donationTime = "",
+            active = true,
+            authenticated = false,
+            timeStamp = selectedDayInMillis!! + selectedTimeInMillis!!
+        )
         userInfoRepository.saveDonation(donationNetworkEntity)
     }
 

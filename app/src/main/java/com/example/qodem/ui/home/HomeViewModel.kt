@@ -11,6 +11,7 @@ import com.example.qodem.data.userinfo.repository.UserInfoRepository
 import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import com.example.qodem.model.User
+import com.example.qodem.utils.ConnectionLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,8 +29,11 @@ constructor(
     private val bloodBankRepository: BloodBankRepository,
     private val userInfoRepository: UserInfoRepository,
     private val preferencesManager: PreferencesManager,
+    private val connectionLiveData: ConnectionLiveData,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    val connectionState = connectionLiveData
 
     //
     private val bloodBanksFlow = bloodBankRepository.bloodBanks

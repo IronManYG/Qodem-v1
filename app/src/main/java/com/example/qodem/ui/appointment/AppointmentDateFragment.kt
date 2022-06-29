@@ -1,8 +1,8 @@
 package com.example.qodem.ui.appointment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,14 +17,15 @@ import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.databinding.FragmentAppointmentDateBinding
 import com.example.qodem.model.AppointmentDay
 import com.example.qodem.model.AppointmentTime
-import com.example.qodem.model.BloodBank
+import com.example.qodem.utils.ConnectionLiveData
 import com.example.qodem.utils.appointmentDaysList
 import com.example.qodem.utils.appointmentTimesList
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import java.util.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -40,20 +41,11 @@ class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
 
     private lateinit var binding: FragmentAppointmentDateBinding
 
-    //
     private lateinit var appointmentDayAdapter: AppointmentDayAdapter
 
-    //
     private lateinit var appointmentTimeAdapter: AppointmentTimeAdapter
 
-    //
-    private lateinit var selectedBloodBank: BloodBank
-
-    //
-    private var isAppointmentDaySelected = false
-    private var isAppointmentTimeSelected = false
-
-    private val args: AppointmentDateFragmentArgs by navArgs()
+    private var connectionState = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,20 +55,14 @@ class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
         setupDaysRecyclerView()
         setupTimesRecyclerView()
 
+        appointmentDayAdapter.submitList(appointmentDaysList())
+        viewModel.appointmentDaysList = appointmentDayAdapter.currentList
+
+        appointmentTimeAdapter.submitList(appointmentTimesList(viewModel.selectedBloodBank!!))
+        viewModel.appointmentTimesList = appointmentTimeAdapter.currentList
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.bloodBanksList.collect { bloodBanks ->
-                        for (bloodBank in bloodBanks) {
-                            if (bloodBank.id == args.bloodBankID) {
-                                selectedBloodBank = bloodBank
-                                appointmentTimeAdapter.submitList(appointmentTimesList(selectedBloodBank))
-                                viewModel.appointmentTimesList = appointmentTimeAdapter.currentList
-                                Log.d("here", "bloodBank id: ${bloodBank.id}")
-                            }
-                        }
-                    }
-                }
                 launch {
                     viewModel.appointmentDateEvents.collect { event ->
                         when (event) {
@@ -89,110 +75,123 @@ class AppointmentDateFragment : Fragment(R.layout.fragment_appointment_date),
                         }
                     }
                 }
+                launch {
+                    viewModel.connectionState.collect { isNetworkAvailable ->
+                        when (isNetworkAvailable) {
+                            true -> {
+                                connectionState = true
+                            }
+                            false -> {
+                                connectionState = false
+                                binding.root.showSnackBar(
+                                    binding.root,
+                                    getString(R.string.network_not_available),
+                                    Snackbar.LENGTH_LONG,
+                                    null,
+                                    requireContext()
+                                ) {}
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        binding.buttonBookAppointment.setOnClickListener {
-            if (isAppointmentDaySelected && isAppointmentTimeSelected) {
-                binding.progressBar2.visibility = View.VISIBLE
-                binding.buttonBookAppointment.isEnabled = false
-                val donationNetworkEntity = DonationNetworkEntity(
-                    bloodBankID = "${args.bloodBankID}",
-                    donationData = "",
-                    donationTime = "",
-                    active = true,
-                    authenticated = false,
-                    timeStamp = viewModel.selectedDayInMillis + viewModel.selectedTimeInMillis
-                )
-                CoroutineScope(Dispatchers.Main).launch {
-                    withContext(Dispatchers.Main) {
-                        viewModel.saveDonation(donationNetworkEntity)
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                viewModel.donationSaveState.collect {
-                                    when (it) {
-                                        true -> {
-                                            CoroutineScope(Dispatchers.IO).launch {
-                                                withContext(Dispatchers.IO) {
-                                                    viewModel.getAllDonations()
+        binding.apply {
+            buttonBookAppointment.setOnClickListener {
+                if(connectionState) {
+                    when {
+                        viewModel.selectedDayInMillis != null && viewModel.selectedTimeInMillis != null && viewModel.selectedBloodBank != null -> {
+                            progressBar2.isVisible = true
+                            buttonBookAppointment.isEnabled = false
+                            viewModel.saveDonation()
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                    viewModel.donationSaveState.collect {
+                                        when (it) {
+                                            true -> {
+                                                viewModel.getAllDonations()
+                                                findNavController().navigate(
+                                                    AppointmentDateFragmentDirections.actionAppointmentDataFragmentToHomeFragment()
+                                                )
+                                            }
+                                            false -> {
+                                                if (viewModel.saveErrorMessage.value != "") {
+                                                    root.showSnackBar(
+                                                        root,
+                                                        viewModel.saveErrorMessage.value!!,
+                                                        Snackbar.LENGTH_SHORT,
+                                                        null,
+                                                        requireContext()
+                                                    ) {}
+                                                    progressBar2.isVisible = false
+                                                    buttonBookAppointment.isEnabled = true
                                                 }
                                             }
-                                            findNavController().navigate(
-                                                AppointmentDateFragmentDirections.actionAppointmentDataFragmentToHomeFragment()
-                                            )
-                                        }
-                                        false -> {
-                                            binding.root.showSnackbar(
-                                                binding.root,
-                                                viewModel.saveErrorMessage.value.toString(),
-                                                Snackbar.LENGTH_SHORT,
-                                                null,
-                                                requireContext()
-                                            ) {}
                                         }
                                     }
                                 }
                             }
                         }
-                        binding.progressBar2.visibility = View.GONE
-                        binding.buttonBookAppointment.isEnabled = true
+                        viewModel.selectedDayInMillis == null && viewModel.selectedTimeInMillis != null -> {
+                            root.showSnackBar(
+                                root,
+                                getString(R.string.please_select_day),
+                                Snackbar.LENGTH_SHORT,
+                                null,
+                                requireContext()
+                            ) {}
+                        }
+                        viewModel.selectedDayInMillis != null && viewModel.selectedTimeInMillis == null -> {
+                            root.showSnackBar(
+                                root,
+                                getString(R.string.please_select_time),
+                                Snackbar.LENGTH_SHORT,
+                                null,
+                                requireContext()
+                            ) {}
+                        }
+                        else -> {
+                            root.showSnackBar(
+                                root,
+                                getString(R.string.please_select_day_and_time),
+                                Snackbar.LENGTH_SHORT,
+                                null,
+                                requireContext()
+                            ) {}
+                        }
                     }
+
+                } else {
+                    binding.root.showSnackBar(
+                        binding.root,
+                        getString(R.string.network_not_available),
+                        Snackbar.LENGTH_LONG,
+                        null,
+                        requireContext()
+                    ) {}
                 }
-            } else if (!isAppointmentDaySelected && isAppointmentTimeSelected) {
-                binding.root.showSnackbar(
-                    binding.root,
-                    getString(R.string.please_select_day),
-                    Snackbar.LENGTH_SHORT,
-                    null,
-                    requireContext()
-                ) {}
-            } else if (isAppointmentDaySelected && !isAppointmentTimeSelected) {
-                binding.root.showSnackbar(
-                    binding.root,
-                    getString(R.string.please_select_time),
-                    Snackbar.LENGTH_SHORT,
-                    null,
-                    requireContext()
-                ) {}
-            } else {
-                binding.root.showSnackbar(
-                    binding.root,
-                    getString(R.string.please_select_day_and_time),
-                    Snackbar.LENGTH_SHORT,
-                    null,
-                    requireContext()
-                ) {}
             }
         }
-
-        //
-        appointmentDayAdapter.submitList(appointmentDaysList())
-
-        viewModel.appointmentDaysList = appointmentDayAdapter.currentList
     }
 
-    //
     private fun setupDaysRecyclerView() = binding.recyclerViewDaySelector.apply {
         appointmentDayAdapter = AppointmentDayAdapter(this@AppointmentDateFragment)
         adapter = appointmentDayAdapter
         layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
     }
 
-    //
     private fun setupTimesRecyclerView() = binding.recyclerViewTimeSelector.apply {
         appointmentTimeAdapter = AppointmentTimeAdapter(this@AppointmentDateFragment)
         adapter = appointmentTimeAdapter
         layoutManager = GridLayoutManager(requireContext(), 3)
     }
 
-
     override fun onDayItemClick(appointmentDay: AppointmentDay) {
         viewModel.onAppointmentDaySelected(appointmentDay)
-        isAppointmentDaySelected = true
     }
 
     override fun onTimeItemClick(appointmentTime: AppointmentTime) {
         viewModel.onAppointmentTimeSelected(appointmentTime)
-        isAppointmentTimeSelected = true
     }
 }

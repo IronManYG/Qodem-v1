@@ -16,7 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentEditGenderBinding
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -85,7 +85,7 @@ class EditGenderFragment : Fragment() {
                                 when (it) {
                                     true -> {
                                         findNavController().popBackStack()
-                                        binding.root.showSnackbar(
+                                        binding.root.showSnackBar(
                                             binding.root,
                                             "Successfully updated",
                                             Snackbar.LENGTH_SHORT,
@@ -94,7 +94,7 @@ class EditGenderFragment : Fragment() {
                                         ) {}
                                     }
                                     false -> {
-                                        binding.root.showSnackbar(
+                                        binding.root.showSnackBar(
                                             binding.root,
                                             viewModel.errorResultMessage.value.toString(),
                                             Snackbar.LENGTH_SHORT,
@@ -107,7 +107,7 @@ class EditGenderFragment : Fragment() {
                         }
                     }
                 } else {
-                    binding.root.showSnackbar(
+                    binding.root.showSnackBar(
                         binding.root,
                         "Please enter your Gender",
                         Snackbar.LENGTH_LONG,

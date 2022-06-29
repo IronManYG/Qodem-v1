@@ -103,4 +103,5 @@
     <string name="please_select_day">من فضلك حدد اليوم</string>
     <string name="please_select_time">من فضلك حدد الوقت</string>
     <string name="please_select_day_and_time">من فضلك حدد اليوم و الوقت</string>
+    <string name="network_not_available">لا يوجد اتصال بالإنترنت</string>
 </resources>

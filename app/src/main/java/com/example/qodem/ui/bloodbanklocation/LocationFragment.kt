@@ -17,7 +17,7 @@ import com.example.qodem.R
 import com.example.qodem.databinding.FragmentLocationBinding
 import com.example.qodem.model.BloodBank
 import com.example.qodem.utils.BitmapHelper
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -104,7 +104,7 @@ class LocationFragment : Fragment() {
                         viewModel.activeDonationFoundState.collect {
                             when (it) {
                                 true -> {
-                                    binding.root.showSnackbar(
+                                    binding.root.showSnackBar(
                                         binding.root,
                                         "You have a pre-booked appointment.",
                                         Snackbar.LENGTH_LONG,
@@ -125,7 +125,7 @@ class LocationFragment : Fragment() {
                     }
                 }
             } else {
-                binding.root.showSnackbar(
+                binding.root.showSnackBar(
                     binding.root,
                     "Please select blood bank",
                     Snackbar.LENGTH_LONG,

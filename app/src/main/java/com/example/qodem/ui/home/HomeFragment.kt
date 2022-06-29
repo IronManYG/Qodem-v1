@@ -20,9 +20,8 @@ import com.example.qodem.model.BloodBank
 import com.example.qodem.model.Donation
 import com.example.qodem.ui.CampaignBloodBankAdapter
 import com.example.qodem.ui.InfographicViewPagerAdapter
-import com.example.qodem.utils.ConnectionLiveData
 import com.example.qodem.utils.CustomCountDownTimer
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -50,9 +49,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
 
     //
     private lateinit var _activeDonation: Donation
-
-    //
-    private lateinit var connectionLiveData: ConnectionLiveData
 
     //
     private var dayToEnableVerify by Delegates.notNull<Int>()
@@ -109,7 +105,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
                         )
                     findNavController().navigate(action)
                 } else {
-                    root.showSnackbar(
+                    root.showSnackBar(
                         root,
                         "It can only be done on Appointment time.",
                         Snackbar.LENGTH_LONG,
@@ -125,7 +121,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
             }
 
             imageAppointmentQr.setOnClickListener {
-                root.showSnackbar(
+                root.showSnackBar(
                     root,
                     "Feature under development.",
                     Snackbar.LENGTH_LONG,
@@ -136,7 +132,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
 
             //
             buttonFindDonors.setOnClickListener {
-                root.showSnackbar(
+                root.showSnackBar(
                     root,
                     "Feature under development.",
                     Snackbar.LENGTH_LONG,
@@ -145,7 +141,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
                 ) {}
             }
             buttonAddDonor.setOnClickListener {
-                root.showSnackbar(
+                root.showSnackBar(
                     root,
                     "Feature under development.",
                     Snackbar.LENGTH_LONG,
@@ -154,7 +150,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
                 ) {}
             }
             buttonSnapAndShare.setOnClickListener {
-                root.showSnackbar(
+                root.showSnackBar(
                     root,
                     "Feature under development.",
                     Snackbar.LENGTH_LONG,
@@ -163,7 +159,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
                 ) {}
             }
             buttonBloodJourney.setOnClickListener {
-                root.showSnackbar(
+                root.showSnackBar(
                     root,
                     "Feature under development.",
                     Snackbar.LENGTH_LONG,
@@ -238,18 +234,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), CampaignBloodBankAdapter.
     }
 
     private fun setupConnectionChecker() {
-        connectionLiveData = ConnectionLiveData(requireContext())
 
-        connectionLiveData.observe(viewLifecycleOwner) { isNetworkAvailable ->
+        viewModel.connectionState.observe(viewLifecycleOwner) { isNetworkAvailable ->
             when (isNetworkAvailable) {
                 true -> {
                     //Stop call it here because its not necessary and call it once in blood bank data base when it crated
                     //viewModel.getBloodBanks()
                 }
                 false -> {
-                    binding.root.showSnackbar(
+                    binding.root.showSnackBar(
                         binding.root,
-                        "Network Not Available",
+                        getString(R.string.network_not_available),
                         Snackbar.LENGTH_LONG,
                         null,
                         requireContext()

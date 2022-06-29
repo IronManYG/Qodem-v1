@@ -14,7 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.databinding.FragmentEditDateOfBirthBinding
 import com.example.qodem.ui.signup.SignUpActivity
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -99,7 +99,7 @@ class EditDateOfBirthFragment : Fragment() {
                                         when (it) {
                                             true -> {
                                                 findNavController().popBackStack()
-                                                binding.root.showSnackbar(
+                                                binding.root.showSnackBar(
                                                     binding.root,
                                                     "Successfully updated",
                                                     Snackbar.LENGTH_SHORT,
@@ -108,7 +108,7 @@ class EditDateOfBirthFragment : Fragment() {
                                                 ) {}
                                             }
                                             false -> {
-                                                binding.root.showSnackbar(
+                                                binding.root.showSnackBar(
                                                     binding.root,
                                                     viewModel.errorResultMessage.value.toString(),
                                                     Snackbar.LENGTH_SHORT,
@@ -121,7 +121,7 @@ class EditDateOfBirthFragment : Fragment() {
                                 }
                             }
                         } else {
-                            binding.root.showSnackbar(
+                            binding.root.showSnackBar(
                                 binding.root,
                                 "Please enter your birth date",
                                 Snackbar.LENGTH_LONG,

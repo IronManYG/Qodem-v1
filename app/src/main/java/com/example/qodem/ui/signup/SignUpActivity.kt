@@ -18,7 +18,7 @@ import com.example.qodem.databinding.ActivitySignUpBinding
 import com.example.qodem.ui.MainActivity
 import com.example.qodem.ui.authentication.AuthenticationActivity
 import com.example.qodem.ui.authentication.AuthenticationViewModel
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
@@ -189,7 +189,7 @@ class SignUpActivity : AppCompatActivity() {
                                             Log.e(TAG, "user Saved!")
                                         }
                                         false -> {
-                                            binding.root.showSnackbar(
+                                            binding.root.showSnackBar(
                                                 binding.root,
                                                 viewModel.saveErrorMessage.value.toString(),
                                                 Snackbar.LENGTH_LONG,
@@ -205,7 +205,7 @@ class SignUpActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                binding.root.showSnackbar(
+                binding.root.showSnackBar(
                     binding.root,
                     "Please enter all info",
                     Snackbar.LENGTH_LONG,

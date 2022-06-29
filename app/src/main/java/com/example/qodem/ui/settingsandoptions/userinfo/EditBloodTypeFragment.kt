@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentEditBloodTypeBinding
 import com.example.qodem.utils.ConnectionLiveData
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +60,7 @@ class EditBloodTypeFragment : Fragment() {
                 }
                 false -> {
                     networkAvailable = true
-                    binding.root.showSnackbar(
+                    binding.root.showSnackBar(
                         binding.root,
                         "Network Not Available",
                         Snackbar.LENGTH_LONG,
@@ -114,7 +114,7 @@ class EditBloodTypeFragment : Fragment() {
                                         when (it) {
                                             true -> {
                                                 findNavController().popBackStack()
-                                                binding.root.showSnackbar(
+                                                binding.root.showSnackBar(
                                                     binding.root,
                                                     "Successfully updated",
                                                     Snackbar.LENGTH_SHORT,
@@ -124,7 +124,7 @@ class EditBloodTypeFragment : Fragment() {
                                                 binding.loading.visibility = View.GONE
                                             }
                                             false -> {
-                                                binding.root.showSnackbar(
+                                                binding.root.showSnackBar(
                                                     binding.root,
                                                     viewModel.errorResultMessage.value.toString(),
                                                     Snackbar.LENGTH_SHORT,
@@ -138,7 +138,7 @@ class EditBloodTypeFragment : Fragment() {
                                 }
                             }
                         } else {
-                            binding.root.showSnackbar(
+                            binding.root.showSnackBar(
                                 binding.root,
                                 "Please enter your Blood Type",
                                 Snackbar.LENGTH_LONG,

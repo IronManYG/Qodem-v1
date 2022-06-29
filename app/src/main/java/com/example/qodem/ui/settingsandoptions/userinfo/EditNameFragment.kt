@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.qodem.databinding.FragmentEditNameBinding
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -97,7 +97,7 @@ class EditNameFragment : Fragment() {
                                         when (it) {
                                             true -> {
                                                 findNavController().popBackStack()
-                                                binding.root.showSnackbar(
+                                                binding.root.showSnackBar(
                                                     binding.root,
                                                     "Successfully updated",
                                                     Snackbar.LENGTH_SHORT,
@@ -106,7 +106,7 @@ class EditNameFragment : Fragment() {
                                                 ) {}
                                             }
                                             false -> {
-                                                binding.root.showSnackbar(
+                                                binding.root.showSnackBar(
                                                     binding.root,
                                                     viewModel.errorResultMessage.value.toString(),
                                                     Snackbar.LENGTH_SHORT,
@@ -119,7 +119,7 @@ class EditNameFragment : Fragment() {
                                 }
                             }
                         } else {
-                            binding.root.showSnackbar(
+                            binding.root.showSnackBar(
                                 binding.root,
                                 "Please enter your name",
                                 Snackbar.LENGTH_LONG,

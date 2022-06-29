@@ -13,7 +13,7 @@
     app:strokeWidth="@dimen/stroke_size">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/item_time_date_width"
         android:layout_height="@dimen/item_time_date_height"
         android:padding="@dimen/small_layout_padding">
 
@@ -22,6 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_am_pm"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/item_time_placeholder" />
@@ -33,6 +35,7 @@
             android:layout_marginStart="@dimen/small_layout_margin"
             app:layout_constraintBottom_toBottomOf="@+id/text_time"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/text_time"
             app:layout_constraintTop_toTopOf="@+id/text_time"
             tools:text="@string/am_pm_placeholder" />

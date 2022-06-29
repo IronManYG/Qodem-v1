@@ -16,7 +16,7 @@ import com.example.qodem.ui.BloodBankAdapter
 import com.example.qodem.utils.dialIntent
 import com.example.qodem.utils.exhaustive
 import com.example.qodem.utils.mapIntent
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -54,7 +54,7 @@ class AppointmentLocationFragment : Fragment(R.layout.fragment_appointment_locat
                 @Suppress("IMPLICIT_CAST_TO_ANY")
                 launch {
                     viewModel.appointmentLocationsEvents.collect { event ->
-                        when(event) {
+                        when (event) {
                             is AppointmentLocationViewModel.AppointmentLocationEvent.BloodBankIsSelected -> {
                                 viewModel.onBloodBankSelectedChanged(event.bloodBank)
                             }
@@ -79,7 +79,7 @@ class AppointmentLocationFragment : Fragment(R.layout.fragment_appointment_locat
                     )
                 findNavController().navigate(action)
             } else {
-                binding.root.showSnackbar(
+                binding.root.showSnackBar(
                     binding.root,
                     getString(R.string.please_select_blood_bank),
                     Snackbar.LENGTH_SHORT,

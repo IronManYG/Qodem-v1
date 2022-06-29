@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.qodem.R
 import com.example.qodem.databinding.FragmentPreScreeningQuestionBinding
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -64,7 +64,7 @@ class PreScreeningQuestionFragment : Fragment() {
                     }
                 } else {
                     findNavController().navigate(R.id.action_preScreeningQuestion_to_homeFragment)
-                    binding.root.showSnackbar(
+                    binding.root.showSnackBar(
                         binding.root,
                         "Your are not eligible to donate blood",
                         Snackbar.LENGTH_LONG,
@@ -73,7 +73,7 @@ class PreScreeningQuestionFragment : Fragment() {
                     ) {}
                 }
             } else {
-                binding.root.showSnackbar(
+                binding.root.showSnackBar(
                     binding.root,
                     "All questions are required to be answered",
                     Snackbar.LENGTH_LONG,

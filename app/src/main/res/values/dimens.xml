@@ -41,5 +41,6 @@
     <dimen name="user_image_width">60dp</dimen>
     <dimen name="user_image_height">60dp</dimen>
     <dimen name="drag_image_padding">40dp</dimen>
+    <dimen name="item_time_date_width">85dp</dimen>
     <item name="frame_size" format="float" type="dimen">0.75</item>
 </resources>

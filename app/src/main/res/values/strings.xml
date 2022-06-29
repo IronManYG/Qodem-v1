@@ -135,4 +135,5 @@
     <string name="please_select_day">Please select day</string>
     <string name="please_select_time">Please select time</string>
     <string name="please_select_day_and_time"><![CDATA[Please select day & time]]></string>
+    <string name="network_not_available">Network Not Available</string>
 </resources>

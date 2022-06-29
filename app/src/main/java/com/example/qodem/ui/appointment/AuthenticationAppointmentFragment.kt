@@ -20,7 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.budiyev.android.codescanner.*
 import com.example.qodem.databinding.FragmentAuthenticationAppointmentBinding
-import com.example.qodem.utils.showSnackbar
+import com.example.qodem.utils.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -65,7 +65,7 @@ class AuthenticationAppointmentFragment : Fragment() {
                             viewModel.resetDonationUpdatedState()
                         }
                         false -> {
-                            binding.root.showSnackbar(
+                            binding.root.showSnackBar(
                                 binding.root,
                                 viewModel.updateErrorMessage.value.toString(),
                                 Snackbar.LENGTH_SHORT,
@@ -143,7 +143,7 @@ class AuthenticationAppointmentFragment : Fragment() {
                 requireContext(),
                 Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED -> {
-                layout.showSnackbar(
+                layout.showSnackBar(
                     view,
                     "Please scan QR code to authenticate the appointment.",
                     Snackbar.LENGTH_LONG,
@@ -156,7 +156,7 @@ class AuthenticationAppointmentFragment : Fragment() {
                 requireContext() as Activity,
                 Manifest.permission.CAMERA
             ) -> {
-                layout.showSnackbar(
+                layout.showSnackBar(
                     view,
                     "Permission is granted. You would use the camera now.",
                     Snackbar.LENGTH_INDEFINITE,
