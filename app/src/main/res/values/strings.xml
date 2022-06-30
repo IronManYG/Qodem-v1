@@ -138,4 +138,6 @@
     <string name="network_not_available">Network Not Available</string>
     <string name="scan_authenticate_qr">Please scan QR code to authenticate the appointment.</string>
     <string name="camera_permission_granted_message">Permission is granted. You would use the camera now.</string>
+    <string name="not_eligible_to_donate_message">Your are not eligible to donate blood</string>
+    <string name="answere_all_questions">All questions are required to be answered</string>
 </resources>

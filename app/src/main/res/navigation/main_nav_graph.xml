@@ -59,6 +59,11 @@
         <argument
             android:name="bloodBankID"
             app:argType="integer" />
+        <argument
+            android:name="selectedBloodBank"
+            app:argType="com.example.qodem.model.BloodBank"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/preScreeningQuestion"
@@ -91,6 +96,11 @@
         <argument
             android:name="bloodBankID"
             app:argType="integer" />
+        <argument
+            android:name="selectedBloodBank"
+            app:argType="com.example.qodem.model.BloodBank"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/appointmentLocationFragment"

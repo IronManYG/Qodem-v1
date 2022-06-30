@@ -7,17 +7,18 @@
     android:background="@color/primaryColorBackground"
     tools:context=".ui.appointment.PreScreeningRequestFragment">
 
-    <ImageView
-        android:id="@+id/image_pre_screening_request"
-        android:layout_width="@dimen/check_pre_screening_icon_width"
-        android:layout_height="@dimen/check_pre_screening_icon_height"
-        android:contentDescription="@string/pre_screening_request_icon"
-        android:src="@drawable/ic_check_box"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_pre_screening_request"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/text_pre_screening_request_explain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/secondaryDarkColor" />
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/check_list" />
 
     <TextView
         android:id="@+id/text_pre_screening_request_explain"
@@ -28,11 +29,13 @@
         android:text="@string/pre_screening_request_explain"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textSize="@dimen/mid_text_size"
+        android:textSize="@dimen/mid_title_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65" />
 
     <Button
         android:id="@+id/button_proceed_now"

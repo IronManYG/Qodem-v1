@@ -106,4 +106,6 @@
     <string name="network_not_available">لا يوجد اتصال بالإنترنت</string>
     <string name="scan_authenticate_qr">يرجى مسح رمز الاستجابة السريعة لتوثيق الموعد.</string>
     <string name="camera_permission_granted_message">تم منح الإذن بإمكانك استخدام الكاميرا.</string>
+    <string name="not_eligible_to_donate_message">أنت غير مؤهل للتبرع بالدم حالياً.</string>
+    <string name="answere_all_questions">من فضلك أجب على كل الأسئلة.</string>
 </resources>
