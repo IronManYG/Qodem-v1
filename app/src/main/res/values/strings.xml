@@ -136,4 +136,6 @@
     <string name="please_select_time">Please select time</string>
     <string name="please_select_day_and_time"><![CDATA[Please select day & time]]></string>
     <string name="network_not_available">Network Not Available</string>
+    <string name="scan_authenticate_qr">Please scan QR code to authenticate the appointment.</string>
+    <string name="camera_permission_granted_message">Permission is granted. You would use the camera now.</string>
 </resources>

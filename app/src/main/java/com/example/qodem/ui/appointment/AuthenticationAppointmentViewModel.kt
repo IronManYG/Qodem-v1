@@ -1,6 +1,5 @@
 package com.example.qodem.ui.appointment
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,18 +18,16 @@ constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    private val activeDonationID = savedStateHandle.get<String>("activeDonationID")
+
     //
     val donationUpdatedState = userInfoRepository.donationUpdated
 
     //
     val updateErrorMessage = userInfoRepository.updateErrorMessage
 
-    suspend fun updateDonationAuthenticatedState(donationID: String, isActive: Boolean) {
-        userInfoRepository.updateDonationAuthenticatedState(donationID, isActive)
-    }
-
-    fun getAllDonations() = viewModelScope.launch {
-        userInfoRepository.getAllDonations()
+    fun updateDonationAuthenticatedState() = viewModelScope.launch {
+        userInfoRepository.updateDonationAuthenticatedState(activeDonationID!!, true)
     }
 
     fun resetDonationUpdatedState() {
