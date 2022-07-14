@@ -37,7 +37,7 @@ object RetrofitModule {
     @Provides
     fun provideRetrofit(moshi: Moshi): Retrofit.Builder {
         return Retrofit.Builder()
-            .baseUrl("https://api.jsonbin.io")
+            .baseUrl("https://api.jsonbin.io/v3/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
     }
 
