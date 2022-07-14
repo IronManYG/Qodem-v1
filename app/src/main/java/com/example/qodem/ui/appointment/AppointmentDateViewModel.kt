@@ -8,12 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.qodem.data.bloodbanks.repository.BloodBankRepository
 import com.example.qodem.data.userinfo.remote.DonationNetworkEntity
 import com.example.qodem.data.userinfo.repository.UserInfoRepository
+import com.example.qodem.di.module.ApplicationScope
 import com.example.qodem.model.AppointmentDay
 import com.example.qodem.model.AppointmentTime
 import com.example.qodem.model.BloodBank
 import com.example.qodem.utils.ConnectionLiveData
 import com.example.qodem.utils.appointmentDaysList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,7 +33,8 @@ class AppointmentDateViewModel
 constructor(
     private val userInfoRepository: UserInfoRepository,
     private val connectionLiveData: ConnectionLiveData,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    @ApplicationScope private val applicationScope: CoroutineScope
 ) : ViewModel() {
 
     companion object {
@@ -86,7 +89,7 @@ constructor(
         selectedTimeInMillis = appointmentTime.timeInMilli
     }
 
-    fun saveDonation() = viewModelScope.launch {
+    fun saveDonation() = applicationScope.launch {
         val donationNetworkEntity = DonationNetworkEntity(
             bloodBankID = "${selectedBloodBank!!.id}",
             donationData = "",
@@ -98,7 +101,7 @@ constructor(
         userInfoRepository.saveDonation(donationNetworkEntity)
     }
 
-    fun getAllDonations() = viewModelScope.launch {
+    fun getAllDonations() = applicationScope.launch {
         userInfoRepository.getAllDonations()
     }
 
